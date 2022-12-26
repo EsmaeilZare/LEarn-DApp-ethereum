@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { PollService } from './poll-service/poll.service';
 import { GameService } from './game-service/game.service';
-import { GameForm, poll, PollForm, PollVote } from './types';
+import { GameForm, PairForm, poll, PollForm, PollVote } from './types';
+import { PairService } from './pair-service/pair.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent {
   polls = this.ps.getPolls()
   games = this.gs.getGames()
 
-  constructor(private ps: PollService, private gs: GameService) {
+  constructor(private ps: PollService, private gs: GameService, private pa:PairService) {
 
   }
 
@@ -33,6 +34,10 @@ export class AppComponent {
 
   handleGameCreate(game: GameForm) {
     this.gs.createGame(game);
+  }
+
+  handlePairCreate(pair: PairForm) {
+    this.pa.createPair(pair)
   }
 
   handlePollVote(pollVoted: PollVote) {

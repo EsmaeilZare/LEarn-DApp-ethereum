@@ -11,6 +11,11 @@ export interface game{
   purchased: boolean;
 }
 
+export interface pair{
+  id: number;
+  wmpair: string[];
+}
+
 export interface PollForm {
   question: string; // The question of the poll, like what's your favorite animal ?
   options: string[]; // ["Dogs", "Cats", "Owls"]
@@ -19,8 +24,13 @@ export interface PollForm {
 
 export interface GameForm {
   word: string;
-  meaning: string[];
+  meaning: string;
   thumbnail: string;
+}
+
+export interface PairForm {
+  word: string;
+  meaning: string;
 }
 
 export interface PollVote {
