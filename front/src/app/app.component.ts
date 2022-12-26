@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PollService } from './poll-service/poll.service';
-import { poll, PollForm, PollVote } from './types';
+import { GameService } from './game-service/game.service';
+import { GameForm, poll, PollForm, PollVote } from './types';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,9 @@ export class AppComponent {
   activePoll: poll = null as any; // nobooghe khodam error midad
 
   polls = this.ps.getPolls()
+  games = this.gs.getGames()
 
-  constructor(private ps: PollService) {
+  constructor(private ps: PollService, private gs: GameService) {
 
   }
 
@@ -27,6 +29,10 @@ export class AppComponent {
 
   handlePollCreate(poll: PollForm) {
     this.ps.createPoll(poll);
+  }
+
+  handleGameCreate(game: GameForm) {
+    this.gs.createGame(game);
   }
 
   handlePollVote(pollVoted: PollVote) {

@@ -4,10 +4,23 @@ export interface poll extends PollForm{
   voted: boolean; // Wheter the user has voted for the poll or not
 }
 
+export interface game{
+  id: number;
+  words: string[];
+  meanings: string[];
+  purchased: boolean;
+}
+
 export interface PollForm {
   question: string; // The question of the poll, like what's your favorite animal ?
   options: string[]; // ["Dogs", "Cats", "Owls"]
   thumbnail: string; // Link to the thumbnail image for the question
+}
+
+export interface GameForm {
+  word: string;
+  meaning: string[];
+  thumbnail: string;
 }
 
 export interface PollVote {

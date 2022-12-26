@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand mr-auto" href="#">Blockchain Polls</a>
-  <button type="button" class="btn btn-secondary" (click)="showForm = !showForm">Create Poll</button>
+  <button type="button" class="btn btn-secondary" (click)="showForm = !showForm">Create Quiz</button>
 </nav>
 
 <section class="jumbotron bg-light text-center">
@@ -9,7 +9,7 @@
     Powered By Blockchain
   </p>
 </section>
-<app-poll-create *ngIf="showForm" (pollCreated)="handlePollCreate($event)"></app-poll-create>
+<app-game-create *ngIf="showForm" (gameCreated)="handleGameCreate($event)"></app-game-create>
 <div class="d-flex">
   <div class="container poll-list">
     <app-poll *ngFor="let poll of polls | async"
