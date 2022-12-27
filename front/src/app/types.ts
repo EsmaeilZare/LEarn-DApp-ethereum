@@ -1,17 +1,18 @@
-export interface poll extends PollForm{
-  id: number;  // id Number of the poll e.g: 21
+export interface poll extends PollForm {
+  id: number; // id Number of the poll e.g: 21
   results: number[]; // [0, 2, 3]
   voted: boolean; // Wheter the user has voted for the poll or not
 }
 
-export interface game{
+export interface game extends GameForm {
   id: number;
-  words: string[];
-  meanings: string[];
+  createdByMe: boolean;
   purchased: boolean;
+  nextLevel: number;
+  winnersCount: number;
 }
 
-export interface pair{
+export interface pair {
   id: number;
   wmpair: string[];
 }
@@ -23,8 +24,8 @@ export interface PollForm {
 }
 
 export interface GameForm {
-  word: string;
-  meaning: string;
+  words: string[];
+  meanings: string[];
   thumbnail: string;
 }
 
@@ -41,5 +42,4 @@ export interface PollVote {
 export interface Voter {
   id: string; // id of the voter, in practice the hash
   voted: number[]; // id of the polls that the voter has voted for e.g [21]
-
 }

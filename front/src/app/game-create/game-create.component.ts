@@ -14,16 +14,16 @@ export class GameCreateComponent {
 
   constructor(private fb: FormBuilder) {
     this.gameForm = this.fb.group({
-      word: this.fb.control('', [Validators.required]),
-      meaning: this.fb.control('', [Validators.required]),
+      // word: this.fb.control('', [Validators.required]),
+      // meaning: this.fb.control('', [Validators.required]),
       thumbnail: this.fb.control(''),
     });
   }
 
   submitForm() {
     const formData: GameForm = {
-      word: this.gameForm.get("word").value,
-      meaning: this.gameForm.get("meaning").value,
+      words: [], // this should be drived from the pair create components 
+      meanings: [],
       thumbnail: this.gameForm.get("thumbnail").value,
     };
 
