@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ApexCharts from 'apexcharts';
-import { PollVote } from '../types';
+import { PollVote } from '../../types';
 
 @Component({
   selector: 'app-poll-vote',

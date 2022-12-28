@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of} from 'rxjs';
-import { pair, PairForm } from '../types';
+import { pair, PairForm } from '../../types';
 
 @Injectable({
   providedIn: 'root'

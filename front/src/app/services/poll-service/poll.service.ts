@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of} from 'rxjs';
-import { poll, PollForm } from '../types';
+import { poll, PollForm } from '../../types';
 
 @Injectable({
   providedIn: 'root'

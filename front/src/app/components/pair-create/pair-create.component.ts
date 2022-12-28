@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GameForm, PairForm } from '../types';
+import { GameForm, PairForm } from '../../types';
 
 @Component({
   selector: 'app-pair-create',

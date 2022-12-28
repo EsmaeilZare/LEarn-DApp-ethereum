@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { delay, Observable, of} from 'rxjs';
-import { game, GameForm } from '../types';
+import { game, GameForm } from '../../types';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms' ;
-import { GameForm } from '../types';
+import { GameForm } from '../../types';
 
 @Component({
   selector: 'app-game-create',
@@ -22,7 +22,7 @@ export class GameCreateComponent {
 
   submitForm() {
     const formData: GameForm = {
-      words: [], // this should be drived from the pair create components 
+      words: [], // this should be drived from the pair create components
       meanings: [],
       thumbnail: this.gameForm.get("thumbnail").value,
     };
