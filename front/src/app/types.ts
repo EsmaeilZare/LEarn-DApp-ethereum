@@ -43,3 +43,11 @@ export interface Voter {
   id: string; // id of the voter, in practice the hash
   voted: number[]; // id of the polls that the voter has voted for e.g [21]
 }
+
+export interface Task {
+  id?: number;
+  text: string;
+  day: string;
+  reminder: boolean;
+}
+

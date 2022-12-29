@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { PollCreateComponent } from './components/poll-create/poll-create.component';
@@ -13,6 +15,9 @@ import { GameCreateComponent } from './components/game-create/game-create.compon
 import { PairCreateComponent } from './components/pair-create/pair-create.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ButtonComponent } from './components/button/button.component';
+import { PairsComponent } from './components/pairs/pairs.component';
+import { GameComponent } from './components/game/game.component';
+import { ShowPairsComponent } from './components/show-pairs/show-pairs.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +29,11 @@ import { ButtonComponent } from './components/button/button.component';
     PairCreateComponent,
     HeaderComponent,
     ButtonComponent,
+    PairsComponent,
+    GameComponent,
+    ShowPairsComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [PollService, GameService, PairService],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { PollService } from './services/poll-service/poll.service';
 import { GameService } from './services/game-service/game.service';
 import { GameForm, PairForm, poll, PollForm, PollVote } from './types';

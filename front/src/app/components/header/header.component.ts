@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { UiService } from '../../services/ui.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   title : string = "Blockchain Game"
   showAddTask: boolean = false;
   subscription: Subscription;
+  @Output() taskos: boolean = this.showAddTask
 
 
   constructor(private uiService: UiService, private router: Router) {

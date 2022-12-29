@@ -1,6 +1,8 @@
 <div class="container">
   <app-header></app-header>
-  <app-game-create *ngIf="showAddTask"></app-game-create>
+  <!-- <app-game-create *ngIf="showAddTask"></app-game-create> -->
+  <app-game *ngIf="showAddTask"></app-game>
+  <!-- <app-pairs *ngIf="showAddTask"></app-pairs> -->
   <!-- <p>{{showAddTask}}</p> -->
 </div>
 <!-- <nav class="navbar navbar-light bg-light">
@@ -15,7 +17,7 @@
   </p>
 </section> -->
 
-<app-game-create *ngIf="showForm" (gameCreated)="handleGameCreate($event)"></app-game-create>
+<!-- <app-game-create *ngIf="showForm" (gameCreated)="handleGameCreate($event)"></app-game-create> -->
 <!-- <app-pair-create *ngIf="showForm" (pairCreated)="handlePairCreate($event)"></app-pair-create> -->
 
 
