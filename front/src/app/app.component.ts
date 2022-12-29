@@ -3,6 +3,9 @@ import { PollService } from './services/poll-service/poll.service';
 import { GameService } from './services/game-service/game.service';
 import { GameForm, PairForm, poll, PollForm, PollVote } from './types';
 import { PairService } from './services/pair-service/pair.service';
+import { UiService } from './services/ui.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -15,10 +18,17 @@ export class AppComponent {
 
   polls = this.ps.getPolls()
   games = this.gs.getGames()
+  showAddTask: boolean = false;
+  subscription: Subscription;
 
-  constructor(private ps: PollService, private gs: GameService, private pa:PairService) {
 
+  constructor(private ps: PollService, private gs: GameService, private pa:PairService, private uiService:UiService) {
+    this.subscription = this.uiService
+      .onToggle()
+      .subscribe((value) => (this.showAddTask = value));
   }
+
+
 
   setActivePoll(poll: poll) { // nobooghe khodam error midad
     this.activePoll = null as any; // nobooghe khodam error midad

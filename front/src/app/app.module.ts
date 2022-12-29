@@ -11,6 +11,8 @@ import { GameService } from './services/game-service/game.service';
 import { PairService } from './services/pair-service/pair.service';
 import { GameCreateComponent } from './components/game-create/game-create.component';
 import { PairCreateComponent } from './components/pair-create/pair-create.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { PairCreateComponent } from './components/pair-create/pair-create.compon
     PollVoteComponent,
     GameCreateComponent,
     PairCreateComponent,
+    HeaderComponent,
+    ButtonComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule],
   providers: [PollService, GameService, PairService],

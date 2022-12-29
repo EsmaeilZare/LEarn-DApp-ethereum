@@ -1,4 +1,9 @@
-<nav class="navbar navbar-light bg-light">
+<div class="container">
+  <app-header></app-header>
+  <app-game-create *ngIf="showAddTask"></app-game-create>
+  <!-- <p>{{showAddTask}}</p> -->
+</div>
+<!-- <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand mr-auto" href="#">Blockchain Polls</a>
   <button type="button" class="btn btn-secondary" (click)="showForm = !showForm">Create Quiz</button>
 </nav>
@@ -8,10 +13,13 @@
   <p class="lead text-muted">
     Powered By Blockchain
   </p>
-</section>
+</section> -->
+
 <app-game-create *ngIf="showForm" (gameCreated)="handleGameCreate($event)"></app-game-create>
 <!-- <app-pair-create *ngIf="showForm" (pairCreated)="handlePairCreate($event)"></app-pair-create> -->
-<div class="d-flex">
+
+
+<!-- <div class="d-flex">
   <div class="container poll-list">
     <app-poll *ngFor="let poll of polls | async" [question]="poll.question" [voted]="poll.voted" [votes]="poll.results"
       [pollImage]="poll.thumbnail" (click)="setActivePoll(poll)">
@@ -22,4 +30,4 @@
       [options]="activePoll.options" [results]="activePoll.results" (pollVoted)="handlePollVote($event)">
     </app-poll-vote>
   </div>
-</div>
+</div> -->
