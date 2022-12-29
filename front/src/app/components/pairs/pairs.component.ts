@@ -3,7 +3,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/services/ui.service';
-import { Task } from '../../types';
+import { Pair } from '../../types';
 
 @Component({
   selector: 'app-pairs',
@@ -11,10 +11,9 @@ import { Task } from '../../types';
   styleUrls: ['./pairs.component.scss']
 })
 export class PairsComponent implements OnInit{
-  @Output() onAddTask: EventEmitter<Task> = new EventEmitter();
-  text: string;
-  day: string;
-  reminder: boolean = false;
+  @Output() onAddPair: EventEmitter<Pair> = new EventEmitter();
+  word: string;
+  meaning: string;
   showAddTask: boolean;
   subscription: Subscription;
 
@@ -32,21 +31,19 @@ export class PairsComponent implements OnInit{
     }
 
   onSubmit() {
-    if (!this.text) {
+    if (!this.word) {
       alert('Please add a task!');
       return;
     }
 
-    const newTask: Task = {
-      text: this.text,
-      day: this.day,
-      reminder: this.reminder,
+    const newPair: Pair = {
+      word: this.word,
+      meaning: this.meaning,
     };
 
-    this.onAddTask.emit(newTask);
+    this.onAddPair.emit(newPair);
 
-    this.text = '';
-    this.day = '';
-    this.reminder = false;
+    this.word = '';
+    this.meaning = '';
   }
 }

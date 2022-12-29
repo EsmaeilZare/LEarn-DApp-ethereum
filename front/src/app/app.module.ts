@@ -10,7 +10,6 @@ import { PollComponent } from './components/poll/poll.component';
 import { PollVoteComponent } from './components/poll-vote/poll-vote.component';
 import { PollService } from './services/poll-service/poll.service';
 import { GameService } from './services/game-service/game.service';
-import { PairService } from './services/pair-service/pair.service';
 import { GameCreateComponent } from './components/game-create/game-create.component';
 import { PairCreateComponent } from './components/pair-create/pair-create.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -34,7 +33,7 @@ import { ShowPairsComponent } from './components/show-pairs/show-pairs.component
     ShowPairsComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [PollService, GameService, PairService],
+  providers: [PollService, GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

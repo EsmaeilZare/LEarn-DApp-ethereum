@@ -2,7 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { PollService } from './services/poll-service/poll.service';
 import { GameService } from './services/game-service/game.service';
 import { GameForm, PairForm, poll, PollForm, PollVote } from './types';
-import { PairService } from './services/pair-service/pair.service';
+// import { PairService } from './services/pair-service/pair.service';
 import { UiService } from './services/ui.service';
 import { Subscription } from 'rxjs';
 
@@ -22,7 +22,7 @@ export class AppComponent {
   subscription: Subscription;
 
 
-  constructor(private ps: PollService, private gs: GameService, private pa:PairService, private uiService:UiService) {
+  constructor(private ps: PollService, private gs: GameService, private uiService:UiService) {
     this.subscription = this.uiService
       .onToggle()
       .subscribe((value) => (this.showAddTask = value));
@@ -44,10 +44,6 @@ export class AppComponent {
 
   handleGameCreate(game: GameForm) {
     this.gs.createGame(game);
-  }
-
-  handlePairCreate(pair: PairForm) {
-    this.pa.createPair(pair)
   }
 
   handlePollVote(pollVoted: PollVote) {

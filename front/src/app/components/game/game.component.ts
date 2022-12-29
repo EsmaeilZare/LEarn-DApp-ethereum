@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { TaskService } from 'src/app/services/task.service';
-import { Task } from '../../types';
+import { PairService } from 'src/app/services/pair.service';
+import { Pair } from '../../types';
 
 @Component({
   selector: 'app-game',
@@ -8,29 +8,24 @@ import { Task } from '../../types';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent {
-  tasks: Task[] = [];
+  pairs: Pair[] = [];
 
-  constructor(private taskService: TaskService) {}
+  constructor(private pairService: PairService) {}
 
   ngOnInit(): void {
-    // this.taskService.getTasks().subscribe((tasks) => (this.tasks = tasks));
+    // this.pairService.getPairs().subscribe((pairs) => (this.pairs = pairs));
   }
 
-  deleteTask(task: Task) {
-    this.taskService
-      .deleteTask(task)
+  deleteTask(pair: Pair) {
+    this.pairService
+      .deletePair(pair)
       .subscribe(
-        () => (this.tasks = this.tasks.filter((t) => t.id !== task.id))
+        () => (this.pairs = this.pairs.filter((t) => t.id !== pair.id))
       );
   }
 
-  toggleReminder(task: Task) {
-    task.reminder = !task.reminder;
-    this.taskService.updateTaskReminder(task).subscribe();
-  }
-
-  addTask(task: Task) {
-    console.log("KIRE KHAR:", task);
-    // this.taskService.addTask(task).subscribe((task) => this.tasks.push(task));
+  addPair(pair: Pair) {
+    console.log("KIRE KHAR:", pair);
+    // this.pairService.addPair(pair).subscribe((pair) => this.pairs.push(pair));
   }
 }

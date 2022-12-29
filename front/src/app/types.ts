@@ -12,10 +12,10 @@ export interface game extends GameForm {
   winnersCount?: number; // added ? to make it optional to remove the error from delay part in game service
 }
 
-export interface pair {
-  id: number;
-  wmpair: string[];
-}
+// export interface pair {
+//   id: number;
+//   wmpair: string[];
+// }
 
 export interface PollForm {
   question: string; // The question of the poll, like what's your favorite animal ?
@@ -44,10 +44,16 @@ export interface Voter {
   voted: number[]; // id of the polls that the voter has voted for e.g [21]
 }
 
-export interface Task {
-  id?: number;
-  text: string;
-  day: string;
-  reminder: boolean;
-}
+// export interface Task {
+//   id?: number;
+//   text: string;
+//   day: string;
+//   reminder: boolean;
+// }
+
+  export interface Pair {
+    id?: number;
+    word: string;
+    meaning: string;
+  }
 
