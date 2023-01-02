@@ -1,10 +1,21 @@
-<div class="container">
-  <app-header></app-header>
-  <!-- <app-game-create *ngIf="showAddTask"></app-game-create> -->
-  <app-game *ngIf="showAddTask"></app-game>
-  <!-- <app-pairs *ngIf="showAddTask"></app-pairs> -->
-  <!-- <p>{{showAddTask}}</p> -->
+<div class="div-main"> <!-- Dive Koli -->
+  <div class="div-top">
+      <app-header></app-header>
+  </div>
+  <div class="div-bottom row">
+    <div class="div-left col-4 container">
+    </div>
+    <div class="div-right col-8 container">
+      <div>
+        <!-- <app-game-create *ngIf="showAddTask"></app-game-create> -->
+        <app-game *ngIf="showAddTask"></app-game>
+        <!-- <app-pairs *ngIf="showAddTask"></app-pairs> -->
+        <!-- <p>{{showAddTask}}</p> -->
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand mr-auto" href="#">Blockchain Polls</a>
   <button type="button" class="btn btn-secondary" (click)="showForm = !showForm">Create Quiz</button>

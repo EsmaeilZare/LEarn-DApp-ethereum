@@ -1,1 +1,11 @@
-<app-pairs (onAddPair)="addPair($event)"></app-pairs>
+<div  class="w-50 text-center mx-auto mh-100">
+  <app-pairs (onAddPair)="addPair($event)"></app-pairs>
+  <!-- <app-show-pairs *ngFor="let word of words" [word]="word"></app-show-pairs> -->
+  <app-show-pairs></app-show-pairs>
+  <app-button
+  (btnClick)="createGame()"
+  text="Create Game"
+  color="Green"
+  ></app-button>
+  <!-- <p *ngFor="let word of words">{{word}}</p> -->
+</div>

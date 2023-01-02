@@ -1,0 +1,25 @@
+.pair {
+  background: #f4f4f4;
+  margin: 5px;
+  padding: 10px 20px;
+}
+
+// .pair div {
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+.table tr {
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  vertical-align: middle;
+
+}
+
+.table-wrapper {
+  max-height: 300px;
+  overflow: auto;
+  // display:inline-block;
+}

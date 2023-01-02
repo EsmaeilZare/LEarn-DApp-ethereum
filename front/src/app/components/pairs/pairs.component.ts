@@ -1,4 +1,5 @@
 // In component skii az add-task
+// should be renamed to create pair
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -32,7 +33,11 @@ export class PairsComponent implements OnInit{
 
   onSubmit() {
     if (!this.word) {
-      alert('Please add a task!');
+      alert('Please add a word');
+      return;
+    }
+    if (!this.meaning) {
+      alert('Please add a meaning!');
       return;
     }
 

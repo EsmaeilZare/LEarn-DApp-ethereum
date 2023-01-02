@@ -1,23 +1,33 @@
-<form class="add-form" (ngSubmit)="onSubmit()">
-  <div class="form-control">
-    <label for="text">Word</label>
+<!-- <form class="add-form" (ngSubmit)="onSubmit()"> -->
+<form>
+  <div class="form-floating">
     <input
       type="text"
       name="word"
       [(ngModel)]="word"
       id="word"
       placeholder="Add word"
+      class="form-control"
     />
+    <label for="word">Word</label>
+
   </div>
-  <div class="form-control">
-    <label for="meaning">Meaning</label>
+  <div class="form-floating">
     <input
+    class="form-control"
       type="text"
       name="meaning"
       [(ngModel)]="meaning"
       id="meaning"
       placeholder="Add Meaning"
     />
+    <label for="meaning">Meaning</label>
+
   </div>
-  <input type="submit" value="Save Pair" class="btn btn-block" />
+  <!-- <input type="submit" value="Save Pair" class="btn btn-block" /> -->
+  <app-button
+  color="pink"
+  text="Save Pair"
+  (btnClick)="onSubmit()"
+></app-button>
 </form>
