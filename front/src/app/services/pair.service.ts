@@ -53,7 +53,10 @@ export class PairService {
   addPair(pair: Pair) {
     // console.log("Omad Too addPair");
     // return this.http.post<Pair>(this.apiUrl, pair, httpOptions);
-
+    if (this.words.map(word => word.toLowerCase()).includes(pair.word.toLowerCase())) {
+      alert('Word already exists');
+      return;
+    }
     this.words.push(pair.word); //Inja mese koskhola daram instance khode in service az words ro angool mikonam na ooni ke too data.ts e
     this.meanings.push(pair.meaning);
     console.log("This Words:", this.words, "This Meanings:", this.meanings);

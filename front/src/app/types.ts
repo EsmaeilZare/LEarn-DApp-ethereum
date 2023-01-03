@@ -7,7 +7,7 @@ export interface poll extends PollForm {
 export interface game extends GameForm {
   id?: number;
   createdByMe?: boolean; // added ? to make it optional to remove the error from delay part in game service
-  purchased: boolean;
+  purchased?: boolean;
   nextLevel?: number; // added ? to make it optional to remove the error from delay part in game service
   winnersCount?: number; // added ? to make it optional to remove the error from delay part in game service
 }

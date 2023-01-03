@@ -18,6 +18,13 @@
 
 }
 
+.table th {
+    position: sticky;
+    top: 0px;  /* 0px if you don't have a navbar, but something is required */
+    background: fade-out($color: #f4f4f4, $amount: 0.25);
+
+}
+
 .table-wrapper {
   max-height: 300px;
   overflow: auto;
