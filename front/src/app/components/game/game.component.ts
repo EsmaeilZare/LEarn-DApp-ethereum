@@ -5,24 +5,27 @@ import { Component } from '@angular/core';
 import { PairService } from 'src/app/services/pair.service';
 import { Pair } from '../../types';
 import { words, meanings } from 'src/app/data';
-import { game } from '../../types';
 import { GameForm } from '../../types';
-import { GameService } from 'src/app/services/game-service/game.service';
+import { GameService } from 'src/app/services/game.service';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
 })
 export class GameComponent {
-  purchased : boolean = false;
+  purchased: boolean = false;
 
   // pairs: Pair[] = [];
   words: string[] = words;
   meanings: string[] = meanings;
-  thumbnail: string = "https://d35aaqx5ub95lt.cloudfront.net/images/f2a2e608c854822ad2563a09595e7827.png"
+  thumbnail: string =
+    'https://d35aaqx5ub95lt.cloudfront.net/images/f2a2e608c854822ad2563a09595e7827.png';
 
-  constructor(private pairService: PairService, private gameService: GameService) {}
+  constructor(
+    private pairService: PairService,
+    private gameService: GameService
+  ) {}
 
   ngOnInit(): void {
     // this.pairService.getPairs().subscribe((pairs) => (this.pairs = pairs));
@@ -38,7 +41,7 @@ export class GameComponent {
 
   addPair(pair: Pair) {
     // console.log("KIRE KHAR:", pair);
-    this.pairService.addPair(pair)
+    this.pairService.addPair(pair);
     // this.pairService.addPair(pair).subscribe((pair) => this.pairs.push(pair));
   }
 
@@ -49,22 +52,20 @@ export class GameComponent {
     // }
 
     const newGame: GameForm = {
-      words : this.words, // Inja mese koskhola daram instance khode in component az words ro angool mikonam na ooni ke too data.ts e
-      meanings : this.meanings, // eyzan
+      words: this.words, // Inja mese koskhola daram instance khode in component az words ro angool mikonam na ooni ke too data.ts e
+      meanings: this.meanings, // eyzan
       thumbnail: this.thumbnail,
-    }
+    };
     // console.log("Game Created\n","Words:", words, "\n", "Meanings:", meanings)
-    console.log("SHOD", newGame)
+    console.log('SHOD', newGame);
     this.gameService.createGame(newGame);
-    console.log("Mohaghagh shod");
+    console.log('Mohaghagh shod');
 
     // inja yahtamel bayad ye eventemitter gozasht ke newGame ro emit kone
 
     this.purchased = false;
     this.words = []; // Inja am darim instance e words e too in component ro clear mikonim
     this.meanings = [];
-    this.thumbnail = "";
-
-
+    this.thumbnail = '';
   }
 }
