@@ -18,6 +18,7 @@ export class AppComponent {
   player = this.ps.getPlayer();
   games = this.gs.getGames();
   showAddTask: boolean = false;
+  isRegistered: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -47,6 +48,15 @@ export class AppComponent {
 
   handleGameCreate(game: GameForm) {
     this.gs.createGame(game);
+  }
+
+  handleRegister() {
+    try {
+      this.ps.register();
+      this.isRegistered = true;
+    } catch (error) {
+      console.log('could not register to the game!');
+    }
   }
 
   // handlePollVote(pollVoted: PollVote) {

@@ -13,6 +13,7 @@ export class Web3Service {
   private web3: Web3;
   private contract: Contract;
   private contractAddress = '0xe061D53A4727670083e77a5956077e04248a64E1';
+  private account: string = null;
 
   constructor(private zone: NgZone) {
     if (window.web3) {
@@ -28,21 +29,29 @@ export class Web3Service {
     }
   }
 
-  getAccount(): Promise<string> {
-    return this.web3.eth.getAccounts().then((accounts) => accounts[0] || '');
+  async onInit(): Promise<void> {
+    await window.ethereum.enable();
+    const accounts = await window.ethereum.request({
+      method: 'eth_requestAccounts',
+    });
+    const acc = accounts[0];
+    this.account = Web3.utils.toChecksumAddress(acc);
   }
 
-  // getAccount(): string {
-  //   return this.account;
-  // }
+  getAccount(): string {
+    if (this.account == null) {
+      this.onInit();
+    }
+    return this.account;
+  }
 
   async executeTransaction(fnName: string, ...args: any[]): Promise<void> {
-    const acc = await this.getAccount();
+    const acc = this.getAccount();
     this.contract.methods[fnName](...args).send({ from: acc });
   }
 
   async call(fnName: string, ...args: any[]) {
-    const acc = await this.getAccount();
+    const acc = this.getAccount();
     return this.contract.methods[fnName](...args).call({ from: acc });
   }
 

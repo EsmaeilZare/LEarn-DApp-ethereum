@@ -1,47 +1,26 @@
 <div class="div-main container"> <!-- Dive Koli -->
   <div class="div-top row container">
-      <app-header></app-header>
+    <app-header></app-header>
   </div>
+
   <div class="div-bottom row container">
-    <div class="div-left col-4 container">
-      <app-show-games></app-show-games>
+    <div *ngIf="!isRegistered">
+      <button [ngStyle]="{ 'background-color': 'blue' }" class="btn" (click)="handleRegister()">
+        Join the Game
+      </button>
     </div>
-    <div class="div-right col-8 container">
-      <div>
-        <!-- <app-game-create *ngIf="showAddTask"></app-game-create> -->
-        <app-game *ngIf="showAddTask"></app-game>
-        <!-- <app-pairs *ngIf="showAddTask"></app-pairs> -->
-        <!-- <p>{{showAddTask}}</p> -->
+    <div *ngIf="isRegistered">
+      <div class="div-left col-4 container">
+        <app-show-games></app-show-games>
+      </div>
+      <div class="div-right col-8 container">
+        <div>
+          <!-- <app-game-create *ngIf="showAddTask"></app-game-create> -->
+          <app-game *ngIf="showAddTask"></app-game>
+          <!-- <app-pairs *ngIf="showAddTask"></app-pairs> -->
+          <!-- <p>{{showAddTask}}</p> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand mr-auto" href="#">Blockchain Polls</a>
-  <button type="button" class="btn btn-secondary" (click)="showForm = !showForm">Create Quiz</button>
-</nav>
-
-<section class="jumbotron bg-light text-center">
-  <h1>Polls Rethinked</h1>
-  <p class="lead text-muted">
-    Powered By Blockchain
-  </p>
-</section> -->
-
-<!-- <app-game-create *ngIf="showForm" (gameCreated)="handleGameCreate($event)"></app-game-create> -->
-<!-- <app-pair-create *ngIf="showForm" (pairCreated)="handlePairCreate($event)"></app-pair-create> -->
-
-
-<!-- <div class="d-flex">
-  <div class="container poll-list">
-    <app-poll *ngFor="let poll of polls | async" [question]="poll.question" [voted]="poll.voted" [votes]="poll.results"
-      [pollImage]="poll.thumbnail" (click)="setActivePoll(poll)">
-    </app-poll>
-  </div>
-  <div class="container poll-detail">
-    <app-poll-vote *ngIf="activePoll" [id]="activePoll.id" [voted]="activePoll.voted" [question]="activePoll.question"
-      [options]="activePoll.options" [results]="activePoll.results" (pollVoted)="handlePollVote($event)">
-    </app-poll-vote>
-  </div>
-</div> -->
