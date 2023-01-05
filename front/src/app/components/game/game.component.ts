@@ -1,3 +1,6 @@
+// should be renamed to create-game
+
+
 import { Component } from '@angular/core';
 import { PairService } from 'src/app/services/pair.service';
 import { Pair } from '../../types';
