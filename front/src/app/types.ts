@@ -9,6 +9,8 @@ export interface Game extends GameForm {
 export interface GameForm {
   words: string[];
   meanings: string[];
+  title: string;
+  description: string;
   thumbnail: string;
 }
 

@@ -14,7 +14,7 @@ contract GameContract {
         uint256 id;
         bytes32[] words;
         bytes32[] meanings;
-        string thumbnails;
+        string[3] details; // guide: 0 ==> title, 1 ==> description, 2 ==> thumbnails
         address creator;
         uint256 winnersCount;
     }
@@ -31,9 +31,12 @@ contract GameContract {
     Game[] games;
     mapping(address => Player) private players;
 
+    event PlayerRegistered(address _playerId);
     event GameCreated(uint256 _gameId);
+    event GamePurchased(uint256 _gameId, address _playerId);
+    event GameLevelCleared(uint256 _gameId, address _playerId, uint8 _nextLevel);
 
-    
+
     modifier validateGameId(uint256 _gameId){
         require(_gameId >=0 && _gameId < games.length, "Game Not Found!");
         _;
@@ -53,16 +56,18 @@ contract GameContract {
         require(msg.sender != games[_gameId].creator, "Unathourized action on this game!");
         _;
     }
-    
-    
+
+
     function registerPlayer() external payable {
         require(players[msg.sender].isRegistered == false, "This user has already been registered!");
-        
+
         players[msg.sender].isRegistered = true;
         players[msg.sender].credit = INITIAL_CREDIT;
+
+        emit PlayerRegistered(msg.sender);
     }
-    
-    
+
+
     function getPlayer() external view authenticatePlayer(msg.sender) returns(address, uint256, uint256[] memory, uint256[] memory, uint8[] memory){
         uint256 purchasedGamesCount = players[msg.sender].purchasedGames.length;
         uint8[] memory purchasedGamesNextLevel = new uint8[](purchasedGamesCount);
@@ -81,39 +86,39 @@ contract GameContract {
             purchasedGamesNextLevel
         );
     }
-    
+
 
     // example of byte32 => "0x0000000000000000000000000000000000000000000000000000006d6168616d"
-    // above function input example: ["0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d"],["0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d"],"thumb"
+    // above function input example: ["0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d"],["0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d","0x0000000000000000000000000000000000000000000000000000006d6168616d"],["game1", "this game is good", "https://images.app.goo.gl/gH2ksczK8hqhVUweA"]
 
-    function createGame(bytes32[] memory _words, bytes32[] memory _meanings, string memory _thumb) public payable authenticatePlayer(msg.sender) checkCredit(GAME_CREATION_FEE) {
+    function createGame(bytes32[] memory _words, bytes32[] memory _meanings, string[3] memory _details) public payable authenticatePlayer(msg.sender) checkCredit(GAME_CREATION_FEE) {
         require(_words.length <= 100 && _words.length >= 10, "Each word game should have at least 10 and at most 100 words");
         require(_words.length == _meanings.length, "size of words and their meanings are not the same!");
-        
+
         uint256 gameId = games.length;
         Game memory newGame = Game({
             id: gameId,
             words: _words,
             meanings: _meanings,
-            thumbnails: _thumb,
+            details: _details,
             creator: msg.sender,
             winnersCount: 0
         });
         games.push(newGame);
 
         players[msg.sender].createdGames.push(gameId);
-        players[msg.sender].nextLevelMap[gameId] = CREATOR_NEXT_LEVEL; 
+        players[msg.sender].nextLevelMap[gameId] = CREATOR_NEXT_LEVEL;
         players[msg.sender].credit -= GAME_CREATION_FEE;
 
         emit GameCreated(gameId);
     }
 
-    function getGame(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) returns(uint256, bytes32[] memory, bytes32[] memory, string memory, uint256, uint8){
+    function getGame(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) returns(uint256, bytes32[] memory, bytes32[] memory, string[3] memory, uint256, uint8){
         return (
             games[_gameId].id,
             games[_gameId].words,
             games[_gameId].meanings,
-            games[_gameId].thumbnails,
+            games[_gameId].details,
             games[_gameId].winnersCount,
             players[msg.sender].nextLevelMap[_gameId]
         );
@@ -125,12 +130,14 @@ contract GameContract {
         players[msg.sender].purchasedGames.push(_gameId);
         players[msg.sender].nextLevelMap[_gameId] = 1;
         players[msg.sender].credit -= GAME_PURCHASE_FEE;
+
+        emit GamePurchased(_gameId, msg.sender);
     }
 
     // should we charge player if result of play was not successful?
     function play(uint256 _gameId, bool success) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) checkCreator(_gameId){
         require(players[msg.sender].nextLevelMap[_gameId] > 0, "This player did not purchase this game!");
-        require(players[msg.sender].nextLevelMap[_gameId] <= MAX_LEVEL, "This player has already completed this game!"); 
+        require(players[msg.sender].nextLevelMap[_gameId] <= MAX_LEVEL, "This player has already completed this game!");
 
         if (success){
             players[msg.sender].credit += (players[msg.sender].nextLevelMap[_gameId]) * GAME_BASE_REWARD;
@@ -140,6 +147,7 @@ contract GameContract {
                 games[_gameId].winnersCount += 1;
                 players[games[_gameId].creator].credit += MAX_LEVEL * GAME_BASE_REWARD;
             }
+            emit GameLevelCleared(_gameId, msg.sender, players[msg.sender].nextLevelMap[_gameId]);
         }
     }
 
