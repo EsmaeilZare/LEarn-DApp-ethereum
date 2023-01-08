@@ -30,7 +30,7 @@ export class GameService {
       'createGame',
       gameForm.words.map((word) => this.web3.stringToBytes(word)),
       gameForm.meanings.map((meaning) => this.web3.stringToBytes(meaning)),
-      gameForm.thumbnail || ''
+      [gameForm.title, gameForm.description || '', gameForm.thumbnail || '']
     );
   }
 
@@ -41,7 +41,9 @@ export class GameService {
       meanings: rawGame[2].map((meaning: string) =>
         this.web3.bytesToString(meaning)
       ),
-      thumbnail: rawGame[3],
+      title: rawGame[3][0],
+      description: rawGame[3][1],
+      thumbnail: rawGame[3][2],
       winnersCount: rawGame[4],
       createdByMe: rawGame[5] == 255 ? true : false,
       purchased: 0 < rawGame[5] && rawGame[5] < 255 ? true : false,
