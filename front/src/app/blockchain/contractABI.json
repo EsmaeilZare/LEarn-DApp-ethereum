@@ -1,5 +1,28 @@
 [
 	{
+		"inputs": [
+			{
+				"internalType": "bytes32[]",
+				"name": "_words",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "bytes32[]",
+				"name": "_meanings",
+				"type": "bytes32[]"
+			},
+			{
+				"internalType": "string[3]",
+				"name": "_details",
+				"type": "string[3]"
+			}
+		],
+		"name": "createGame",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -57,6 +80,24 @@
 		"type": "event"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_gameId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"name": "play",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -72,22 +113,19 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bytes32[]",
-				"name": "_words",
-				"type": "bytes32[]"
-			},
-			{
-				"internalType": "bytes32[]",
-				"name": "_meanings",
-				"type": "bytes32[]"
-			},
-			{
-				"internalType": "string[3]",
-				"name": "_details",
-				"type": "string[3]"
+				"internalType": "uint256",
+				"name": "_gameId",
+				"type": "uint256"
 			}
 		],
-		"name": "createGame",
+		"name": "purchase",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "registerPlayer",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -180,44 +218,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_gameId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"name": "play",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_gameId",
-				"type": "uint256"
-			}
-		],
-		"name": "purchase",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "registerPlayer",
-		"outputs": [],
-		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

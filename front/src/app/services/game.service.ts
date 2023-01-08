@@ -11,13 +11,18 @@ export class GameService {
   async getGames(): Promise<Game[]> {
     // Using observable type to get as close to the real blockchain included situation as possible
     const games: Game[] = [];
+    console.log("KIRE KHARI SHOD 1");
     const totalGamesCount = await this.web3.call('getTotalGames');
+    console.log("KIRE KHARI SHOD 2:", totalGamesCount);
 
     for (let gameId = 0; gameId < totalGamesCount; gameId++) {
+      console.log("Kir too in dars:", gameId)
       const rawGame = await this.web3.call('getGame', gameId);
+      console.log("Kir too ")
       games.push(this.parseGame(rawGame));
     }
 
+    console.log("KIRE KHARI SHOD")
     return games;
   }
 

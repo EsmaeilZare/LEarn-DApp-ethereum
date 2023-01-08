@@ -21,14 +21,14 @@ export class GameCreateComponent {
     });
   }
 
-  submitForm() {
-    const formData: GameForm = {
-      words: [], // this should be drived from the pair create components
-      meanings: [],
-      thumbnail: this.gameForm.get("thumbnail").value,
-    };
+  // submitForm() {
+  //   const formData: GameForm = {
+  //     words: [], // this should be drived from the pair create components
+  //     meanings: [],
+  //     thumbnail: this.gameForm.get("thumbnail").value,
+  //   };
 
-    this.gameCreated.emit(formData);
-  }
+  //   this.gameCreated.emit(formData);
+  // }
 
 }

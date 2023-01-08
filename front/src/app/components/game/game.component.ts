@@ -19,8 +19,11 @@ export class GameComponent {
   // pairs: Pair[] = [];
   words: string[] = words;
   meanings: string[] = meanings;
-  thumbnail: string =
-    'https://d35aaqx5ub95lt.cloudfront.net/images/f2a2e608c854822ad2563a09595e7827.png';
+  // thumbnail: string =
+  //   'https://d35aaqx5ub95lt.cloudfront.net/images/f2a2e608c854822ad2563a09595e7827.png';
+  title: string;
+  thumbnail: string;
+  description: string;
 
   constructor(
     private pairService: PairService,
@@ -54,7 +57,9 @@ export class GameComponent {
     const newGame: GameForm = {
       words: this.words, // Inja mese koskhola daram instance khode in component az words ro angool mikonam na ooni ke too data.ts e
       meanings: this.meanings, // eyzan
+      title: this.title,
       thumbnail: this.thumbnail,
+      description: this.description
     };
     // console.log("Game Created\n","Words:", words, "\n", "Meanings:", meanings)
     console.log('SHOD', newGame);
