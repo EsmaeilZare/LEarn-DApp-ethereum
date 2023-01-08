@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Observable } from 'rxjs';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import { environment } from 'src/environments/environment';
 
 const contractAbi = require('./contractABI.json');
 declare var window: any;
@@ -12,7 +13,7 @@ declare var window: any;
 export class Web3Service {
   private web3: Web3;
   private contract: Contract;
-  private contractAddress = '0xe061D53A4727670083e77a5956077e04248a64E1';
+  private contractAddress = environment.CONTRACT_ADDRESS;
   private account: string = null;
 
   constructor(private zone: NgZone) {
