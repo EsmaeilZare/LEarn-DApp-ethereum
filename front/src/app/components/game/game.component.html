@@ -1,7 +1,24 @@
-<div  class="w-50 text-center mx-auto mh-100">
+<div  class="w-75 text-center mx-auto mh-100">
   <app-pairs (onAddPair)="addPair($event)"></app-pairs>
   <!-- <app-show-pairs *ngFor="let word of words" [word]="word"></app-show-pairs> -->
   <app-show-pairs></app-show-pairs>
+  <form>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Title">
+      <label for="floatingInput">Title</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Thumbnail">
+      <label for="floatingInput">Thumbnail</label>
+    </div>
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Description" id="floatingTextarea2" aria-describedby="DescriptionHelp" style="height: 100px"></textarea>
+      <label for="floatingTextarea2">Description</label>
+      <!-- <div id="DescriptionHelp" class="form-text" style="margin-left: 0; padding-left: 0;">
+        Enter a short description for your game
+      </div> -->
+    </div>
+  </form>
   <app-button
   (btnClick)="createGame()"
   text="Create Game"
