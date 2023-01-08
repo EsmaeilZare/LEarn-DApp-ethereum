@@ -1,3 +1,4 @@
+// IN COMPONENT KOSSHER MAHZE
 import { Component, EventEmitter, Output } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms' ;
 import { GameForm } from '../../types';

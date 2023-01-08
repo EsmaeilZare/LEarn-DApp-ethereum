@@ -14,6 +14,7 @@ import { PairsComponent } from './components/pairs/pairs.component';
 import { GameComponent } from './components/game/game.component';
 import { ShowPairsComponent } from './components/show-pairs/show-pairs.component';
 import { ShowGamesComponent } from './components/show-games/show-games.component';
+import { PlayGameComponent } from './components/play-game/play-game.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ShowGamesComponent } from './components/show-games/show-games.component
     GameComponent,
     ShowPairsComponent,
     ShowGamesComponent,
+    PlayGameComponent,
   ],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [PlayerService, GameService],
