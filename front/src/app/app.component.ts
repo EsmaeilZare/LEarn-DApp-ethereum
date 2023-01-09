@@ -2,8 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { GameService } from './services/game.service';
 import { PlayerService } from './services/player.service';
 import { UiService } from './services/ui.service';
-import { GameForm } from './types';
-// import { PairService } from './services/pair-service/pair.service';
+import { Game, GameForm, Player } from './types';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,10 +14,10 @@ export class AppComponent {
   showForm = false;
   // activePoll: poll = null as any; // nobooghe khodam error midad
 
-  player = this.ps.getPlayer();
-  games = this.gs.getGames();
+  player: any = null;
+  games: any = [];
   showAddTask: boolean = false;
-  isRegistered: boolean = false;
+  isRegistered: boolean = true;
   subscription: Subscription;
 
   constructor(
@@ -31,10 +30,29 @@ export class AppComponent {
       .subscribe((value) => (this.showAddTask = value));
   }
 
-  ngOnInit() {
-    this.gs.onEvent('GameCreated').subscribe(() => {
+  async ngOnInit() {
+    try {
+      this.player = this.ps.getPlayer();
       this.games = this.gs.getGames();
-    });
+
+      this.gs.onEvent('GameCreated').subscribe(() => {
+        console.log('GameCreated');
+        this.games = this.gs.getGames();
+      });
+      this.ps.onEvent('PlayerRegistered').subscribe(() => {
+        console.log('PlayerRegistered');
+        this.player = this.ps.getPlayer();
+      });
+    } catch (error: any) {
+      switch (error.message) {
+        case 'This user is not registered!':
+          this.isRegistered = false;
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 
   // setActivePoll(poll: poll) {

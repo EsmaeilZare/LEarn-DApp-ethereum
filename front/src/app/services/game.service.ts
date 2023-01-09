@@ -9,16 +9,20 @@ export class GameService {
   constructor(private web3: Web3Service) {}
 
   async getGames(): Promise<Game[]> {
-    // Using observable type to get as close to the real blockchain included situation as possible
-    const games: Game[] = [];
-    const totalGamesCount = await this.web3.call('getTotalGames');
+    try {
+      const games: Game[] = [];
+      const totalGamesCount = await this.web3.call('getTotalGames');
 
-    for (let gameId = 0; gameId < totalGamesCount; gameId++) {
-      const rawGame = await this.web3.call('getGame', gameId);
-      games.push(this.parseGame(rawGame));
+      for (let gameId = 0; gameId < totalGamesCount; gameId++) {
+        const rawGame = await this.web3.call('getGame', gameId);
+        games.push(this.parseGame(rawGame));
+      }
+
+      return games;
+    } catch (error) {
+      alert('We could not retrieve games.\n');
+      throw error;
     }
-
-    return games;
   }
 
   play(gameId: number, success: number) {
@@ -52,24 +56,6 @@ export class GameService {
   }
 
   onEvent(name: string) {
-    switch (name) {
-      case 'GameCreated': {
-        console.log('GameCreated');
-        break;
-      }
-      case 'GamePurchased': {
-        console.log('GamePurchased');
-        break;
-      }
-      case 'GameLevelCleared': {
-        console.log('GamePurchased');
-        break;
-      }
-      default: {
-        //statements;
-        break;
-      }
-    }
     return this.web3.onEvents(name);
   }
 }
