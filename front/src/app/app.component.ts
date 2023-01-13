@@ -2,7 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { GameService } from './services/game.service';
 import { PlayerService } from './services/player.service';
 import { UiService } from './services/ui.service';
-import { Game, GameForm, Player } from './types';
+import { Game, GameDetails, Player, Question } from './types';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -42,22 +42,21 @@ export class AppComponent {
       });
 
       this.gs.onEvent('GameInfoAdded').subscribe((data: any) => {
-        const gameId = Number(data.payload.gameId);
-        console.log('GameCreated with id: ', gameId);
-        this.games = this.gs.getGames();
+        const gameId = parseInt(data.payload.gameId);
+        console.log('GameInfoAdded with id: ', gameId);
+        this.games.push(this.gs.getGameInfo(gameId));
       });
 
       this.gs.onEvent('GameCreated').subscribe((data: any) => {
-        const gameId = data.payload.gameId;
-        console.log('GameCreated with id: ', gameId);
-        this.games = this.gs.getGames();
+        const gameId = parseInt(data.payload.gameId);
+        console.log('GameInfoAdded with id: ', gameId);
+        this.games.push(this.gs.getGameInfo(gameId));
       });
     } catch (error: any) {
       switch (error.message) {
         case 'This user is not registered!':
           this.isRegistered = false;
           break;
-
         default:
           break;
       }
@@ -73,11 +72,15 @@ export class AppComponent {
   //   }, 100);
   // }
 
-  handleGameCreate(game: GameForm) {
-    this.gs.createGame(game);
+  handleGameInfoCreate(_gameDetails: GameDetails) {
+    this.gs.createGameInfo(_gameDetails);
   }
 
-  handleRegister() {
+  handleGameQuestionsCreate(_gameId: number, _gameQuestions: Question[]) {
+    this.gs.createGameQusetions(_gameId, _gameQuestions);
+  }
+
+  handleRegisterPlayer() {
     try {
       this.ps.registerPlayer();
       this.isRegistered = true;

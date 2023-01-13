@@ -13,9 +13,9 @@ contract GameContract {
     struct Question {
         string context;
         string answer;
-        string wrongOption_1;
-        string wrongOption_2;
-        string wrongOption_3;
+        string wrongOption1;
+        string wrongOption2;
+        string wrongOption3;
     }
 
     struct GameDetails {
@@ -153,9 +153,9 @@ contract GameContract {
             Question storage question = game.questions[i];
             question.context = _gameQuestions[i].context;
             question.answer = _gameQuestions[i].answer;
-            question.wrongOption_1 = _gameQuestions[i].wrongOption_1;
-            question.wrongOption_2 = _gameQuestions[i].wrongOption_2;
-            question.wrongOption_3 = _gameQuestions[i].wrongOption_3;
+            question.wrongOption1 = _gameQuestions[i].wrongOption1;
+            question.wrongOption2 = _gameQuestions[i].wrongOption2;
+            question.wrongOption3 = _gameQuestions[i].wrongOption3;
 
         }
 
@@ -205,9 +205,9 @@ contract GameContract {
         for(uint8 i=0; i<uint8(game.details.numQuestions); i++){
             gameQuestions[i].context = game.questions[i].context;
             gameQuestions[i].answer = game.questions[i].answer;
-            gameQuestions[i].wrongOption_1 = game.questions[i].wrongOption_1;
-            gameQuestions[i].wrongOption_2 = game.questions[i].wrongOption_2;
-            gameQuestions[i].wrongOption_3 = game.questions[i].wrongOption_3;
+            gameQuestions[i].wrongOption1 = game.questions[i].wrongOption1;
+            gameQuestions[i].wrongOption2 = game.questions[i].wrongOption2;
+            gameQuestions[i].wrongOption3 = game.questions[i].wrongOption3;
         }
         return (game.details.numQuestions, gameQuestions);
     }

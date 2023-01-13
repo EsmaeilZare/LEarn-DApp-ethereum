@@ -28,6 +28,7 @@ export interface PlayerGameStats {
 }
 
 export interface Game {
+  id: number;
   details: GameDetails;
   stats: GameStats;
   questions: Question[];

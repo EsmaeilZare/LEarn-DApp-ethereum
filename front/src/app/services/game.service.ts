@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from 'src/app/blockchain/web3.service';
-import { Game, GameDetails } from '../types';
+import {
+  Game,
+  GameDetails,
+  GameStats,
+  Question,
+  PlayerGameStats,
+} from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -8,15 +14,39 @@ import { Game, GameDetails } from '../types';
 export class GameService {
   constructor(private web3: Web3Service) {}
 
-  createGameInfo(GameDetails: GameDetails) {
+  createGameInfo(gameDetails: GameDetails) {
     this.web3.executeTransaction(
       'createGame',
-      GameDetails.title,
-      GameDetails.description,
-      GameDetails.price,
-      GameDetails.numQuestions,
-      GameDetails.thumbnails
+      gameDetails.title,
+      gameDetails.description,
+      gameDetails.price,
+      gameDetails.numQuestions,
+      gameDetails.thumbnails
     );
+  }
+
+  createGameQusetions(_gameId: number, _gameQuestions: Question[]) {
+    const questions = [];
+    for (let i = 0; i < _gameQuestions.length; i++) {
+      questions.push([
+        _gameQuestions[i].context,
+        _gameQuestions[i].answer,
+        _gameQuestions[i].wrongOption1,
+        _gameQuestions[i].wrongOption2,
+        _gameQuestions[i].wrongOption3,
+      ]);
+    }
+    this.web3.executeTransaction('createGameQusetions', _gameId, questions);
+  }
+
+  async getGameInfo(_gameId: number): Promise<Game> {
+    try {
+      const rawGameInfo = await this.web3.call('getGameInfo', _gameId);
+      return this.parseGameInfo(_gameId, rawGameInfo);
+    } catch (error) {
+      // alert('We could not retrieve game.\n');
+      throw error;
+    }
   }
 
   async getAllGames(): Promise<Game[]> {
@@ -25,8 +55,8 @@ export class GameService {
       const totalGamesCount = await this.web3.call('getTotalGames');
 
       for (let gameId = 0; gameId < totalGamesCount; gameId++) {
-        const rawGame = await this.web3.call('getGame', gameId);
-        games.push(this.parseGame(rawGame));
+        const game = await this.getGameInfo(gameId);
+        games.push(game);
       }
 
       return games;
@@ -36,34 +66,38 @@ export class GameService {
     }
   }
 
-  async getGame(_gameId: number): Promise<Game> {
-    try {
-      const rawGame = await this.web3.call('getGame', _gameId);
-      return this.parseGame(rawGame);
-    } catch (error) {
-      // alert('We could not retrieve game.\n');
-      throw error;
-    }
-  }
-
   play(gameId: number, score: number) {
     this.web3.executeTransaction('play', gameId, score);
   }
 
-  parseGame(rawGame: any): Game {
+  parseGameInfo(_gameId: number, _rawGameInfo: any): Game {
+    const details: GameDetails = {
+      title: _rawGameInfo[0][0],
+      description: _rawGameInfo[0][1],
+      price: _rawGameInfo[0][2],
+      numQuestions: _rawGameInfo[0][3],
+      thumbnails: _rawGameInfo[0][4],
+    };
+
+    const stats: GameStats = {
+      numBuyers: parseInt(_rawGameInfo[1][0]),
+      rating: parseInt(_rawGameInfo[1][1]),
+      numRaters: parseInt(_rawGameInfo[1][2]),
+    };
+
+    const playerStats: PlayerGameStats = {
+      isCreator: _rawGameInfo[2][0],
+      isPurchased: _rawGameInfo[2][1],
+      highscore: parseInt(_rawGameInfo[2][2]),
+      rating: parseInt(_rawGameInfo[2][3]),
+    };
+
     return {
-      id: parseInt(rawGame[0]),
-      words: rawGame[1].map((word: string) => this.web3.bytesToString(word)),
-      meanings: rawGame[2].map((meaning: string) =>
-        this.web3.bytesToString(meaning)
-      ),
-      title: rawGame[3][0],
-      description: rawGame[3][1],
-      thumbnail: rawGame[3][2],
-      winnersCount: rawGame[4],
-      createdByMe: rawGame[5] == 255 ? true : false,
-      purchased: 0 < rawGame[5] && rawGame[5] < 255 ? true : false,
-      nextLevel: rawGame[5],
+      id: _gameId,
+      details: details,
+      stats: stats,
+      questions: [],
+      playerStats: playerStats,
     };
   }
 

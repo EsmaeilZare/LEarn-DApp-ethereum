@@ -142,17 +142,17 @@
           },
           {
             "internalType": "string",
-            "name": "wrongOption_1",
+            "name": "wrongOption1",
             "type": "string"
           },
           {
             "internalType": "string",
-            "name": "wrongOption_2",
+            "name": "wrongOption2",
             "type": "string"
           },
           {
             "internalType": "string",
-            "name": "wrongOption_3",
+            "name": "wrongOption3",
             "type": "string"
           }
         ],
@@ -290,17 +290,17 @@
           },
           {
             "internalType": "string",
-            "name": "wrongOption_1",
+            "name": "wrongOption1",
             "type": "string"
           },
           {
             "internalType": "string",
-            "name": "wrongOption_2",
+            "name": "wrongOption2",
             "type": "string"
           },
           {
             "internalType": "string",
-            "name": "wrongOption_3",
+            "name": "wrongOption3",
             "type": "string"
           }
         ],
