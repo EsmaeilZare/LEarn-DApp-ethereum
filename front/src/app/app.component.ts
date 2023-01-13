@@ -17,7 +17,7 @@ export class AppComponent {
   player: any = null;
   games: any = [];
   showAddTask: boolean = false;
-  isRegistered: boolean = true;
+  isRegistered: boolean = false;
   subscription: Subscription;
 
   constructor(
@@ -33,15 +33,24 @@ export class AppComponent {
   async ngOnInit() {
     try {
       this.player = this.ps.getPlayer();
-      this.games = this.gs.getGames();
+      this.games = this.gs.getAllGames();
 
-      this.gs.onEvent('GameCreated').subscribe(() => {
-        console.log('GameCreated');
-        this.games = this.gs.getGames();
-      });
-      this.ps.onEvent('PlayerRegistered').subscribe(() => {
+      this.ps.onEvent('PlayerRegistered').subscribe((data: any) => {
         console.log('PlayerRegistered');
         this.player = this.ps.getPlayer();
+        this.games = this.gs.getAllGames();
+      });
+
+      this.gs.onEvent('GameInfoAdded').subscribe((data: any) => {
+        const gameId = Number(data.payload.gameId);
+        console.log('GameCreated with id: ', gameId);
+        this.games = this.gs.getGames();
+      });
+
+      this.gs.onEvent('GameCreated').subscribe((data: any) => {
+        const gameId = data.payload.gameId;
+        console.log('GameCreated with id: ', gameId);
+        this.games = this.gs.getGames();
       });
     } catch (error: any) {
       switch (error.message) {
@@ -70,7 +79,7 @@ export class AppComponent {
 
   handleRegister() {
     try {
-      this.ps.register();
+      this.ps.registerPlayer();
       this.isRegistered = true;
     } catch (error) {
       console.log('could not register to the game!');

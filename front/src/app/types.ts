@@ -1,17 +1,45 @@
-export interface Game extends GameForm {
-  id?: number;
-  createdByMe?: boolean; // added ? to make it optional to remove the error from delay part in game service
-  purchased?: boolean;
-  nextLevel?: number; // added ? to make it optional to remove the error from delay part in game service
-  winnersCount?: number; // added ? to make it optional to remove the error from delay part in game service
-}
-
-export interface GameForm {
-  words: string[];
-  meanings: string[];
+export interface GameDetails {
   title: string;
   description: string;
-  thumbnail: string;
+  price: number;
+  numQuestions: number;
+  thumbnails: string;
+}
+
+export interface Question {
+  context: string;
+  answer: string;
+  wrongOption1: string;
+  wrongOption2: string;
+  wrongOption3: string;
+}
+
+export interface GameStats {
+  numBuyers: number;
+  rating: number;
+  numRaters: number;
+}
+
+export interface PlayerGameStats {
+  isCreator: boolean;
+  isPurchased: boolean;
+  highscore: number;
+  rating: number; // from 0 to 100
+}
+
+export interface Game {
+  details: GameDetails;
+  stats: GameStats;
+  questions: Question[];
+  playerStats: PlayerGameStats;
+}
+
+export interface Player {
+  id: string;
+  isRegistered: boolean;
+  credit: number;
+  createdGames: number[];
+  purchasedGames: number[];
 }
 
 export interface PairForm {
@@ -23,11 +51,4 @@ export interface Pair {
   id?: number;
   word: string;
   meaning: string;
-}
-
-export interface Player {
-  id: string;
-  credit: number;
-  createdGames: number[];
-  purchasedGames: number[];
 }

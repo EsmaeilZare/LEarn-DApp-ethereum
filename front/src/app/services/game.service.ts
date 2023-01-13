@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from 'src/app/blockchain/web3.service';
-import { Game, GameForm } from '../types';
+import { Game, GameDetails } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,18 @@ import { Game, GameForm } from '../types';
 export class GameService {
   constructor(private web3: Web3Service) {}
 
-  async getGames(): Promise<Game[]> {
+  createGameInfo(GameDetails: GameDetails) {
+    this.web3.executeTransaction(
+      'createGame',
+      GameDetails.title,
+      GameDetails.description,
+      GameDetails.price,
+      GameDetails.numQuestions,
+      GameDetails.thumbnails
+    );
+  }
+
+  async getAllGames(): Promise<Game[]> {
     try {
       const games: Game[] = [];
       const totalGamesCount = await this.web3.call('getTotalGames');
@@ -20,22 +31,23 @@ export class GameService {
 
       return games;
     } catch (error) {
-      alert('We could not retrieve games.\n');
+      // alert('We could not retrieve games.\n');
       throw error;
     }
   }
 
-  play(gameId: number, success: number) {
-    this.web3.executeTransaction('play', gameId, success);
+  async getGame(_gameId: number): Promise<Game> {
+    try {
+      const rawGame = await this.web3.call('getGame', _gameId);
+      return this.parseGame(rawGame);
+    } catch (error) {
+      // alert('We could not retrieve game.\n');
+      throw error;
+    }
   }
 
-  createGame(gameForm: GameForm) {
-    this.web3.executeTransaction(
-      'createGame',
-      gameForm.words.map((word) => this.web3.stringToBytes(word)),
-      gameForm.meanings.map((meaning) => this.web3.stringToBytes(meaning)),
-      [gameForm.title, gameForm.description || '', gameForm.thumbnail || '']
-    );
+  play(gameId: number, score: number) {
+    this.web3.executeTransaction('play', gameId, score);
   }
 
   parseGame(rawGame: any): Game {

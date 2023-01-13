@@ -23,7 +23,6 @@ export class Web3Service {
         contractAbi,
         this.contractAddress
       );
-      console.log('provider -------------> ', this.web3.currentProvider);
     } else {
       console.warn('Metamask not found. Install or enable Metamask.');
     }
@@ -65,30 +64,17 @@ export class Web3Service {
       .catch(this.handleError);
   }
 
-  // onEvents(eventName: string) {
-  //   return new Observable((observer) => {
-  //     this.contract.events[eventName]().on(
-  //       'data',
-  //       (data: { event: string; returnValues: any }) => {
-  //         console.log('this is the event sent by blockchain ->', data.event);
-  //         if ('_playerId' in data.returnValues) {
-  //           console.log('see there was an event with this key!');
-  //           if (data.returnValues['_playerId'] != this.account) {
-  //             return;
-  //           }
-  //         }
-  //         this.zone.run(() => {
-  //           observer.next({ event: data.event, payload: data.returnValues });
-  //         });
-  //       }
-  //     );
-  //   });
-  // }
-
   onEvents(event: string) {
     return new Observable((observer) => {
-      this.contract.events[event]().on('data', (data: any) => {
-        // THIS MUST RUN INSIDE ANGULAR ZONE AS IT'S LISTENING FOR 'ON'
+      this.contract.events[event]().on('data', async (data: any) => {
+        console.log('hey look what I found! => ', data.returnValues);
+        if (data.returnValues.playerId) {
+          const acc = await this.getAccount();
+          if (acc != data.returnValues.playerId) {
+            console.log('TaDAAAAAAAAAAAaa => ', data.returnValues.playerId);
+            // return;
+          }
+        }
         this.zone.run(() => {
           observer.next({
             event: data.event,

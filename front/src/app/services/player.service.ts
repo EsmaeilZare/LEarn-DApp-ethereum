@@ -8,11 +8,11 @@ import { Player } from '../types';
 export class PlayerService {
   constructor(private web3: Web3Service) {}
 
-  register() {
+  registerPlayer() {
     try {
       this.web3.executeTransaction('registerPlayer');
     } catch (error) {
-      alert('there was an error while registering in the game.\n');
+      // alert('there was an error while registering in the game.\n');
       throw error;
     }
   }
@@ -22,7 +22,7 @@ export class PlayerService {
       const rawPlayer = await this.web3.call('getPlayer');
       return this.parsePlayer(rawPlayer);
     } catch (error) {
-      alert('We could not retrieve your account detail on the game.\n');
+      // alert('We could not retrieve your account detail on the game.\n');
       throw error;
     }
   }
@@ -30,6 +30,7 @@ export class PlayerService {
   parsePlayer(rawPlayer: any): Player {
     return {
       id: rawPlayer[0],
+      isRegistered: true,
       credit: rawPlayer[1],
       createdGames: rawPlayer[2].map((gameId: string) => parseInt(gameId)),
       purchasedGames: rawPlayer[3].map((gameId: string) => parseInt(gameId)),
