@@ -13,5 +13,5 @@ export class ShowGamesComponent {
     private gameService: GameService,
   ){}
 
-  games = this.gameService.getGames()
+  games = this.gameService.getAllGames()
 }

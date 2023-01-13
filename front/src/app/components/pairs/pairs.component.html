@@ -5,13 +5,13 @@
       <div class="form-floating">
         <input
           type="text"
-          name="word"
-          [(ngModel)]="word"
-          id="word"
+          name="context"
+          [(ngModel)]="context"
+          id="context"
           placeholder="Add word"
           class="form-control"
         />
-        <label for="word">Word</label>
+        <label for="coontext">Word</label>
       </div>
     </div>
     <div class="col-md">
@@ -19,17 +19,56 @@
         <input
         class="form-control"
           type="text"
-          name="meaning"
-          [(ngModel)]="meaning"
-          id="meaning"
-          placeholder="Add Meaning"
+          name="answer"
+          [(ngModel)]="answer"
+          id="answer"
+          placeholder="Add Answer"
         />
-        <label for="meaning">Meaning</label>
+        <label for="answer">Answer</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <input
+        class="form-control"
+          type="text"
+          name="w1"
+          [(ngModel)]="wrongOption1"
+          id="w1"
+          placeholder="Add Option"
+        />
+        <label for="w1">Add Option</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <input
+        class="form-control"
+          type="text"
+          name="w2"
+          [(ngModel)]="wrongOption2"
+          id="w2"
+          placeholder="Add Option"
+        />
+        <label for="w2">Add Option</label>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="form-floating">
+        <input
+        class="form-control"
+          type="text"
+          name="w3"
+          [(ngModel)]="wrongOption3"
+          id="w3"
+          placeholder="Add Option"
+        />
+        <label for="w3">Add Option</label>
       </div>
     </div>
     <div class="col-3">
       <!-- <input type="submit" value="Save Pair" class="btn btn-block" /> -->
-      <button type="submit" class="btn btn-primary form-control">Save Pair</button>
+      <button type="submit" class="btn btn-primary form-control">Save Question</button>
       <!-- <app-button
       color="pink"
       text="Save Pair"

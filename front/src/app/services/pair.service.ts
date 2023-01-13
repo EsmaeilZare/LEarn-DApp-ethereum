@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Pair } from '../types';
-// import { words, meanings } from '../data';
+import { Pair, Question } from '../types';
 import { words, meanings } from '../data';
 
 const httpOptions = {
@@ -21,6 +20,11 @@ export class PairService {
   // meanings: string[] = []
   meanings: string[] = meanings;
   // pairs: Pair[] = [];
+
+  contexts: Question["context"][]; //Inja dige mese koskhola too ye file joda tarifeshoon nemikonam. haminja tarif mikonam
+  // answers: Question["answer"][];
+  questions: Question[] = [];
+
 
   constructor(private http: HttpClient) {}
 
@@ -67,4 +71,22 @@ export class PairService {
     // console.log("PAIRS:", PAIRS)
     return;
   }
+
+  addQuestion(question: Question) {
+  console.log("Oomad too addQuestion")
+  try {
+    if (this.contexts.map(context => context.toLowerCase()).includes(question.context.toLowerCase())) {
+      alert('Word already exists');
+      return;
+  }
+  }
+  catch(e){
+    console.log("Error: ",e)
+  }
+
+  console.log("", question);
+  this.questions.push(question);
+  console.log(this.questions);
+  return;
+}
 }

@@ -3,10 +3,12 @@
 
 import { Component } from '@angular/core';
 import { PairService } from 'src/app/services/pair.service';
-import { Pair } from '../../types';
+import { Pair, Question } from '../../types';
 import { words, meanings } from 'src/app/data';
-import { GameForm } from '../../types';
+// import { GameForm } from '../../types';
 import { GameService } from 'src/app/services/game.service';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-game',
@@ -48,13 +50,18 @@ export class GameComponent {
     // this.pairService.addPair(pair).subscribe((pair) => this.pairs.push(pair));
   }
 
+  addQuestion(question: Question) {
+
+    this.pairService.addQuestion(question)
+  }
+
   createGame() {
     // if (words.length < 30 || meanings.length < 30) {
     //   alert('Please add at least 30 word-meaning pairs');
     //   return;
     // }
 
-    const newGame: GameForm = {
+    const newGame = {
       words: this.words, // Inja mese koskhola daram instance khode in component az words ro angool mikonam na ooni ke too data.ts e
       meanings: this.meanings, // eyzan
       title: this.title,
@@ -63,7 +70,7 @@ export class GameComponent {
     };
     // console.log("Game Created\n","Words:", words, "\n", "Meanings:", meanings)
     console.log('SHOD', newGame);
-    this.gameService.createGame(newGame);
+    // this.gameService.createGame(newGame);
     console.log('Mohaghagh shod');
 
     // inja yahtamel bayad ye eventemitter gozasht ke newGame ro emit kone

@@ -1,20 +1,28 @@
 // In component skii az add-task
-// should be renamed to create pair
+// should be renamed to create question
 
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+// import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/services/ui.service';
-import { Pair } from '../../types';
+import { Question } from '../../types';
+
 
 @Component({
   selector: 'app-pairs',
   templateUrl: './pairs.component.html',
   styleUrls: ['./pairs.component.scss']
 })
+
+
 export class PairsComponent implements OnInit{
-  @Output() onAddPair: EventEmitter<Pair> = new EventEmitter();
-  word: string;
-  meaning: string;
+  @Output() onAddQuestion: EventEmitter<Question> = new EventEmitter();
+
+  context: Question["context"];
+  answer: Question["answer"];
+  wrongOption1: Question["wrongOption1"];
+  wrongOption2: Question["wrongOption2"];
+  wrongOption3: Question["wrongOption3"];
   showAddTask: boolean;
   subscription: Subscription;
 
@@ -32,23 +40,35 @@ export class PairsComponent implements OnInit{
     }
 
   onSubmit() {
-    if (!this.word) {
+    if (!this.context) {
       alert('Please add a word');
       return;
     }
-    if (!this.meaning) {
-      alert('Please add a meaning!');
+    if (!this.answer) {
+      alert('Please add an answer!');
       return;
     }
 
-    const newPair: Pair = {
-      word: this.word,
-      meaning: this.meaning,
+    if (!this.wrongOption1 || !this.wrongOption2 || !this.wrongOption3) {
+      alert('Please add all optoins!')
+      return;
+    }
+
+    const newQuestion: Question = {
+      context: this.context,
+      answer: this.answer,
+      wrongOption1: this.wrongOption1,
+      wrongOption2: this.wrongOption2,
+      wrongOption3: this.wrongOption3
+
     };
 
-    this.onAddPair.emit(newPair);
+    this.onAddQuestion.emit(newQuestion);
 
-    this.word = '';
-    this.meaning = '';
-  }
+    this.context = '';
+    this.answer = '';
+    this.wrongOption1 = '';
+    this.wrongOption2 = '';
+    this.wrongOption3 = '';
+    }
 }
