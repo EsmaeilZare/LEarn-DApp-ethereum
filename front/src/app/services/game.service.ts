@@ -52,7 +52,7 @@ export class GameService {
   async getAllGames(): Promise<Game[]> {
     try {
       const games: Game[] = [];
-      const totalGamesCount = await this.web3.call('getTotalGames');
+      const totalGamesCount = await this.web3.call('getGamesCount');
 
       for (let gameId = 0; gameId < totalGamesCount; gameId++) {
         const game = await this.getGameInfo(gameId);
@@ -66,8 +66,22 @@ export class GameService {
     }
   }
 
-  play(gameId: number, score: number) {
-    this.web3.executeTransaction('play', gameId, score);
+  async getGameQuestions(_gameId: number): Promise<Question[]> {
+    try {
+      const questions: Question[] = [];
+      const rawGameQuestions = await this.web3.call(
+        'getGameQuestions',
+        _gameId
+      );
+
+      rawGameQuestions.forEach((rawGameQuestion: any) => {
+        questions.push(this.parseGameQuestion(rawGameQuestion));
+      });
+      return questions;
+    } catch (error) {
+      // alert('We could not retrieve game.\n');
+      throw error;
+    }
   }
 
   parseGameInfo(_gameId: number, _rawGameInfo: any): Game {
@@ -99,6 +113,17 @@ export class GameService {
       questions: [],
       playerStats: playerStats,
     };
+  }
+
+  parseGameQuestion(_rawGameQuestion: any): Question {
+    const question: Question = {
+      context: _rawGameQuestion[0],
+      answer: _rawGameQuestion[1],
+      wrongOption1: _rawGameQuestion[2],
+      wrongOption2: _rawGameQuestion[3],
+      wrongOption3: _rawGameQuestion[4],
+    };
+    return question;
   }
 
   onEvent(name: string) {

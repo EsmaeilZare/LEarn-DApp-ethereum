@@ -55,6 +55,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "gameId",
+        "type": "uint256"
+      }
+    ],
+    "name": "GameRated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "address",
         "name": "playerId",
         "type": "address"
@@ -393,7 +406,7 @@
       },
       {
         "internalType": "uint8",
-        "name": "rating",
+        "name": "_rating",
         "type": "uint8"
       }
     ],

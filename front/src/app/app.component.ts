@@ -15,7 +15,9 @@ export class AppComponent {
   // activePoll: poll = null as any; // nobooghe khodam error midad
 
   player: any = null;
-  games: any = [];
+  games = new Map<number, Game>();
+  activeGame: Game = null;
+  // games: any = [];
   showAddTask: boolean = false;
   isRegistered: boolean = false;
   subscription: Subscription;
@@ -33,24 +35,53 @@ export class AppComponent {
   async ngOnInit() {
     try {
       this.player = this.ps.getPlayer();
-      this.games = this.gs.getAllGames();
+      (await this.gs.getAllGames()).forEach((game) => {
+        this.games.set(game.id, game);
+      });
 
-      this.ps.onEvent('PlayerRegistered').subscribe((data: any) => {
+      this.ps.onEvent('PlayerRegistered').subscribe(async (data: any) => {
         console.log('PlayerRegistered');
         this.player = this.ps.getPlayer();
-        this.games = this.gs.getAllGames();
+        (await this.gs.getAllGames()).forEach((game) => {
+          this.games.set(game.id, game);
+        });
       });
 
-      this.gs.onEvent('GameInfoAdded').subscribe((data: any) => {
+      this.gs.onEvent('GameInfoAdded').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         console.log('GameInfoAdded with id: ', gameId);
-        this.games.push(this.gs.getGameInfo(gameId));
+        const game = await this.gs.getGameInfo(gameId);
+        this.games.set(gameId, game);
       });
 
-      this.gs.onEvent('GameCreated').subscribe((data: any) => {
+      this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         console.log('GameInfoAdded with id: ', gameId);
-        this.games.push(this.gs.getGameInfo(gameId));
+        const game = await this.gs.getGameInfo(gameId);
+        this.games.set(gameId, game);
+      });
+
+      this.ps.onEvent('GamePurchased').subscribe(async (data: any) => {
+        const gameId = parseInt(data.payload.gameId);
+        console.log('GameInfoAdded with id: ', gameId);
+        const game = await this.gs.getGameInfo(gameId);
+        this.games.set(gameId, game);
+      });
+
+      this.ps.onEvent('NewHighscore').subscribe(async (data: any) => {
+        const gameId = parseInt(data.payload.gameId);
+        const score = parseInt(data.payload.score);
+        console.log('GameInfoAdded with id: ', gameId);
+        const game = this.games.get(gameId);
+        game.playerStats.highscore = score;
+        this.games.set(gameId, game);
+      });
+
+      this.gs.onEvent('GameRated').subscribe(async (data: any) => {
+        const gameId = parseInt(data.payload.gameId);
+        console.log('GameInfoAdded with id: ', gameId);
+        const game = await this.gs.getGameInfo(gameId);
+        this.games.set(gameId, game);
       });
     } catch (error: any) {
       switch (error.message) {
@@ -63,21 +94,8 @@ export class AppComponent {
     }
   }
 
-  // setActivePoll(poll: poll) {
-  //   // nobooghe khodam error midad
-  //   this.activePoll = null as any; // nobooghe khodam error midad
-
-  //   setTimeout(() => {
-  //     this.activePoll = poll;
-  //   }, 100);
-  // }
-
-  handleGameInfoCreate(_gameDetails: GameDetails) {
-    this.gs.createGameInfo(_gameDetails);
-  }
-
-  handleGameQuestionsCreate(_gameId: number, _gameQuestions: Question[]) {
-    this.gs.createGameQusetions(_gameId, _gameQuestions);
+  setActiveGame(game: Game) {
+    this.activeGame = game;
   }
 
   handleRegisterPlayer() {
@@ -89,7 +107,23 @@ export class AppComponent {
     }
   }
 
-  // handlePollVote(pollVoted: PollVote) {
-  //   this.ps.vote(pollVoted.id, pollVoted.vote);
-  // }
+  handleGameInfoCreate(_gameDetails: GameDetails) {
+    this.gs.createGameInfo(_gameDetails);
+  }
+
+  handleGameQuestionsCreate(_gameId: number, _gameQuestions: Question[]) {
+    this.gs.createGameQusetions(_gameId, _gameQuestions);
+  }
+
+  handlePurchase(_gameId: number) {
+    this.ps.purchase(_gameId);
+  }
+
+  handlePlay(_gameId: number, _score: number) {
+    this.ps.play(_gameId, _score);
+  }
+
+  handleRateGame(_gameId: number, _rating: number) {
+    this.ps.rateGame(_gameId, _rating);
+  }
 }

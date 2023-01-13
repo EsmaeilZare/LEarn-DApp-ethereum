@@ -27,6 +27,18 @@ export class PlayerService {
     }
   }
 
+  purchase(_gameId: number) {
+    this.web3.executeTransaction('purchase', _gameId);
+  }
+
+  play(_gameId: number, _score: number) {
+    this.web3.executeTransaction('play', _gameId, _score);
+  }
+
+  rateGame(_gameId: number, _rating: number) {
+    this.web3.executeTransaction('rateGame', _gameId, _rating);
+  }
+
   parsePlayer(rawPlayer: any): Player {
     return {
       id: rawPlayer[0],

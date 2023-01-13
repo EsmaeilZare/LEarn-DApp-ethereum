@@ -65,6 +65,7 @@ contract GameContract {
     event GameCreated(uint256 gameId);
     event GamePurchased(address playerId, uint256 gameId);
     event NewHighscore(address playerId, uint256 gameId, uint8 highscore);
+    event GameRated(uint256 gameId);
 
 
     modifier validateGameId(uint256 _gameId){
@@ -257,12 +258,14 @@ contract GameContract {
 
 
     // since we don't have floating point number here we are going to store rating between 0 to 100 and in the app we can show it as 0 to 10
-    function rateGame(uint256 _gameId, uint8 rating) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) gameNotCreatedByUser(_gameId) {
+    function rateGame(uint256 _gameId, uint8 _rating) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) gameNotCreatedByUser(_gameId) {
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "This player did not purchase this game!");
-        require(rating <= 100 && rating > 0, "rating number should be between 1 to 100!");
+        require(_rating <= 100 && _rating > 0, "rating number should be between 1 to 100!");
 
-        players[msg.sender].gameStats[_gameId].rating = rating;
-        games[_gameId].stats.rating = (rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / (games[_gameId].stats.numRaters + 1);
+        players[msg.sender].gameStats[_gameId].rating = _rating;
+        games[_gameId].stats.rating = (_rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / (games[_gameId].stats.numRaters + 1);
         games[_gameId].stats.numRaters++;
+
+        emit GameRated(_gameId);
     }
 }
