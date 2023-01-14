@@ -16,19 +16,21 @@ import { GameService } from './services/game.service';
 // components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { GameCreateComponent } from './components/game/create/game-create.component';
+import { GameCreateComponent } from './components/game/game-create/game-create.component';
 import { GameComponent } from './components/game/home/game.component';
 import { ShowGamesComponent } from './components/game/list/show-games.component';
 import { QuestionComponent } from './components/question/question.component';
-import { GameAddDetailsComponent } from './components/game/add-details/game-add-details.component';
-import {} from './components/game/add-questions/game-add-questions.component';
+import { GameAddDetailsComponent } from './components/game/game-add-details/game-add-details.component';
+import { GameAddQuestionsComponent } from './components/game-add-questions/game-add-questions.component';
 import { GamePlayComponent } from './components/game/play/game-play.component';
-import { QuestionCreateComponent } from './components/question/create/create.component';
+import { QuestionCreateComponent } from './components/question-create/question-create.component';
 import { QuestionListComponent } from './components/question/list/list.component';
-import { QuestionShowComponent } from './components/question/show/show.component';
+import { ShowGamifiedQuestionComponent } from './components/question/show-gamified/show-gamified.component';
 import { RegisterComponent } from './components/player/register/register.component';
 import { ProfileComponent } from './components/player/profile/profile.component';
 import { ListItemComponent } from './components/game/list-item/list-item.component';
+import { ShowPlainQuestionComponent } from './components/question/show-plain/show-plain.component';
+
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { ListItemComponent } from './components/game/list-item/list-item.compone
     HeaderComponent,
     GameComponent,
     GameCreateComponent,
+    GameAddQuestionsComponent,
     ShowGamesComponent,
     QuestionComponent,
     ChangeBgDirective,
@@ -43,10 +46,11 @@ import { ListItemComponent } from './components/game/list-item/list-item.compone
     GameAddDetailsComponent,
     GamePlayComponent,
     QuestionListComponent,
-    QuestionShowComponent,
+    ShowGamifiedQuestionComponent,
     RegisterComponent,
     ProfileComponent,
     ListItemComponent,
+    ShowPlainQuestionComponent,
   ],
   imports: [
     BrowserModule,

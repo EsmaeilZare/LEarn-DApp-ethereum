@@ -149,14 +149,13 @@ contract GameContract {
     }
 
 
-    // input example: 0,[["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"],["q","a","w1","w2","w3"]]
+    // input example: 0,[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
     function createGameQusetions(uint256 _gameId, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) gameCreatedByUser(_gameId) {
-        uint8 numQuestion = games[_gameId].details.numQuestions;
-        require(_gameQuestions.length == numQuestion, "Number of questions passed should be equal to the number of questions specified in the game creation!");
-
         Game storage game = games[_gameId];
+        require(game.isComplete == false, "This is a complete game and you can not edit it anymore!");
+        require(_gameQuestions.length == game.details.numQuestions, "Number of questions passed should be equal to the number of questions specified in the game creation!");
 
-        for (uint8 i=0; i<numQuestion; i++){
+        for (uint8 i=0; i<game.details.numQuestions; i++){
             Question storage question = game.questions[i];
             question.text = _gameQuestions[i].text;
             question.options[0] = _gameQuestions[i].options[0];
