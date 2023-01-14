@@ -3,15 +3,20 @@ export interface GameDetails {
   description: string;
   price: number;
   numQuestions: number;
-  thumbnails: string;
+  thumbnail: string;
+}
+
+enum CorrectOption {
+  First,
+  Second,
+  Third,
+  Fourth,
 }
 
 export interface Question {
-  context: string;
-  answer: string;
-  wrongOption1: string;
-  wrongOption2: string;
-  wrongOption3: string;
+  text: string;
+  options: string[];
+  answer: CorrectOption;
 }
 
 export interface GameStats {

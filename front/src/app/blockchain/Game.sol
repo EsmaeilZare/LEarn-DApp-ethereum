@@ -10,12 +10,18 @@ contract GameContract {
     uint8 private constant MAX_QUESTIONS_COUNT = 100;
     uint8 private constant FAIL_TRESHOLD = 60;
 
+
+    enum CorrectOption {
+        First,
+        Second,
+        Third,
+        Fourth
+    }
+
     struct Question {
-        string context;
-        string answer;
-        string wrongOption1;
-        string wrongOption2;
-        string wrongOption3;
+        string text;
+        string[4] options;
+        CorrectOption answer;
     }
 
     struct GameDetails {
@@ -23,7 +29,7 @@ contract GameContract {
         string description;
         uint256 price;
         uint8 numQuestions;
-        string thumbnails;
+        string thumbnail;
     }
 
     struct GameStats {
@@ -120,7 +126,7 @@ contract GameContract {
 
 
     // input example: "Game Title", "Game Description", 1, 10, "https://livlo.co.uk/file/2019/06/486900232-1.jpg"
-    function createGameInfo(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnails) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
+    function createGameInfo(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
         require(_numQuestions <= MAX_QUESTIONS_COUNT && _numQuestions >= MIN_QUESTIONS_COUNT, "Each game should have at least 10 and at most 100 questions");
         require(_price>=0 && _price <= 10, "game price should be between 0 t0 10!");
 
@@ -132,7 +138,7 @@ contract GameContract {
         newGame.details.description = _description;
         newGame.details.price = _price;
         newGame.details.numQuestions = _numQuestions;
-        newGame.details.thumbnails = _thumbnails;
+        newGame.details.thumbnail = _thumbnail;
         newGame.creator = msg.sender;
 
         players[msg.sender].createdGames.push(gameId);
@@ -152,12 +158,12 @@ contract GameContract {
 
         for (uint8 i=0; i<numQuestion; i++){
             Question storage question = game.questions[i];
-            question.context = _gameQuestions[i].context;
+            question.text = _gameQuestions[i].text;
+            question.options[0] = _gameQuestions[i].options[0];
+            question.options[1] = _gameQuestions[i].options[1];
+            question.options[2] = _gameQuestions[i].options[2];
+            question.options[3] = _gameQuestions[i].options[3];
             question.answer = _gameQuestions[i].answer;
-            question.wrongOption1 = _gameQuestions[i].wrongOption1;
-            question.wrongOption2 = _gameQuestions[i].wrongOption2;
-            question.wrongOption3 = _gameQuestions[i].wrongOption3;
-
         }
 
         game.isComplete = true;
@@ -173,7 +179,7 @@ contract GameContract {
             description: games[_gameId].details.description,
             price: games[_gameId].details.price,
             numQuestions: games[_gameId].details.numQuestions,
-            thumbnails: games[_gameId].details.thumbnails
+            thumbnail: games[_gameId].details.thumbnail
         });
 
         GameStats memory stats = GameStats({
@@ -204,11 +210,9 @@ contract GameContract {
         Game storage game = games[_gameId];
 
         for(uint8 i=0; i<uint8(game.details.numQuestions); i++){
-            gameQuestions[i].context = game.questions[i].context;
+            gameQuestions[i].text = game.questions[i].text;
+            gameQuestions[i].options = game.questions[i].options;
             gameQuestions[i].answer = game.questions[i].answer;
-            gameQuestions[i].wrongOption1 = game.questions[i].wrongOption1;
-            gameQuestions[i].wrongOption2 = game.questions[i].wrongOption2;
-            gameQuestions[i].wrongOption3 = game.questions[i].wrongOption3;
         }
         return (game.details.numQuestions, gameQuestions);
     }

@@ -21,7 +21,7 @@ export class GameService {
       gameDetails.description,
       gameDetails.price,
       gameDetails.numQuestions,
-      gameDetails.thumbnails
+      gameDetails.thumbnail
     );
   }
 
@@ -29,11 +29,9 @@ export class GameService {
     const questions = [];
     for (let i = 0; i < _gameQuestions.length; i++) {
       questions.push([
-        _gameQuestions[i].context,
+        _gameQuestions[i].text,
+        _gameQuestions[i].options,
         _gameQuestions[i].answer,
-        _gameQuestions[i].wrongOption1,
-        _gameQuestions[i].wrongOption2,
-        _gameQuestions[i].wrongOption3,
       ]);
     }
     this.web3.executeTransaction('createGameQusetions', _gameId, questions);
@@ -90,7 +88,7 @@ export class GameService {
       description: _rawGameInfo[0][1],
       price: _rawGameInfo[0][2],
       numQuestions: _rawGameInfo[0][3],
-      thumbnails: _rawGameInfo[0][4],
+      thumbnail: _rawGameInfo[0][4],
     };
 
     const stats: GameStats = {
@@ -117,11 +115,9 @@ export class GameService {
 
   parseGameQuestion(_rawGameQuestion: any): Question {
     const question: Question = {
-      context: _rawGameQuestion[0],
-      answer: _rawGameQuestion[1],
-      wrongOption1: _rawGameQuestion[2],
-      wrongOption2: _rawGameQuestion[3],
-      wrongOption3: _rawGameQuestion[4],
+      text: _rawGameQuestion[0],
+      options: _rawGameQuestion[1],
+      answer: parseInt(_rawGameQuestion[2]),
     };
     return question;
   }

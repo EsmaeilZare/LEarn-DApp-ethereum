@@ -3,33 +3,51 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+// directives
+import { ChangeBgDirective } from './directives/change-bg.directive';
+
+// services
 import { PlayerService } from './services/player.service';
 import { GameService } from './services/game.service';
-import { GameCreateComponent } from './components/game-create/game-create.component';
-import { PairCreateComponent } from './components/pair-create/pair-create.component';
+
+// components
+import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { ButtonComponent } from './components/button/button.component';
-import { PairsComponent } from './components/pairs/pairs.component';
-import { GameComponent } from './components/game/game.component';
-import { ShowPairsComponent } from './components/show-pairs/show-pairs.component';
-import { ShowGamesComponent } from './components/show-games/show-games.component';
-import { PlayGameComponent } from './components/play-game/play-game.component';
+import { GameCreateComponent } from './components/game/create/game-create.component';
+import { GameComponent } from './components/game/home/game.component';
+import { ShowGamesComponent } from './components/game/list/show-games.component';
+import { QuestionComponent } from './components/question/question.component';
+import { GameAddDetailsComponent } from './components/game/add-details/game-add-details.component';
+import {} from './components/game/add-questions/game-add-questions.component';
+import { GamePlayComponent } from './components/game/play/game-play.component';
+import { QuestionCreateComponent } from './components/question/create/create.component';
+import { QuestionListComponent } from './components/question/list/list.component';
+import { QuestionShowComponent } from './components/question/show/show.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameCreateComponent,
-    PairCreateComponent,
     HeaderComponent,
-    ButtonComponent,
-    PairsComponent,
     GameComponent,
-    ShowPairsComponent,
+    GameCreateComponent,
     ShowGamesComponent,
-    PlayGameComponent,
+    QuestionComponent,
+    ChangeBgDirective,
+    QuestionCreateComponent,
+    GameAddDetailsComponent,
+    GamePlayComponent,
+    QuestionListComponent,
+    QuestionShowComponent,
   ],
-  imports: [BrowserModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [PlayerService, GameService],
   bootstrap: [AppComponent],
 })

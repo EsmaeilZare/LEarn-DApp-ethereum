@@ -21,10 +21,9 @@ export class PairService {
   meanings: string[] = meanings;
   // pairs: Pair[] = [];
 
-  contexts: Question["context"][]; //Inja dige mese koskhola too ye file joda tarifeshoon nemikonam. haminja tarif mikonam
+  contexts: Question['text'][]; //Inja dige mese koskhola too ye file joda tarifeshoon nemikonam. haminja tarif mikonam
   // answers: Question["answer"][];
   questions: Question[] = [];
-
 
   constructor(private http: HttpClient) {}
 
@@ -41,13 +40,10 @@ export class PairService {
     return this.http.delete<Pair>(url);
   }
 
-
   // updateTaskReminder(pair: Pair): Observable<Pair> {
   //   const url = `${this.apiUrl}/${pair.id}`;
   //   return this.http.put<Pair>(url, pair, httpOptions);
   // }
-
-
 
   // addPair(pair: Pair): Observable<Pair> {
   //   // console.log("KIRE KHAR:", pair);
@@ -57,14 +53,18 @@ export class PairService {
   addPair(pair: Pair) {
     // console.log("Omad Too addPair");
     // return this.http.post<Pair>(this.apiUrl, pair, httpOptions);
-    if (this.words.map(word => word.toLowerCase()).includes(pair.word.toLowerCase())) {
+    if (
+      this.words
+        .map((word) => word.toLowerCase())
+        .includes(pair.word.toLowerCase())
+    ) {
       alert('Word already exists');
       return;
     }
     this.words.push(pair.word); //Inja mese koskhola daram instance khode in service az words ro angool mikonam na ooni ke too data.ts e
     this.meanings.push(pair.meaning);
-    console.log("This Words:", this.words, "This Meanings:", this.meanings);
-    console.log("Words:", words, "Meanings:", meanings);
+    console.log('This Words:', this.words, 'This Meanings:', this.meanings);
+    console.log('Words:', words, 'Meanings:', meanings);
 
     // this.pairs = this.getPairs()
     // this.getPairs().push(pair);
@@ -73,20 +73,23 @@ export class PairService {
   }
 
   addQuestion(question: Question) {
-  console.log("Oomad too addQuestion")
-  try {
-    if (this.contexts.map(context => context.toLowerCase()).includes(question.context.toLowerCase())) {
-      alert('Word already exists');
-      return;
-  }
-  }
-  catch(e){
-    console.log("Error: ",e)
-  }
+    console.log('Oomad too addQuestion');
+    try {
+      if (
+        this.contexts
+          .map((context) => context.toLowerCase())
+          .includes(question.text.toLowerCase())
+      ) {
+        alert('Word already exists');
+        return;
+      }
+    } catch (e) {
+      console.log('Error: ', e);
+    }
 
-  console.log("", question);
-  this.questions.push(question);
-  console.log(this.questions);
-  return;
-}
+    console.log('', question);
+    this.questions.push(question);
+    console.log(this.questions);
+    return;
+  }
 }

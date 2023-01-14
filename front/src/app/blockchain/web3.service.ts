@@ -85,37 +85,6 @@ export class Web3Service {
     });
   }
 
-  //   onEvent2(){
-  //     //File name: server.js
-
-  // var Contract = require('web3-eth-contract');
-  // var abi =  require('./path-to-abi.json');
-
-  // // set provider for all later instances to use
-  // Contract.setProvider('wss://ropsten.infura.io/ws/v3/{your_infura_project_id}');
-
-  // var address = 'your factory contract address';
-
-  // var contract = new Contract(contractAbi, address);
-
-  // contract.events.NewTeslaCreated(() => {
-  // }).on("connected", function(subscriptionId: any){
-  //     console.log('SubID: ',subscriptionId);
-  // })
-  // .on('data', function(event: { returnValues: { owner: any; }; }){
-  //     console.log('Event:', event);
-  //     console.log('Owner Wallet Address: ',event.returnValues.owner);
-  //     //Write send email process here!
-  // })
-  // .on('changed', function(event: any){
-  //     //Do something when it is removed from the database.
-  // })
-  // .on('error', function(error: any, receipt: any) {
-  //     console.log('Error:', error, receipt);
-  // });;
-
-  //   }
-
   bytesToString(str: string) {
     return this.web3.utils.hexToAscii(str);
   }
