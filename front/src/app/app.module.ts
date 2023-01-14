@@ -25,6 +25,8 @@ import { GamePlayComponent } from './components/game/play/game-play.component';
 import { QuestionCreateComponent } from './components/question/create/create.component';
 import { QuestionListComponent } from './components/question/list/list.component';
 import { QuestionShowComponent } from './components/question/show/show.component';
+import { RegisterComponent } from './components/player/register/register.component';
+import { ProfileComponent } from './components/player/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { QuestionShowComponent } from './components/question/show/show.component
     GamePlayComponent,
     QuestionListComponent,
     QuestionShowComponent,
+    RegisterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
