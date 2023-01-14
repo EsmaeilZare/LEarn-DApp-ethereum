@@ -4,14 +4,11 @@ import { Game } from 'src/app/types';
 
 @Component({
   selector: 'app-show-games',
-  templateUrl: './show-games.component.html',
-  styleUrls: ['./show-games.component.scss']
+  templateUrl: './game-list.component.html',
+  styleUrls: ['./game-list.component.scss'],
 })
 export class ShowGamesComponent {
+  constructor(private gameService: GameService) {}
 
-  constructor(
-    private gameService: GameService,
-  ){}
-
-  games = this.gameService.getAllGames()
+  games = this.gameService.getAllGames();
 }

@@ -4,8 +4,8 @@ import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
   selector: 'app-question-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  templateUrl: './question-list.component.html',
+  styleUrls: ['./question-list.component.scss'],
 })
 export class QuestionListComponent {
   public questionList: any = [];
