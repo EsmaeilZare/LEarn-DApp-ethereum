@@ -1,0 +1,40 @@
+<!-- <div *ngFor="let game of games | async as list" class="col mb-3"> -->
+  <div class="row row-cols-3 g-4" >
+  <div *ngFor="let game of games" class="col mb-3">
+    <div class="card h-100">
+      <img src="{{game.details.thumbnail}}" class="card-img-top h-50" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{game.details.title}}</h5>
+        <p class="card-text">{{game.details.description}}</p>
+      </div>
+      <div class="card-footer text-center d-grid">
+        <button type="button" class="btn btn-primary" *ngIf="game.playerStats.isPurchased; else play">
+          PLAY
+        </button>
+        <ng-template #play>
+          <button type="button" class="btn btn-primary">
+            Purchase for {{game.details.price}}$
+          </button>
+        </ng-template>
+
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-primary">
+          <span class="badge bg-secondary">{{game.details.numQuestions}}</span> Questions
+        </button>
+        <button type="button" class="btn" [ngClass]=" {up: game.stats.rating <= 35 ,'btn-info': game.stats.rating > 35 && game.stats.rating < 65 , 'btn-success' : game.stats.rating >= 65}">
+          <span class="badge bg-secondary">{{game.stats.rating}}% Rated</span> from {{game.stats.numRaters}} votes.
+        </button>
+        <button type="button" class="btn btn-primary" *ngIf="game.playerStats.isPurchased; else players">
+          <span class="badge bg-secondary">{{game.playerStats.highscore}}</span> Highscore
+        </button>
+        <ng-template #players>
+          <button type="button" class="btn btn-primary">
+            <span class="badge bg-secondary">{{game.stats.numBuyers}}</span> Players
+          </button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

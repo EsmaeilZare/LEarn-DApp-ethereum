@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -27,6 +28,7 @@ import { QuestionListComponent } from './components/question/list/list.component
 import { QuestionShowComponent } from './components/question/show/show.component';
 import { RegisterComponent } from './components/player/register/register.component';
 import { ProfileComponent } from './components/player/profile/profile.component';
+import { ListItemComponent } from './components/game/list-item/list-item.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { ProfileComponent } from './components/player/profile/profile.component'
     QuestionShowComponent,
     RegisterComponent,
     ProfileComponent,
+    ListItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { ProfileComponent } from './components/player/profile/profile.component'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [PlayerService, GameService],
   bootstrap: [AppComponent],
