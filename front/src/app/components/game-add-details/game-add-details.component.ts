@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
 import { GameDetails } from 'src/app/types';
 
 @Component({
@@ -9,7 +9,6 @@ import { GameDetails } from 'src/app/types';
 })
 export class GameAddDetailsComponent {
   @Output() gameDetailsAdded: EventEmitter<GameDetails> = new EventEmitter();
-
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -25,6 +24,10 @@ export class GameAddDetailsComponent {
       thumbnail: this.fb.control(''),
     });
   }
+
+  get title() {return this.form.get('title');}
+  get price() {return this.form.get('price')}
+  get qn() {return this.form.get("numQuestions")}
 
   submitForm() {
     const gameDetails: GameDetails = {
