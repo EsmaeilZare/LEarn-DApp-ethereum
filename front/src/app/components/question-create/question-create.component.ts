@@ -8,11 +8,15 @@ import { Question } from 'src/app/types';
   styleUrls: ['./question-create.component.scss'],
 })
 export class QuestionCreateComponent {
-  form: FormGroup;
-
   @Output() questionCreated: EventEmitter<Question> = new EventEmitter();
 
+  form: FormGroup;
+
   constructor(private fb: FormBuilder) {
+    this.initForm();
+  }
+
+  initForm() {
     this.form = this.fb.group({
       questionText: this.fb.control('', [Validators.required]),
       op0: this.fb.control('', [Validators.required]),
@@ -24,7 +28,7 @@ export class QuestionCreateComponent {
   }
 
   submit() {
-    const formData: Question = {
+    const question: Question = {
       text: this.form.get('questionText').value,
       options: [
         this.form.get('op0').value,
@@ -34,8 +38,7 @@ export class QuestionCreateComponent {
       ],
       answer: Number(this.form.get('answer').value),
     };
-    console.log(formData);
-
-    this.questionCreated.emit(formData);
+    this.initForm();
+    this.questionCreated.emit(question);
   }
 }

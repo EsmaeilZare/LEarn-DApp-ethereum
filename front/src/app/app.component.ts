@@ -11,6 +11,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  currentGameId: number = 1;
+  currentGameNumQuestions: number = 2;
+
+  currentGameInfo = {
+    id: 1,
+    numQuestions: 2,
+  };
+
   showForm = false;
   // activePoll: poll = null as any; // nobooghe khodam error midad
 

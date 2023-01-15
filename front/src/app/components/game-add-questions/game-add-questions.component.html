@@ -1,8 +1,8 @@
 <div class="row">
-  <app-question-create class="col-6"></app-question-create>
-  <app-question-list class="col-6"></app-question-list>
+  <app-question-create class="col-6" (questionCreated)="addQuestion($event)"></app-question-create>
+  <app-question-list class="col-6" [questions]="questions"></app-question-list>
   <div class="d-flex justify-content-center">
-    <button class="btn btn-primary">Confirm Game Questions</button>
+    <button class="btn btn-primary" (click)="createGameQuestions()"
+      [disabled]="questions.length!=gameInfo.numQuestions">Confirm Game Questions</button>
   </div>
-
 </div>

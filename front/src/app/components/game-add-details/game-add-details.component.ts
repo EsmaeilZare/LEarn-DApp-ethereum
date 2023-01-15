@@ -8,12 +8,16 @@ import { GameDetails } from 'src/app/types';
   styleUrls: ['./game-add-details.component.scss'],
 })
 export class GameAddDetailsComponent {
-  gameDetailsForm: FormGroup;
-
   @Output() gameDetailsAdded: EventEmitter<GameDetails> = new EventEmitter();
 
+  form: FormGroup;
+
   constructor(private fb: FormBuilder) {
-    this.gameDetailsForm = this.fb.group({
+    this.formInit();
+  }
+
+  formInit() {
+    this.form = this.fb.group({
       title: this.fb.control('', [Validators.required]),
       price: this.fb.control('', [Validators.required]),
       numQuestions: this.fb.control('', [Validators.required]),
@@ -23,14 +27,15 @@ export class GameAddDetailsComponent {
   }
 
   submitForm() {
-    const formData: GameDetails = {
-      title: this.gameDetailsForm.get('title').value,
-      price: this.gameDetailsForm.get('price').value,
-      numQuestions: this.gameDetailsForm.get('numQuestions').value,
-      description: this.gameDetailsForm.get('description').value,
-      thumbnail: this.gameDetailsForm.get('thumbnail').value,
+    const gameDetails: GameDetails = {
+      title: this.form.get('title').value,
+      price: this.form.get('price').value,
+      numQuestions: this.form.get('numQuestions').value,
+      description: this.form.get('description').value,
+      thumbnail: this.form.get('thumbnail').value,
     };
+    this.formInit();
 
-    this.gameDetailsAdded.emit(formData);
+    this.gameDetailsAdded.emit(gameDetails);
   }
 }

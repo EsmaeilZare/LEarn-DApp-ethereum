@@ -1,6 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GameDetails } from 'src/app/types';
+import { Question } from 'src/app/types';
 
 @Component({
   selector: 'app-game-add-questions',
@@ -8,24 +8,24 @@ import { GameDetails } from 'src/app/types';
   styleUrls: ['./game-add-questions.component.scss'],
 })
 export class GameAddQuestionsComponent {
-  gameAddQuestionsForm: FormGroup;
-
+  @Input() gameInfo: any;
   @Output() gameQuestionsAdded: EventEmitter<any> = new EventEmitter();
 
-  constructor(private fb: FormBuilder) {
-    this.gameAddQuestionsForm = this.fb.group({
-      title: this.fb.control('', [Validators.required]),
-      price: this.fb.control('', [Validators.required]),
-      numQuestions: this.fb.control('', [Validators.required]),
-      description: this.fb.control(''),
-      thumbnail: this.fb.control(''),
-    });
+  questions: Question[];
+
+  constructor() {
+    this.questions = [];
   }
 
-  submitForm() {
+  addQuestion(newQuestion: Question) {
+    console.log('=-=-=-=-=-=-', this.gameInfo.numQuestions);
+    this.questions.push(newQuestion);
+  }
+
+  createGameQuestions() {
     const formData: any = {
-      gameId: this,
-      questions: this,
+      // gameId: this.gameId,
+      questions: this.questions,
     };
 
     this.gameQuestionsAdded.emit(formData);

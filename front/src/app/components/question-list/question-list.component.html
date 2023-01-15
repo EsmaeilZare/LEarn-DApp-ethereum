@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let question of questionList; let i = index;">
+      <tr *ngFor="let question of questions; let i = index;">
         <td>{{i + 1}}</td>
         <td><app-show-plain-question [question]="question"></app-show-plain-question></td>
         <td>
