@@ -1,0 +1,76 @@
+<div class="card h-100">
+  <img src="{{_game.details.thumbnail}}" class="card-img-top" style="height: 35%;" alt="...">
+  <div class="card-body" style="height: 1rem;">
+    <p class="card-title display-5">{{_game.details.title}}</p>
+    <hr>
+    <p class="card-text" style="font-size: 1.5rem;">{{_game.details.description}}</p>
+  </div>
+  <div class="container-wrapper" *ngIf="_game.playerStats.isPurchased && !_game.playerStats.isCreator">
+    <div class="container d-flex align-items-center justify-content-center mb-0">
+      <div class="row justify-content-center">
+        <div class="rating-wrapper">
+          <!-- star 5 -->
+          <input type="radio" id="5-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="5">
+          <label for="5-star-rating{{_game.id}}" class="star-rating">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 4 -->
+          <input type="radio" id="4-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="4">
+          <label for="4-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 3 -->
+          <input type="radio" id="3-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="3">
+          <label for="3-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 2 -->
+          <input type="radio" id="2-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="2">
+          <label for="2-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 1 -->
+          <input type="radio" id="1-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="1">
+          <label for="1-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+  <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;">
+    <button type="button" class="btn btn-primary btn-lg" *ngIf="_game.playerStats.isPurchased; else play">
+      PLAY
+    </button>
+    <ng-template #play>
+      <button type="button" class="btn btn-primary btn-lg">
+        Purchase for {{_game.details.price}}$
+      </button>
+    </ng-template>
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-primary btn-sm">
+      <span class="badge bg-secondary">{{_game.details.numQuestions}}</span> Questions
+    </button>
+    <button type="button" class="btn"
+      [ngClass]=" {up: _game.stats.rating <= 35 ,'btn-info': _game.stats.rating > 35 && _game.stats.rating < 65 , 'btn-success' : _game.stats.rating >= 65}">
+      <span class="badge bg-secondary">{{_game.stats.rating}}% Rated</span> &nbsp;<span
+        class="badge bg-secondary">{{_game.stats.numRaters}} votes.</span>
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" *ngIf="_game.playerStats.isPurchased; else players">
+      <span class="badge bg-secondary">{{_game.playerStats.highscore}}</span> Highscore
+    </button>
+    <ng-template #players>
+      <button type="button" class="btn btn-primary">
+        <span class="badge bg-secondary">{{_game.stats.numBuyers}}</span> Players
+      </button>
+    </ng-template>
+  </div>
+</div>

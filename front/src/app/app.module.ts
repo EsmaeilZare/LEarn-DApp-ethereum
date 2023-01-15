@@ -28,7 +28,7 @@ import { QuestionListComponent } from './components/question-list/question-list.
 import { ShowGamifiedQuestionComponent } from './components/question-show-gamified/question-show-gamified.component';
 import { RegisterComponent } from './components/player-register/player-register.component';
 import { ProfileComponent } from './components/player-profile/player-profile.component';
-import { GameItemComponent } from './components/game-list-item/game-item.component';
+import { GameItemComponent } from './components/game-item/game-item.component';
 import { ShowPlainQuestionComponent } from './components/question-show-plain/question-show-plain.component';
 import { GameShowDetailsComponent } from './components/game-show-details/game-show-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
