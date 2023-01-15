@@ -18,7 +18,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { GameCreateComponent } from './components/game-create/game-create.component';
 import { GameComponent } from './components/game-home/game.component';
-import { ShowGamesComponent } from './components/game-list/game-list.component';
+import { GameListComponent } from './components/game-list/game-list.component';
 import { QuestionComponent } from './components/question/question.component';
 import { GameAddDetailsComponent } from './components/game-add-details/game-add-details.component';
 import { GameAddQuestionsComponent } from './components/game-add-questions/game-add-questions.component';
@@ -28,7 +28,7 @@ import { QuestionListComponent } from './components/question-list/question-list.
 import { ShowGamifiedQuestionComponent } from './components/question-show-gamified/question-show-gamified.component';
 import { RegisterComponent } from './components/player-register/player-register.component';
 import { ProfileComponent } from './components/player-profile/player-profile.component';
-import { ListItemComponent } from './components/game-list-item/game-list-item.component';
+import { GameItemComponent } from './components/game-list-item/game-item.component';
 import { ShowPlainQuestionComponent } from './components/question-show-plain/question-show-plain.component';
 import { GameShowDetailsComponent } from './components/game-show-details/game-show-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -40,7 +40,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GameComponent,
     GameCreateComponent,
     GameAddQuestionsComponent,
-    ShowGamesComponent,
+    GameListComponent,
     QuestionComponent,
     ChangeBgDirective,
     QuestionCreateComponent,
@@ -50,7 +50,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ShowGamifiedQuestionComponent,
     RegisterComponent,
     ProfileComponent,
-    ListItemComponent,
+    GameItemComponent,
     ShowPlainQuestionComponent,
     GameShowDetailsComponent,
   ],

@@ -93,15 +93,14 @@ export class Web3Service {
 
   private handleError(error: any) {
     let reason = 'unknown';
-
-    let begin = error.message.indexOf('{');
-    if (begin > 0) {
-      let data = JSON.parse(error.message.substr(begin))['data'];
-      for (const e in data) {
-        if ('reason' in data[e]) {
-          reason = data[e]['reason'];
-        }
-      }
+    var regex = /__TX_ERROR__/gi,
+      result,
+      indices = [];
+    while ((result = regex.exec(error.message))) {
+      indices.push(result.index);
+    }
+    if (indices.length >= 2) {
+      reason = error.message.substring(indices[0] + 12, indices[1]);
     }
     console.warn(reason);
     throw new Error(reason);

@@ -73,33 +73,33 @@ contract GameContract {
 
 
     modifier validateGameId(uint256 _gameId){
-        require(_gameId >=0 && _gameId < numGames, "Game Not Found!");
+        require(_gameId >=0 && _gameId < numGames, "__TX_ERROR__Game Not Found__TX_ERROR__");
         _;
     }
 
     modifier authenticatePlayer(address _playerId){
-        require(players[_playerId].isRegistered == true, "This user is not registered!");
+        require(players[_playerId].isRegistered == true, "__TX_ERROR__This user is not registered__TX_ERROR__");
         _;
     }
 
     modifier sufficientCredit(uint256 fee){
-        require(players[msg.sender].credit >= fee, "Unsufficeint credit for this action!");
+        require(players[msg.sender].credit >= fee, "__TX_ERROR__Unsufficeint credit for this action__TX_ERROR__");
         _;
     }
 
     modifier gameNotCreatedByUser(uint256 _gameId){
-        require(msg.sender != games[_gameId].creator, "Unathourized action on your own game!");
+        require(msg.sender != games[_gameId].creator, "__TX_ERROR__Unathourized action on your own game__TX_ERROR__");
         _;
     }
 
     modifier gameCreatedByUser(uint256 _gameId){
-        require(msg.sender == games[_gameId].creator, "Unathourized action on a game that is not created by you!");
+        require(msg.sender == games[_gameId].creator, "__TX_ERROR__Unathourized action on a game that is not created by you__TX_ERROR__");
         _;
     }
 
 
     function registerPlayer() external payable {
-        require(players[msg.sender].isRegistered == false, "This user has already been registered!");
+        require(players[msg.sender].isRegistered == false, "__TX_ERROR__This user has already been registered__TX_ERROR__");
 
         players[msg.sender].isRegistered = true;
         players[msg.sender].credit = INITIAL_CREDIT;
@@ -120,9 +120,9 @@ contract GameContract {
 
     // input example: "title","description",1,10,"",[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
     function createGame(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
-        require(_numQuestions <= MAX_QUESTIONS_COUNT && _numQuestions >= MIN_QUESTIONS_COUNT, "Each game should have at least 10 and at most 100 questions");
-        require(_price>=0 && _price <= 10, "game price should be between 0 t0 10!");
-        require(_gameQuestions.length == _numQuestions, "Number of questions passed should be equal to the number of questions specified in the game creation!");
+        require(_numQuestions <= MAX_QUESTIONS_COUNT && _numQuestions >= MIN_QUESTIONS_COUNT, "__TX_ERROR__Each game should have at least 10 and at most 100 questions__TX_ERROR__");
+        require(_price>=0 && _price <= 10, "__TX_ERROR__game price should be between 0 t0 10__TX_ERROR__");
+        require(_gameQuestions.length == _numQuestions, "__TX_ERROR__Number of questions passed should be equal to the number of questions specified in the game creation__TX_ERROR__");
 
         uint256 gameId = numGames++;
 
@@ -184,7 +184,7 @@ contract GameContract {
 
 
     function getGameQuestions(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) returns(uint8, Question[MAX_QUESTIONS_COUNT] memory){
-        require(players[msg.sender].gameStats[_gameId].isPurchased == true || games[_gameId].creator == msg.sender, "This player has not access to this game!");
+        require(players[msg.sender].gameStats[_gameId].isPurchased == true || games[_gameId].creator == msg.sender, "__TX_ERROR__This player has not access to this game__TX_ERROR__");
 
         Question[MAX_QUESTIONS_COUNT] memory gameQuestions;
         Game storage game = games[_gameId];
@@ -199,7 +199,7 @@ contract GameContract {
 
 
     function purchase(uint256 _gameId) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId) sufficientCredit(games[_gameId].details.price){
-        require(players[msg.sender].gameStats[_gameId].isPurchased == false, "This player have already purchased this game!");
+        require(players[msg.sender].gameStats[_gameId].isPurchased == false, "__TX_ERROR__This player have already purchased this game__TX_ERROR__");
 
         players[msg.sender].purchasedGames.push(_gameId);
         players[msg.sender].gameStats[_gameId].isPurchased = true;
@@ -214,7 +214,7 @@ contract GameContract {
 
 
     function play(uint256 _gameId, uint8 score) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId){
-        require(players[msg.sender].gameStats[_gameId].isPurchased == true, "This player did not purchase this game!");
+        require(players[msg.sender].gameStats[_gameId].isPurchased == true, "__TX_ERROR__This player did not purchase this game__TX_ERROR__");
 
         if (score > players[msg.sender].gameStats[_gameId].highscore){
             if (score >= FAIL_TRESHOLD){
@@ -232,19 +232,10 @@ contract GameContract {
         return numGames;
     }
 
-
-    function transferCredit(uint256 amount, address reciever) external payable authenticatePlayer(msg.sender) sufficientCredit(amount) {
-        require(players[reciever].isRegistered == true, "The reciever is not registered!");
-        require(amount > 0, "The transfer amount should be grater than 0 !");
-        players[msg.sender].credit -= amount;
-        players[reciever].credit +=amount;
-    }
-
-
     // since we don't have floating point number here we are going to store rating between 0 to 100 and in the app we can show it as 0 to 10
     function rateGame(uint256 _gameId, uint8 _rating) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId) {
-        require(players[msg.sender].gameStats[_gameId].isPurchased == true, "This player did not purchase this game!");
-        require(_rating <= 100 && _rating > 0, "rating number should be between 1 to 100!");
+        require(players[msg.sender].gameStats[_gameId].isPurchased == true, "__TX_ERROR__This player did not purchase this game__TX_ERROR__");
+        require(_rating <= 100 && _rating > 0, "__TX_ERROR__rating number should be between 1 to 100__TX_ERROR__");
 
         players[msg.sender].gameStats[_gameId].rating = _rating;
         games[_gameId].stats.rating = (_rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / (games[_gameId].stats.numRaters + 1);

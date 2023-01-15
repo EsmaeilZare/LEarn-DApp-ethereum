@@ -15,11 +15,6 @@ export class GameService {
   constructor(private web3: Web3Service) {}
 
   createGame(_gameDetails: GameDetails, _questions: Question[]) {
-    console.log(
-      'this is a log from game service calling createGame with:',
-      _gameDetails,
-      _questions
-    );
     try {
       this.web3.executeTransaction(
         'createGame',

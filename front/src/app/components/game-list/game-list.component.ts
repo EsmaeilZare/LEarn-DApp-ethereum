@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { GameService } from 'src/app/services/game.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Game } from 'src/app/types';
 
 @Component({
-  selector: 'app-show-games',
+  selector: 'app-game-list',
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.scss'],
 })
-export class ShowGamesComponent {
-  constructor(private gameService: GameService) {}
+export class GameListComponent {
+  @Input() _games: Game[];
+  @Output() gamePurchesed: EventEmitter<Game> = new EventEmitter();
 
-  games = this.gameService.getAllGames();
+  purchase(_game: Game) {
+    this.gamePurchesed.emit(_game);
+  }
 }
