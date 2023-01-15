@@ -14,27 +14,16 @@ import {
 export class GameService {
   constructor(private web3: Web3Service) {}
 
-  createGameInfo(gameDetails: GameDetails) {
+  createGame(_gameDetails: GameDetails, _gameQuestions: Question[]) {
     this.web3.executeTransaction(
       'createGame',
-      gameDetails.title,
-      gameDetails.description,
-      gameDetails.price,
-      gameDetails.numQuestions,
-      gameDetails.thumbnail
+      _gameDetails.title,
+      _gameDetails.description,
+      _gameDetails.price,
+      _gameDetails.numQuestions,
+      _gameDetails.thumbnail,
+      _gameQuestions
     );
-  }
-
-  createGameQusetions(_gameId: number, _gameQuestions: Question[]) {
-    const questions = [];
-    for (let i = 0; i < _gameQuestions.length; i++) {
-      questions.push([
-        _gameQuestions[i].text,
-        _gameQuestions[i].options,
-        _gameQuestions[i].answer,
-      ]);
-    }
-    this.web3.executeTransaction('createGameQusetions', _gameId, questions);
   }
 
   async getGameInfo(_gameId: number): Promise<Game> {

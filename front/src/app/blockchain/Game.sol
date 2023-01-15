@@ -44,7 +44,6 @@ contract GameContract {
         GameStats stats;
         mapping(uint8 => Question) questions;
         address creator;
-        bool isComplete;
     }
 
     struct PlayerGameStats {
@@ -67,7 +66,6 @@ contract GameContract {
     mapping(address => Player) private players;
 
     event PlayerRegistered(address playerId);
-    event GameInfoAdded(address playerId, uint256 gameId);
     event GameCreated(uint256 gameId);
     event GamePurchased(address playerId, uint256 gameId);
     event NewHighscore(address playerId, uint256 gameId, uint8 highscore);
@@ -99,11 +97,6 @@ contract GameContract {
         _;
     }
 
-    modifier gameIsComplete(uint256 _gameId){
-        require(games[_gameId].isComplete == true , "Game Not Ready!");
-        _;
-    }
-
 
     function registerPlayer() external payable {
         require(players[msg.sender].isRegistered == false, "This user has already been registered!");
@@ -125,10 +118,11 @@ contract GameContract {
     }
 
 
-    // input example: "Game Title", "Game Description", 1, 10, "https://livlo.co.uk/file/2019/06/486900232-1.jpg"
-    function createGameInfo(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
+    // input example: "title","description",1,10,"",[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
+    function createGame(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
         require(_numQuestions <= MAX_QUESTIONS_COUNT && _numQuestions >= MIN_QUESTIONS_COUNT, "Each game should have at least 10 and at most 100 questions");
         require(_price>=0 && _price <= 10, "game price should be between 0 t0 10!");
+        require(_gameQuestions.length == _numQuestions, "Number of questions passed should be equal to the number of questions specified in the game creation!");
 
         uint256 gameId = numGames++;
 
@@ -141,22 +135,8 @@ contract GameContract {
         newGame.details.thumbnail = _thumbnail;
         newGame.creator = msg.sender;
 
-        players[msg.sender].createdGames.push(gameId);
-        players[msg.sender].gameStats[gameId].isCreator = true;
-        players[msg.sender].credit -= GAME_CREATION_FEE;
-
-        emit GameInfoAdded(msg.sender, gameId);
-    }
-
-
-    // input example: 0,[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
-    function createGameQusetions(uint256 _gameId, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) gameCreatedByUser(_gameId) {
-        Game storage game = games[_gameId];
-        require(game.isComplete == false, "This is a complete game and you can not edit it anymore!");
-        require(_gameQuestions.length == game.details.numQuestions, "Number of questions passed should be equal to the number of questions specified in the game creation!");
-
-        for (uint8 i=0; i<game.details.numQuestions; i++){
-            Question storage question = game.questions[i];
+        for (uint8 i=0; i<_numQuestions; i++){
+            Question storage question = newGame.questions[i];
             question.text = _gameQuestions[i].text;
             question.options[0] = _gameQuestions[i].options[0];
             question.options[1] = _gameQuestions[i].options[1];
@@ -165,14 +145,15 @@ contract GameContract {
             question.answer = _gameQuestions[i].answer;
         }
 
-        game.isComplete = true;
+        players[msg.sender].createdGames.push(gameId);
+        players[msg.sender].gameStats[gameId].isCreator = true;
+        players[msg.sender].credit -= GAME_CREATION_FEE;
 
-        emit GameCreated(_gameId);
+        emit GameCreated(gameId);
     }
 
 
     function getGameInfo(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) returns(GameDetails memory, GameStats memory, PlayerGameStats memory){
-        require(games[_gameId].isComplete == true || games[_gameId].creator == msg.sender, "Game Not found!");
         GameDetails memory details = GameDetails({
             title: games[_gameId].details.title,
             description: games[_gameId].details.description,
@@ -202,7 +183,7 @@ contract GameContract {
     }
 
 
-    function getGameQuestions(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) returns(uint8, Question[MAX_QUESTIONS_COUNT] memory){
+    function getGameQuestions(uint256 _gameId) external view authenticatePlayer(msg.sender) validateGameId(_gameId) returns(uint8, Question[MAX_QUESTIONS_COUNT] memory){
         require(players[msg.sender].gameStats[_gameId].isPurchased == true || games[_gameId].creator == msg.sender, "This player has not access to this game!");
 
         Question[MAX_QUESTIONS_COUNT] memory gameQuestions;
@@ -217,7 +198,7 @@ contract GameContract {
     }
 
 
-    function purchase(uint256 _gameId) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) gameNotCreatedByUser(_gameId) sufficientCredit(games[_gameId].details.price){
+    function purchase(uint256 _gameId) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId) sufficientCredit(games[_gameId].details.price){
         require(players[msg.sender].gameStats[_gameId].isPurchased == false, "This player have already purchased this game!");
 
         players[msg.sender].purchasedGames.push(_gameId);
@@ -232,7 +213,7 @@ contract GameContract {
 
 
 
-    function play(uint256 _gameId, uint8 score) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) gameNotCreatedByUser(_gameId){
+    function play(uint256 _gameId, uint8 score) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId){
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "This player did not purchase this game!");
 
         if (score > players[msg.sender].gameStats[_gameId].highscore){
@@ -261,7 +242,7 @@ contract GameContract {
 
 
     // since we don't have floating point number here we are going to store rating between 0 to 100 and in the app we can show it as 0 to 10
-    function rateGame(uint256 _gameId, uint8 _rating) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameIsComplete(_gameId) gameNotCreatedByUser(_gameId) {
+    function rateGame(uint256 _gameId, uint8 _rating) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId) {
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "This player did not purchase this game!");
         require(_rating <= 100 && _rating > 0, "rating number should be between 1 to 100!");
 

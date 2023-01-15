@@ -11,8 +11,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  currentGameId: number = 1;
-  currentGameNumQuestions: number = 2;
 
   currentGameInfo = {
     id: 1,
@@ -53,13 +51,6 @@ export class AppComponent {
         (await this.gs.getAllGames()).forEach((game) => {
           this.games.set(game.id, game);
         });
-      });
-
-      this.gs.onEvent('GameInfoAdded').subscribe(async (data: any) => {
-        const gameId = parseInt(data.payload.gameId);
-        console.log('GameInfoAdded with id: ', gameId);
-        const game = await this.gs.getGameInfo(gameId);
-        this.games.set(gameId, game);
       });
 
       this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
@@ -115,12 +106,8 @@ export class AppComponent {
     }
   }
 
-  handleGameInfoCreate(_gameDetails: GameDetails) {
-    this.gs.createGameInfo(_gameDetails);
-  }
-
-  handleGameQuestionsCreate(_gameId: number, _gameQuestions: Question[]) {
-    this.gs.createGameQusetions(_gameId, _gameQuestions);
+  handleGameCreate(_gameDetails: GameDetails, _gameQuestions: Question[]) {
+    this.gs.createGame(_gameDetails, _gameQuestions);
   }
 
   handlePurchase(_gameId: number) {
