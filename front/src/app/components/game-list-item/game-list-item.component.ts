@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { Game } from 'src/app/types';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-game-list-item',
   templateUrl: './game-list-item.component.html',
-  styleUrls: ['./game-list-item.component.scss']
+  styleUrls: ['./game-list-item.component.scss'],
 })
 export class ListItemComponent {
+  currentRate = 6;
   game1 : Game = {
     id : 1,
     details: {
@@ -50,8 +53,8 @@ export class ListItemComponent {
 
     questions : [],
     playerStats : {
-      isCreator : true,
-      isPurchased : false,
+      isCreator : false,
+      isPurchased : true,
       highscore : 100,
       rating : 7
     }
@@ -75,7 +78,7 @@ export class ListItemComponent {
 
     questions : [],
     playerStats : {
-      isCreator : true,
+      isCreator : false,
       isPurchased : true,
       highscore : 100,
       rating : 7
@@ -83,7 +86,7 @@ export class ListItemComponent {
   }
 
   game4 : Game = {
-    id : 3,
+    id : 4,
     details: {
       title : "Sevomin Bazi",
       description : "In sevomin bazie kirie maast b hamin soorati ke molaheze mikonid. binandegan va shenavandegane aziz. kir too blockchain",

@@ -31,6 +31,7 @@ import { ProfileComponent } from './components/player-profile/player-profile.com
 import { ListItemComponent } from './components/game-list-item/game-list-item.component';
 import { ShowPlainQuestionComponent } from './components/question-show-plain/question-show-plain.component';
 import { GameShowDetailsComponent } from './components/game-show-details/game-show-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { GameShowDetailsComponent } from './components/game-show-details/game-sh
     ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
+    NgbModule,
   ],
   providers: [PlayerService, GameService],
   bootstrap: [AppComponent],
