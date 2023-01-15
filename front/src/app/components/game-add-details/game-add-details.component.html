@@ -2,7 +2,10 @@
   <div class="row g-2">
     <div class="form-group col-6">
       <div class="form-floating">
-        <input [ngClass]="{'is-invalid': title.invalid && (title.dirty || title.touched), 'is-valid': title.valid && (title.dirty || title.touched)}" aria-describedby="titleError" formControlName="title" name="title" type="text" class="form-control form-control-sm mb-0"  placeholder="Enter Tilte" id="title" required/>
+        <input
+          [ngClass]="{'is-invalid': title.invalid && (title.dirty || title.touched), 'is-valid': title.valid && (title.dirty || title.touched)}"
+          aria-describedby="titleError" formControlName="title" name="title" type="text"
+          class="form-control form-control-sm mb-0" placeholder="Enter Tilte" id="title" required />
         <label for="title" class="col-sm-3 col-form-label col-form-label-sm">
           Title
         </label>
@@ -10,45 +13,51 @@
           Please choose a title.
         </div>
       </div>
-      </div>
+    </div>
 
     <div class="form-group col-3">
       <div class="form-floating">
-        <input id="price" area-describedby="priceError" [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched), 'is-valid': price.valid && (price.dirty || price.touched)}" formControlName="price" type="number" min="0" max="10" class="form-control form-control-sm mb-0"
-          placeholder="Specify price of the game" id="price"/>
-          <label for="price" class="col-sm-3 col-form-label col-form-label-sm">
-            Price
-          </label>
-          <div id="priceError" class="invalid-feedback">
-            Please choose a price between 0 - 10.
-          </div>
+        <input id="price" area-describedby="priceError"
+          [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched), 'is-valid': price.valid && (price.dirty || price.touched)}"
+          formControlName="price" type="number" min="0" max="10" class="form-control form-control-sm mb-0"
+          placeholder="Specify price of the game" id="price" />
+        <label for="price" class="col-sm-3 col-form-label col-form-label-sm">
+          Price
+        </label>
+        <div id="priceError" class="invalid-feedback">
+          Please choose a price between 0 - 10.
+        </div>
       </div>
     </div>
     <div class="form-group col-3">
       <div class="form-floating">
-        <input id="qn" area-describedby="questionError" [ngClass]="{'is-invalid': qn.invalid && (qn.dirty || qn.touched), 'is-valid': qn.valid && (qn.dirty || qn.touched)}" formControlName="numQuestions" type="number" min="10" max="100" class="form-control form-control-sm mb-0"
-          placeholder="How many questions dose this game have?"/>
-          <label for="number" class="col-sm-3 col-form-label col-form-label-sm">
-            Number of Questions
-          </label>
-          <div id="questionError" class="invalid-feedback">
-            Please choose a number between 10 - 100.
-          </div>
+        <input id="qn" area-describedby="questionError"
+          [ngClass]="{'is-invalid': qn.invalid && (qn.dirty || qn.touched), 'is-valid': qn.valid && (qn.dirty || qn.touched)}"
+          formControlName="numQuestions" type="number" min="10" max="100" class="form-control form-control-sm mb-0"
+          placeholder="How many questions dose this game have?" />
+        <label for="number" class="col-sm-3 col-form-label col-form-label-sm">
+          Number of Questions
+        </label>
+        <div id="questionError" class="invalid-feedback">
+          Please choose a number between 10 - 100.
+        </div>
       </div>
-  </div>
+    </div>
   </div>
   <div class="form-group">
     <div class="form-floating">
       <textarea formControlName="description" type="text" class="form-control form-control-sm"
-        placeholder="Please add a short description" id="description" style="max-height: 150px; min-height: 75px;"></textarea>
-        <label class="col-sm-3 col-form-label col-form-label-sm">
-          Description
-        </label>
+        placeholder="Please add a short description" id="description"
+        style="max-height: 150px; min-height: 75px;"></textarea>
+      <label class="col-sm-3 col-form-label col-form-label-sm">
+        Description
+      </label>
     </div>
   </div>
   <div class="form-group">
     <div class="form-floating">
-      <input formControlName="thumbnail" type="text" class="form-control form-control-sm" placeholder="Image URL" id="image"/>
+      <input formControlName="thumbnail" type="text" class="form-control form-control-sm" placeholder="Image URL"
+        id="image" />
       <label for="image" class="col-sm-3 col-form-label col-form-label-sm">
         Image URL
       </label>
