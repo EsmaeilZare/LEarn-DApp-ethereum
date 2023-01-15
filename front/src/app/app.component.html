@@ -10,3 +10,4 @@
 <!-- <app-game-create (gameCreated)="handleGameCreate($event)"></app-game-create> -->
 <!-- <app-register (playerRegistered)="handleRegisterPlayer()"></app-register> -->
 <app-game-play></app-game-play>
+<app-game-list [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)"></app-game-list>
