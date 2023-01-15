@@ -30,6 +30,7 @@ import { RegisterComponent } from './components/player-register/player-register.
 import { ProfileComponent } from './components/player-profile/player-profile.component';
 import { ListItemComponent } from './components/game-list-item/game-list-item.component';
 import { ShowPlainQuestionComponent } from './components/question-show-plain/question-show-plain.component';
+import { GameShowDetailsComponent } from './components/game-show-details/game-show-details.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ShowPlainQuestionComponent } from './components/question-show-plain/que
     ProfileComponent,
     ListItemComponent,
     ShowPlainQuestionComponent,
+    GameShowDetailsComponent,
   ],
   imports: [
     BrowserModule,
