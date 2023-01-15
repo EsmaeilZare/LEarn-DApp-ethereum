@@ -5,7 +5,7 @@
         <img src="{{game.details.thumbnail}}" class="card-img-top h-50" alt="...">
         <div class="card-body">
           <p class="card-title display-5">{{game.details.title}}</p>
-          <p class="card-text">{{game.details.description}}</p>
+          <p class="card-text" style="font-size: 1.5rem;">{{game.details.description}}</p>
         </div>
         <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;">
           <button type="button" class="btn btn-primary btn-lg" *ngIf="game.playerStats.isPurchased; else play">

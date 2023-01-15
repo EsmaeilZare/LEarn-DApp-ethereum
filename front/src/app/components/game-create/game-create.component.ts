@@ -7,35 +7,24 @@ import { GameDetails } from 'src/app/types';
   templateUrl: './game-create.component.html',
   styleUrls: ['./game-create.component.scss'],
 })
+
 export class GameCreateComponent {
-  form: FormGroup;
 
-  @Output() gameDetailsAdded: EventEmitter<GameDetails> = new EventEmitter();
+  showDetails : boolean = false;
 
-  constructor(private fb: FormBuilder) {
-    this.formInit();
+  addDetails(gamedetails: GameDetails) {
+    this.showDetails = true;
+    console.log("***KIR***");
+    return;
   }
 
-  formInit() {
-    this.form = this.fb.group({
-      title: this.fb.control('', [Validators.required]),
-      price: this.fb.control('', [Validators.required]),
-      numQuestions: this.fb.control('', [Validators.required]),
-      description: this.fb.control(''),
-      thumbnail: this.fb.control(''),
-    });
+  addQuestions(questions: any) {
+    console.log("KIRI o TOKHMI", questions);
+    return;
   }
 
-  submitForm() {
-    const gameDetails: GameDetails = {
-      title: this.form.get('title').value,
-      price: this.form.get('price').value,
-      numQuestions: this.form.get('numQuestions').value,
-      description: this.form.get('description').value,
-      thumbnail: this.form.get('thumbnail').value,
-    };
-    this.formInit();
-
-    this.gameDetailsAdded.emit(gameDetails);
+  submitGame() {
+    console.log("Aghaye Atabaki kiram too sibilet");
+    return;
   }
 }

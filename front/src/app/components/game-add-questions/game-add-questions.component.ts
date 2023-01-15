@@ -8,7 +8,7 @@ import { Question } from 'src/app/types';
   styleUrls: ['./game-add-questions.component.scss'],
 })
 export class GameAddQuestionsComponent {
-  @Input() gameInfo: any;
+  @Input() numQuestions: any;
   @Output() gameQuestionsAdded: EventEmitter<any> = new EventEmitter();
 
   questions: Question[];
@@ -18,7 +18,7 @@ export class GameAddQuestionsComponent {
   }
 
   addQuestion(newQuestion: Question) {
-    console.log('=-=-=-=-=-=-', this.gameInfo.numQuestions);
+    console.log('=-=-=-=-=-=-', this.numQuestions);
     this.questions.push(newQuestion);
   }
 
