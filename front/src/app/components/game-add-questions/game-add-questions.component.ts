@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/types';
+import { GameDetails, Question } from 'src/app/types';
 
 @Component({
   selector: 'app-game-add-questions',
@@ -8,26 +7,42 @@ import { Question } from 'src/app/types';
   styleUrls: ['./game-add-questions.component.scss'],
 })
 export class GameAddQuestionsComponent {
-  @Input() numQuestions: any;
-  @Output() gameQuestionsAdded: EventEmitter<any> = new EventEmitter();
+  @Input() _questions?: Question[];
+  @Input() numQuestions: number;
+  @Output() gameQuestionsAdded: EventEmitter<Question[]> = new EventEmitter();
 
   questions: Question[];
 
   constructor() {
+    this.initQuestions();
+  }
+
+  initQuestions() {
     this.questions = [];
+    if (this._questions != null) {
+      this._questions.forEach((question) => {
+        this.questions.push(question);
+      });
+    }
   }
 
   addQuestion(newQuestion: Question) {
-    console.log('=-=-=-=-=-=-', this.numQuestions);
-    this.questions.push(newQuestion);
+    try {
+      if (
+        this.questions
+          .map((question) => question.text.toLowerCase())
+          .includes(newQuestion.text.toLowerCase())
+      ) {
+        alert('question already exists');
+        return;
+      }
+      this.questions.push(newQuestion);
+    } catch (e) {
+      console.log('Error: ', e);
+    }
   }
 
   createGameQuestions() {
-    const formData: any = {
-      // gameId: this.gameId,
-      questions: this.questions,
-    };
-
-    this.gameQuestionsAdded.emit(formData);
+    this.gameQuestionsAdded.emit(this.questions);
   }
 }

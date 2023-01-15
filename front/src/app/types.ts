@@ -47,14 +47,3 @@ export interface Player {
   createdGames: number[];
   purchasedGames: number[];
 }
-
-export interface PairForm {
-  word: string;
-  meaning: string;
-}
-
-export interface Pair {
-  id?: number;
-  word: string;
-  meaning: string;
-}

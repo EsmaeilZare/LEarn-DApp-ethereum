@@ -67,12 +67,10 @@ export class Web3Service {
   onEvents(event: string) {
     return new Observable((observer) => {
       this.contract.events[event]().on('data', async (data: any) => {
-        console.log('hey look what I found! => ', data.returnValues);
         if (data.returnValues.playerId) {
           const acc = await this.getAccount();
           if (acc != data.returnValues.playerId) {
-            console.log('TaDAAAAAAAAAAAaa => ', data.returnValues.playerId);
-            // return;
+            return;
           }
         }
         this.zone.run(() => {
@@ -102,10 +100,10 @@ export class Web3Service {
       for (const e in data) {
         if ('reason' in data[e]) {
           reason = data[e]['reason'];
-          console.warn(reason);
         }
       }
     }
+    console.warn(reason);
     throw new Error(reason);
   }
 }

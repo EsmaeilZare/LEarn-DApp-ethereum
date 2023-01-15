@@ -1,5 +1,60 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_description",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_numQuestions",
+        "type": "uint8"
+      },
+      {
+        "internalType": "string",
+        "name": "_thumbnail",
+        "type": "string"
+      },
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "internalType": "string[4]",
+            "name": "options",
+            "type": "string[4]"
+          },
+          {
+            "internalType": "enum GameContract.CorrectOption",
+            "name": "answer",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct GameContract.Question[]",
+        "name": "_gameQuestions",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "createGame",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -70,6 +125,24 @@
     "type": "event"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gameId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "score",
+        "type": "uint8"
+      }
+    ],
+    "name": "play",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -85,54 +158,55 @@
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "_title",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "_description",
-        "type": "string"
-      },
+        "internalType": "uint256",
+        "name": "_gameId",
+        "type": "uint256"
+      }
+    ],
+    "name": "purchase",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "uint256",
-        "name": "_price",
+        "name": "_gameId",
         "type": "uint256"
       },
       {
         "internalType": "uint8",
-        "name": "_numQuestions",
+        "name": "_rating",
         "type": "uint8"
-      },
-      {
-        "internalType": "string",
-        "name": "_thumbnail",
-        "type": "string"
-      },
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "text",
-            "type": "string"
-          },
-          {
-            "internalType": "string[4]",
-            "name": "options",
-            "type": "string[4]"
-          },
-          {
-            "internalType": "enum GameContract.CorrectOption",
-            "name": "answer",
-            "type": "uint8"
-          }
-        ],
-        "internalType": "struct GameContract.Question[]",
-        "name": "_gameQuestions",
-        "type": "tuple[]"
       }
     ],
-    "name": "createGame",
+    "name": "rateGame",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registerPlayer",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "reciever",
+        "type": "address"
+      }
+    ],
+    "name": "transferCredit",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -312,80 +386,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_gameId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "score",
-        "type": "uint8"
-      }
-    ],
-    "name": "play",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_gameId",
-        "type": "uint256"
-      }
-    ],
-    "name": "purchase",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_gameId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_rating",
-        "type": "uint8"
-      }
-    ],
-    "name": "rateGame",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "registerPlayer",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "reciever",
-        "type": "address"
-      }
-    ],
-    "name": "transferCredit",
-    "outputs": [],
-    "stateMutability": "payable",
     "type": "function"
   }
 ]

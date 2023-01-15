@@ -14,16 +14,25 @@ import {
 export class GameService {
   constructor(private web3: Web3Service) {}
 
-  createGame(_gameDetails: GameDetails, _gameQuestions: Question[]) {
-    this.web3.executeTransaction(
-      'createGame',
-      _gameDetails.title,
-      _gameDetails.description,
-      _gameDetails.price,
-      _gameDetails.numQuestions,
-      _gameDetails.thumbnail,
-      _gameQuestions
+  createGame(_gameDetails: GameDetails, _questions: Question[]) {
+    console.log(
+      'this is a log from game service calling createGame with:',
+      _gameDetails,
+      _questions
     );
+    try {
+      this.web3.executeTransaction(
+        'createGame',
+        _gameDetails.title,
+        _gameDetails.description,
+        _gameDetails.price,
+        _gameDetails.numQuestions,
+        _gameDetails.thumbnail,
+        _questions
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getGameInfo(_gameId: number): Promise<Game> {
@@ -31,7 +40,6 @@ export class GameService {
       const rawGameInfo = await this.web3.call('getGameInfo', _gameId);
       return this.parseGameInfo(_gameId, rawGameInfo);
     } catch (error) {
-      // alert('We could not retrieve game.\n');
       throw error;
     }
   }

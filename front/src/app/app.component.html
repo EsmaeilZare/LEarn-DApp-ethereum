@@ -7,4 +7,4 @@
 <!-- <app-game-add-questions [gameInfo]="currentGameInfo"></app-game-add-questions> -->
 <!-- <app-game-add-details></app-game-add-details> -->
 <!-- <app-game-list-item></app-game-list-item> -->
-<app-game-create></app-game-create>
+<app-game-create (gameCreated)="handleGameCreate($event)"></app-game-create>
