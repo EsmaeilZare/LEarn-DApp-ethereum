@@ -1,0 +1,23 @@
+<div class="card">
+  <img src="{{_gameDetails.thumbnail}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-title display-5">{{_gameDetails.title}}</p>
+    <p class="card-text" style="font-size: 1.5rem;">{{_gameDetails.description}}</p>
+  </div>
+  <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;">
+      <button type="button" class="btn btn-primary btn-lg">
+        Purchase for {{_gameDetails.price}}$
+      </button>
+  </div>
+  <div class="card-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-primary btn-sm">
+      <span class="badge bg-secondary">{{_gameDetails.numQuestions}}</span> Questions
+    </button>
+    <button type="button" class="btn btn-primary">
+      <span class="badge bg-secondary">50% Rated</span> &nbsp;<span class="badge bg-secondary">0 votes.</span>
+    </button>
+    <button type="button" class="btn btn-primary">
+      <span class="badge bg-secondary">X</span> Players
+    </button>
+  </div>
+</div>
