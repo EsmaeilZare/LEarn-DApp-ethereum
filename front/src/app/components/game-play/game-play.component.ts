@@ -12,7 +12,7 @@ export class GamePlayComponent implements OnInit {
   public questionList: any = [];
   public currentQuestion: number = 0;
   public points: number = 0;
-  counter = 60;
+  counter = 15;
   correctAnswer: number = 0;
   inCorrectAnswer: number = 0;
   interval$: any;
@@ -30,45 +30,42 @@ export class GamePlayComponent implements OnInit {
       this.questionList = res.questions;
     });
   }
-  nextQuestion() {
-    this.currentQuestion++;
-  }
-  previousQuestion() {
-    this.currentQuestion--;
-  }
-  answer(currentQno: number, option: any) {
-    if (currentQno === this.questionList.length) {
+
+  answer(currentQno: number, optionIndex: number) {
+    if (currentQno === this.questionList.length - 1) {
       this.isQuizCompleted = true;
       this.stopCounter();
     }
-    if (option.correct) {
-      this.points += 10;
+    const question = this.questionList[currentQno];
+
+    console.log(optionIndex, question.answer);
+    if (optionIndex == question.answer) {
+      this.points += Math.round(100 / this.questionList.length);
       this.correctAnswer++;
       setTimeout(() => {
         this.currentQuestion++;
         this.resetCounter();
         this.getProgressPercent();
-      }, 1000);
+      }, 300);
     } else {
       setTimeout(() => {
         this.currentQuestion++;
         this.inCorrectAnswer++;
         this.resetCounter();
         this.getProgressPercent();
-      }, 1000);
-
-      this.points -= 10;
+      }, 300);
     }
   }
+
   startCounter() {
     this.interval$ = interval(1000).subscribe((val) => {
       this.counter--;
       if (this.counter === 0) {
         this.currentQuestion++;
-        this.counter = 60;
-        this.points -= 10;
+        this.counter = 15;
       }
     });
+
     setTimeout(() => {
       this.interval$.unsubscribe();
     }, 600000);
@@ -79,14 +76,14 @@ export class GamePlayComponent implements OnInit {
   }
   resetCounter() {
     this.stopCounter();
-    this.counter = 60;
+    this.counter = 15;
     this.startCounter();
   }
   resetQuiz() {
     this.resetCounter();
     this.getAllQuestions();
     this.points = 0;
-    this.counter = 60;
+    this.counter = 15;
     this.currentQuestion = 0;
     this.progress = '0';
   }

@@ -3,14 +3,12 @@
     {
       "text": "Which of the following does TypeScript use to specify types?",
       "options": [":", ";", "!", "&"],
-      "answer": 0,
-      "explanation": "TS uses a colon (:) to separate the property name from the property type"
+      "answer": 0
     },
     {
       "text": "Which of the following is NOT a type used in TypeScript?",
       "options": ["number", "string", "boolean", "enum"],
-      "answer": 3,
-      "explanation": "enum is not used as a type in TypeScript"
+      "answer": 3
     },
     {
       "text": "How can we specify properties and methods for an object in TypeScript?",
@@ -20,38 +18,32 @@
         "Use enums.",
         "Use async/await."
       ],
-      "answer": 1,
-      "explanation": "interfaces are typically used to list the properties and methods for an object"
+      "answer": 1
     },
     {
       "text": "How else can Array<number> be written in TypeScript?",
       "options": ["@number", "number[]", "number!", "number?"],
-      "answer": 1,
-      "explanation": "number[] is another way of writing Array<number> in TypeScript"
+      "answer": 1
     },
     {
       "text": "In which of these does a class take parameters?",
       "options": ["constructor", "destructor", "import", "subscribe"],
-      "answer": 0,
-      "explanation": "a constructor is used by a class to take in parameters"
+      "answer": 0
     },
     {
       "text": "Which is NOT an access modifier?",
       "options": ["private", "protected", "public", "async"],
-      "answer": 3,
-      "explanation": "async is not used as an access modifier type in TypeScript"
+      "answer": 3
     },
     {
       "text": "Which keyword allows us to share information between files in TypeScript?",
       "options": ["import", "export", "async", "constructor"],
-      "answer": 1,
-      "explanation": "the export keyword allows for the information to be transmitted between files"
+      "answer": 1
     },
     {
       "text": "Which is an array method to generate a new array based on a condition?",
       "options": ["filter", "map", "async", "enum"],
-      "answer": 0,
-      "explanation": "filter is a method used to conditionally create a new array"
+      "answer": 0
     },
     {
       "text": "How is a property accessible within a class?",
@@ -61,8 +53,7 @@
         "Destructuring",
         "Arrow function"
       ],
-      "answer": 0,
-      "explanation": "this.propertyName is the way to access a specific property within a class"
+      "answer": 0
     }
   ]
 }
