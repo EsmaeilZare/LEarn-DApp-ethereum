@@ -8,6 +8,10 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./game-play.component.scss'],
 })
 export class GamePlayComponent implements OnInit {
+
+  tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+  crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+  htmlToAdd : string;
   public name: string = '';
   public questionList: any = [];
   public currentQuestion: number = 0;
@@ -32,6 +36,7 @@ export class GamePlayComponent implements OnInit {
   }
 
   answer(currentQno: number, optionIndex: number) {
+    console.log("MOHAGHAGH")
     if (currentQno === this.questionList.length - 1) {
       this.isQuizCompleted = true;
       this.stopCounter();
@@ -40,20 +45,22 @@ export class GamePlayComponent implements OnInit {
 
     console.log(optionIndex, question.answer);
     if (optionIndex == question.answer) {
+      this.htmlToAdd = this.tickIconTag;
       this.points += Math.round(100 / this.questionList.length);
       this.correctAnswer++;
       setTimeout(() => {
         this.currentQuestion++;
         this.resetCounter();
         this.getProgressPercent();
-      }, 300);
+      }, 1000);
     } else {
+      this.htmlToAdd = this.crossIconTag;
       setTimeout(() => {
         this.currentQuestion++;
         this.inCorrectAnswer++;
         this.resetCounter();
         this.getProgressPercent();
-      }, 300);
+      }, 1000);
     }
   }
 
@@ -71,6 +78,9 @@ export class GamePlayComponent implements OnInit {
     }, 600000);
   }
   stopCounter() {
+    if (this.currentQuestion === this.questionList.length) {
+      this.isQuizCompleted = true;
+    }
     this.interval$.unsubscribe();
     this.counter = 0;
   }
