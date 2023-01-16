@@ -3,74 +3,37 @@
 <div *ngIf="isLoaded" class="mt-5">
   <div class="body">
     <ng-container *ngIf="!isQuizCompleted">
-
       <div class="quiz_box">
-
         <header>
-          <!-- <div class="score">
-              <h5>{{points}} Points</h5>
-            </div> -->
-          <div class="title" style="font-style: italic;">Question {{currentQuestion+1}} of {{questionList.length}}</div>
+          <div class="title" style="font-style: italic;">Question {{currentQNumber+1}} of {{questionList.length}}</div>
           <div class="timer">
             <div class="time_left_txt">Time Left</div>
-            <div class="timer_sec">{{counter}}</div>
-            <!-- <h5>{{counter}} sec ⏱</h5> -->
+            <div class="timer_sec">{{conuntdown}}</div>
           </div>
-          <!-- <div class="time_line"></div> -->
         </header>
-
         <section>
           <div class="que_text">
-            <span>{{questionList[currentQuestion]?.text}}</span>
+            <span>{{questionList[currentQNumber]?.text}}</span>
           </div>
           <div class="option_list">
-            <div class="option" *ngFor="let option of questionList[currentQuestion]?.options; let i = index "
-              (click)="answer(currentQuestion,i)" appChangeBg [isCorrect]="i==questionList[currentQuestion]?.answer">
+            <div
+              [ngClass]="i!=lastAnswer && i==lastSelectedOption && !isAnswerable ? 'option incorrect' : i==lastAnswer && !isAnswerable ? 'option correct' :'option'"
+              *ngFor="let option of questionList[currentQNumber]?.options; let i = index "
+              (click)="isAnswerable ? answer(currentQNumber,i): false">
               <span>{{option}}</span>
-              <!-- <div *ngIf="i==questionList[currentQuestion]?.answer" class="icon tick"><i class="fas fa-check"></i></div> -->
-
+              <div *ngIf="i==lastAnswer && !isAnswerable" class="icon tick"><i class="fas fa-check"></i></div>
+              <div *ngIf="i!=lastAnswer && i==lastSelectedOption && !isAnswerable" class="icon cross"><i
+                  class="fas fa-times"></i></div>
             </div>
-            <!-- <ol *ngFor="let option of questionList[currentQuestion]?.options; let i = index">
-              <li (click)="answer(currentQuestion,i)">
-                <div appChangeBg [isCorrect]="i==questionList[currentQuestion]?.answer" class="option">
-                  <span>{{option}}</span>
-                </div>
-              </li>
-            </ol> -->
           </div>
         </section>
-
         <footer>
           <div class="total que">
             <h5>{{points}} Points</h5>
           </div>
         </footer>
-
-
-        <!-- <div class="progress mb-3">
-          <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width':progress+'%'}"
-            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div> -->
-
-        <!-- <div class="question">
-          <div class="card">
-            <h3>{{questionList[currentQuestion]?.text}}</h3>
-          </div>
-        </div> -->
-
-        <!-- <div class="options">
-          <ol *ngFor="let option of questionList[currentQuestion]?.options; let i = index">
-            <li (click)="answer(currentQuestion+1,option)">
-              <div appChangeBg [isCorrect]="i==questionList[currentQuestion]?.answer" class="card">
-                {{option}}
-              </div>
-            </li>
-          </ol>
-        </div> -->
-
       </div>
     </ng-container>
-
     <ng-container *ngIf="isQuizCompleted">
       <div class="result_box">
         <div class="icon">
@@ -78,27 +41,13 @@
         </div>
         <div class="complete_text">You've completed the Quiz!</div>
         <div class="text-center">
-          <h5 class="mt-2">You've answered {{correctAnswer}} out of {{questionList.length}} questions.</h5>
+          <h5 class="mt-2">You've answered {{correctAnswers}} out of {{questionList.length}} questions.</h5>
           <h5 class="mt-2">Your Score: {{points}} points.</h5>
         </div>
         <div class="buttons">
-          <button class="btn btn-info">Quit Quiz</button>
+          <button class="btn btn-info" (click)="quitQuiz()">Quit Quiz</button>
         </div>
       </div>
     </ng-container>
-
-    <!-- <ng-container *ngIf="isQuizCompleted">
-      <div class="row d-flex justify-content-between">
-        <img style="width: 50%;" class="img-fluid col-sm-12 mx-auto"
-          src="https://icon-library.com/images/celebration-icon-png/celebration-icon-png-7.jpg" alt="">
-        <div class="result text-center col-md-6 col-sm-12">
-          <h3>Congratulations!! <br>You have completed the quiz. <br>Below is your result:</h3>
-          <p>Total Question Attempted : {{questionList.length}} </p>
-          <p>Total Correct Answered : {{correctAnswer}} </p>
-          <p>Total Wrong Answered : {{inCorrectAnswer}} </p>
-          <p>Your Score : {{points}} Points </p>
-        </div>
-      </div>
-    </ng-container> -->
   </div>
 </div>
