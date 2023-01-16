@@ -1,7 +1,25 @@
 <app-header></app-header>
-<app-game-create *ngIf="appState.get('GameCreation')" (gameCreated)="handleGameCreate($event)"></app-game-create>
-<app-register *ngIf="appState.get('Registeration')" (playerRegistered)="handleRegisterPlayer()"></app-register>
+<div class="row">
+  <div class="col-2">
+    <div>
+      <button (click)="showCreateGame()">Create Game</button>
+    </div>
+    <div>
+      <button (click)="showAllGames()">All Games</button>
+    </div>
+    <div>
+      <button (click)="showCreatedGames()">Created Games</button>
+    </div>
+    <div>
+      <button (click)="showPurchasedGames()">Purchased Games</button>
+    </div>
+  </div>
+  <div class="col-10">
+    <app-game-list *ngIf="appState.get('GameList')" [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
+      (gameRated)="handleRateGame($event)" (playingStarted)="startPlaying($event)"></app-game-list>
+    <app-game-create *ngIf="appState.get('GameCreation')" (gameCreated)="handleGameCreate($event)"></app-game-create>
+    <app-register *ngIf="appState.get('Registeration')" (playerRegistered)="handleRegisterPlayer()"></app-register>
+  </div>
+</div>
 <app-game-play *ngIf="appState.get('Playing')" [_game]="activeGame"
   (gamePlayed)="handlePlayGame($event)"></app-game-play>
-<app-game-list *ngIf="appState.get('GameList')" [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)"
-  (gameRated)="handleRateGame($event)"></app-game-list>

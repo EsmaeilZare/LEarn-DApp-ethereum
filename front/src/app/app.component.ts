@@ -16,6 +16,7 @@ export class AppComponent {
   player: Player = null;
   gamesMap = new Map<number, Game>();
   activeGame: Game = null;
+  activeGameList: Game[] = [];
 
   appState = new Map<string, boolean>([
     ['GameList', true],
@@ -91,16 +92,44 @@ export class AppComponent {
     }
   }
 
-  getGamesList(_gameIds?: number[]) {
-    let gameList: Game[] = [];
+  setActiveGamesList(_gameIds: number[]) {
+    this.activeGameList = [];
     if (_gameIds == null) {
       _gameIds = [...this.gamesMap.keys()];
     }
     _gameIds.forEach((gameId) => {
-      gameList.push(this.gamesMap.get(gameId));
+      this.activeGameList.push(this.gamesMap.get(gameId));
     });
+  }
 
-    return gameList;
+  showCreateGame() {
+    this.appState.set('GameCreation', true);
+    this.appState.set('GameList', false);
+  }
+
+  showAllGames() {
+    this.setActiveGamesList(null);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  showCreatedGames() {
+    this.setActiveGamesList(this.player.createdGames);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  showPurchasedGames() {
+    this.setActiveGamesList(this.player.purchasedGames);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  startPlaying(_game: Game) {
+    this.setActiveGame(_game);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', false);
+    this.appState.set('Playing', true);
   }
 
   setActiveGame(game: Game) {

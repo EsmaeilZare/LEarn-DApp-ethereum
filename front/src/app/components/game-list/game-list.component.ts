@@ -10,6 +10,7 @@ export class GameListComponent {
   @Input() _games: Game[];
   @Output() gamePurchesed: EventEmitter<Game> = new EventEmitter();
   @Output() gameRated: EventEmitter<any> = new EventEmitter();
+  @Output() playingStarted: EventEmitter<Game> = new EventEmitter();
 
   // games: Game[];
 
@@ -19,6 +20,10 @@ export class GameListComponent {
 
   rateGame(_formData: any) {
     this.gameRated.emit(_formData);
+  }
+
+  startPlaying(_game: Game) {
+    this.playingStarted.emit(_game);
   }
 
   // constructor() {
