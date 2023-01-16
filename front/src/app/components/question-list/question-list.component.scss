@@ -1,11 +1,22 @@
 .table tr {
+  // display: flex;
+  align-items: center;
+  justify-content: space-between;
+  // justify-items: stretch;
   vertical-align: middle;
 }
 
 .table th {
+  text-align: center;
   position: sticky;
   top: 0px; /* 0px if you don't have a navbar, but something is required */
   background: fade-out($color: #f4f4f4, $amount: 0.25);
+}
+
+.table td {
+  text-align: center;
+  align-items: center;
+
 }
 
 .table-wrapper {

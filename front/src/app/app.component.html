@@ -80,10 +80,10 @@
 
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <li><a class="nav-link scrollto active" href="#">Home</a></li>
         <li (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Create Game</a></li>
         <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto" >Games</a></li>
-        <li><a class="nav-link scrollto " href="#portfolio">Features</a></li>
+        <li (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
         <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
         <li *ngIf="!isRegistered; else profile" (click)="handleRegisterPlayer()"><a class="getstarted scrollto">Register</a></li>
         <ng-template #profile >
@@ -189,40 +189,40 @@
       <!-- End Counts Section -->
 
     <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
+    <section #futures id="features" class="features">
       <div class="container">
 
         <div class="section-title" data-aos="fade-up">
           <h2>Features</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <p>A feature rich platform like nothing else</p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="300">
           <div class="col-lg-3 col-md-4">
             <div class="icon-box">
-              <i class="ri-store-line" style="color: #ffbb2c;"></i>
-              <h3><a href="">Lorem Ipsum</a></h3>
+              <i class="bi bi-database-x" style="color: #47aeff;"></i>
+              <h3><a href="">No database</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
             <div class="icon-box">
-              <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-              <h3><a href="">Dolor Sitema</a></h3>
+              <i class="bi bi-fingerprint" style="color: #29cc61"></i>
+              <h3><a href="">Secure Login</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
             <div class="icon-box">
-              <i class="ri-calendar-todo-line" style="color: #e80368;"></i>
-              <h3><a href="">Sed perspiciatis</a></h3>
+              <i class="bi bi-person-gear" style="color: #11dbcf;"></i>
+              <h3><a href="">24/7 Support</a></h3>
             </div>
           </div>
           <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
             <div class="icon-box">
-              <i class="ri-paint-brush-line" style="color: #e361ff;"></i>
-              <h3><a href="">Magni Dolores</a></h3>
+              <i class="bi bi-wallet2" style="color: #5578ff;"></i>
+              <h3><a href="">Wallet Connect</a></h3>
             </div>
           </div>
-          <div class="col-lg-3 col-md-4 mt-4">
+          <!-- <div class="col-lg-3 col-md-4 mt-4">
             <div class="icon-box">
               <i class="ri-database-2-line" style="color: #47aeff;"></i>
               <h3><a href="">Nemo Enim</a></h3>
@@ -270,8 +270,8 @@
               <h3><a href="">Flavor Nivelanda</a></h3>
             </div>
           </div>
+        </div> -->
         </div>
-
       </div>
     </section>
 
@@ -472,6 +472,28 @@
       </div>
     </section> -->
     <!-- End Portfolio Section -->
+
+      <!-- ======= Footer ======= -->
+      <footer id="footer">
+        <div class="container">
+          <div class="row d-flex align-items-center">
+            <div class="col-lg-6 text-lg-left text-center">
+              <div class="copyright">
+                &copy; Copyright <strong>(L)Earn</strong>. All Rights Reserved
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+                <a href="#intro" class="scrollto">Home</a>
+                <a href="#about" class="scrollto">About</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- End Footer -->
 </body>
 
 <!-- <app-dashbord></app-dashbord> -->

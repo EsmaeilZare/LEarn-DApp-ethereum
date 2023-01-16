@@ -1,12 +1,12 @@
 <div class="plainQuestion" (click)="showOptions = !showOptions">
-  <div class="card">
-    <p>{{question.text}}</p>
+  <div class="">
+    {{question.text}}
   </div>
 </div>
 <ng-container *ngIf="showOptions">
   <div class="options" *ngFor="let option of question.options; let i = index">
-    <div [ngClass]="{highlight: i==question.answer}" class="card">
-      {{option}}
+    <div [ngClass]="{highlight: i==question.answer}" class="d-flex justify-content-between">
+      <span>{{i+1}}.</span><span>{{option}}</span>
     </div>
   </div>
 </ng-container>
