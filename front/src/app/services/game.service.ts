@@ -14,7 +14,7 @@ import {
 export class GameService {
   constructor(private web3: Web3Service) {}
 
-  createGame(_gameDetails: GameDetails, _questions: Question[]) {
+  createGame(_gameDetails: GameDetails, _questions: Question[]): boolean {
     try {
       this.web3.executeTransaction(
         'createGame',
@@ -25,8 +25,10 @@ export class GameService {
         _gameDetails.thumbnail,
         _questions
       );
-    } catch (error) {
-      throw error;
+      return true;
+    } catch (error: any) {
+      console.error('could not create the game! Due to: ', error.message);
+      return false;
     }
   }
 
@@ -34,8 +36,9 @@ export class GameService {
     try {
       const rawGameInfo = await this.web3.call('getGameInfo', _gameId);
       return this.parseGameInfo(_gameId, rawGameInfo);
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      console.warn('could not retrieve game details due to : ', error.message);
+      return null;
     }
   }
 
@@ -50,9 +53,12 @@ export class GameService {
       }
 
       return games;
-    } catch (error) {
-      // alert('We could not retrieve games.\n');
-      throw error;
+    } catch (error: any) {
+      console.warn(
+        'could not retrieve any game details due to : ',
+        error.message
+      );
+      return [];
     }
   }
 
@@ -68,9 +74,12 @@ export class GameService {
         questions.push(this.parseGameQuestion(rawGameQuestion));
       });
       return questions;
-    } catch (error) {
-      // alert('We could not retrieve game.\n');
-      throw error;
+    } catch (error: any) {
+      console.warn(
+        'could not retrieve game questions details due to : ',
+        error.message
+      );
+      return [];
     }
   }
 
