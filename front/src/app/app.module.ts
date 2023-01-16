@@ -32,6 +32,7 @@ import { GameItemComponent } from './components/game-item/game-item.component';
 import { ShowPlainQuestionComponent } from './components/question-show-plain/question-show-plain.component';
 import { GameShowDetailsComponent } from './components/game-show-details/game-show-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GameItemComponent,
     ShowPlainQuestionComponent,
     GameShowDetailsComponent,
+    DashbordComponent,
   ],
   imports: [
     BrowserModule,
