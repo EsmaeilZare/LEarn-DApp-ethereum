@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { interval } from 'rxjs';
 import { QuestionService } from 'src/app/services/question.service';
+import { Game, Question } from 'src/app/types';
 
 @Component({
   selector: 'app-game-play',
@@ -8,12 +10,15 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./game-play.component.scss'],
 })
 export class GamePlayComponent implements OnInit {
+  @Input() _game: Game;
+  @Output() gamePlayed: EventEmitter<any> = new EventEmitter();
 
   tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
   crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
   htmlToAdd : string;
   public name: string = '';
   public questionList: any = [];
+
   public currentQuestion: number = 0;
   public points: number = 0;
   counter = 15;
@@ -22,17 +27,15 @@ export class GamePlayComponent implements OnInit {
   interval$: any;
   progress: string = '0';
   isQuizCompleted: boolean = false;
-  constructor(private questionService: QuestionService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.name = localStorage.getItem('name')!;
     this.getAllQuestions();
     this.startCounter();
   }
+
   getAllQuestions() {
-    this.questionService.getQuestionJson().subscribe((res) => {
-      this.questionList = res.questions;
-    });
+    this.questionList = this._game.questions;
   }
 
   answer(currentQno: number, optionIndex: number) {
@@ -103,5 +106,14 @@ export class GamePlayComponent implements OnInit {
       100
     ).toString();
     return this.progress;
+  }
+
+  quitQuiz() {
+    const formData: any = {
+      gameId: this._game.id,
+      score: this.points,
+    };
+
+    this.gamePlayed.emit(formData);
   }
 }

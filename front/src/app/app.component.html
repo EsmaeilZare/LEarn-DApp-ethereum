@@ -1,15 +1,7 @@
-<!-- <app-header></app-header> -->
-<!-- <router-outlet></router-outlet> -->
-<!-- <app-create-question></app-create-question>
-<app-show-gamified-question></app-show-gamified-question>
-<app-show-plain-question></app-show-plain-question>
-<app-question-list></app-question-list> -->
-<!-- <app-game-add-questions [gameInfo]="currentGameInfo"></app-game-add-questions> -->
-<!-- <app-game-add-details></app-game-add-details> -->
-<!-- <app-game-list-item></app-game-list-item> -->
-<!-- <app-game-create (gameCreated)="handleGameCreate($event)"></app-game-create> -->
-<!-- <app-register (playerRegistered)="handleRegisterPlayer()"></app-register> -->
-<app-game-play></app-game-play>
-<!-- <app-game-list [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)"></app-game-list> -->
-<!-- <app-game-play></app-game-play> -->
-<app-game-list [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)" (gameRated)="handleRateGame($event)"></app-game-list>
+<app-header></app-header>
+<app-game-create *ngIf="appState.get('GameCreation')" (gameCreated)="handleGameCreate($event)"></app-game-create>
+<app-register *ngIf="appState.get('Registeration')" (playerRegistered)="handleRegisterPlayer()"></app-register>
+<app-game-play *ngIf="appState.get('Playing')" [_game]="activeGame"
+  (gamePlayed)="handlePlayGame($event)"></app-game-play>
+<app-game-list *ngIf="appState.get('GameList')" [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)"
+  (gameRated)="handleRateGame($event)"></app-game-list>
