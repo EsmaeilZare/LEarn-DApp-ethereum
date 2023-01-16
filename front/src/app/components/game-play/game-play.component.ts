@@ -7,6 +7,8 @@ import {
   EventEmitter,
   SimpleChanges,
 } from '@angular/core';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import { start } from '@popperjs/core';
 import { interval } from 'rxjs';
 import { QuestionService } from 'src/app/services/question.service';
 import { Game, Question } from 'src/app/types';
@@ -22,114 +24,96 @@ export class GamePlayComponent implements OnInit {
   @Output() gamePlayed: EventEmitter<any> = new EventEmitter();
 
   isLoaded: boolean = false;
+  isAnswerable: boolean = true;
+  conuntdown: number = 0;
+  lastAnswer: number = 0;
+  lastSelectedOption: number = 0;
 
-  tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
-  crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
-  htmlToAdd: string;
-  public name: string = '';
-  // public questionList: any = [];
-
-  public currentQuestion: number = 0;
+  public currentQNumber: number = 0;
   public points: number = 0;
-  counter = 15;
-  correctAnswer: number = 0;
-  inCorrectAnswer: number = 0;
+  correctAnswers: number = 0;
+  incorrectAnswers: number = 0;
   interval$: any;
   progress: string = '0';
   isQuizCompleted: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {
-    // this.getAllQuestions();
-    this.startCounter();
+    this.startQuestion(this.currentQNumber, 15);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // let isOK = true;
     if (changes['questionList'].currentValue.length != 0) {
       this.isLoaded = true;
     }
-    // for (const propName in changes) {
-    //   const chng = changes[propName];
-    //   const cur = JSON.stringify(chng.currentValue);
-    //   const prev = JSON.stringify(chng.previousValue);
-    //   console.log(
-    //     `${propName}: currentValue = ${cur}, previousValue = ${prev}`
-    //   );
-    //   if (cur == null) {
-    //     isOK = false;
-    //   }
-    // }
-    // this.isLoaded = isOK;
   }
 
-  // getAllQuestions() {
-  //   this.questionList = this._game.questions;
-  // }
-
   answer(currentQno: number, optionIndex: number) {
-    if (currentQno === this.questionList.length - 1) {
-      this.isQuizCompleted = true;
-      this.stopCounter();
-    }
+    this.endQuestion(currentQno);
+
     const question = this.questionList[currentQno];
+    this.lastAnswer = question.answer;
+    this.lastSelectedOption = optionIndex;
 
     console.log(optionIndex, question.answer);
     if (optionIndex == question.answer) {
-      this.htmlToAdd = this.tickIconTag;
+      // correct answer
       this.points += Math.round(100 / this.questionList.length);
-      this.correctAnswer++;
+      this.correctAnswers++;
+
       setTimeout(() => {
-        this.currentQuestion++;
-        this.resetCounter();
         this.getProgressPercent();
-      }, 1000);
+        this.startQuestion(currentQno + 1, 15);
+      }, 2000);
     } else {
-      this.htmlToAdd = this.crossIconTag;
+      // incorrect answer
+      this.incorrectAnswers++;
+
       setTimeout(() => {
-        this.currentQuestion++;
-        this.inCorrectAnswer++;
-        this.resetCounter();
         this.getProgressPercent();
-      }, 1000);
+        this.startQuestion(currentQno + 1, 15);
+      }, 2000);
     }
   }
 
-  startCounter() {
+  startQuestion(qNumber: number, responsetimePeriod: number) {
+    if (qNumber >= this.questionList.length) {
+      this.isQuizCompleted = true;
+      return;
+    }
+    this.conuntdown = responsetimePeriod;
+    this.isAnswerable = true;
+
     this.interval$ = interval(1000).subscribe((val) => {
-      this.counter--;
-      if (this.counter === 0) {
-        this.currentQuestion++;
-        this.counter = 15;
+      if (this.conuntdown > 0) {
+        this.conuntdown--;
+      } else {
+        this.endQuestion(qNumber);
+        this.startQuestion(qNumber + 1, responsetimePeriod);
       }
     });
+  }
 
-    setTimeout(() => {
-      this.interval$.unsubscribe();
-    }, 600000);
-  }
-  stopCounter() {
-    if (this.currentQuestion === this.questionList.length) {
-      this.isQuizCompleted = true;
-    }
+  endQuestion(qNumber: number) {
+    this.isAnswerable = false;
     this.interval$.unsubscribe();
-    this.counter = 0;
+    setTimeout(() => {
+      this.currentQNumber++;
+    }, 2000);
   }
-  resetCounter() {
-    this.stopCounter();
-    this.counter = 15;
-    this.startCounter();
-  }
+
   resetQuiz() {
-    this.resetCounter();
+    this.endQuestion;
     this.points = 0;
-    this.counter = 15;
-    this.currentQuestion = 0;
+    this.currentQNumber = 0;
     this.progress = '0';
+    this.startQuestion(this.currentQNumber, 15);
   }
+
   getProgressPercent() {
     this.progress = (
-      (this.currentQuestion / this.questionList.length) *
+      (this.currentQNumber / this.questionList.length) *
       100
     ).toString();
     return this.progress;
