@@ -142,7 +142,7 @@ export class AppComponent {
     this.ps.play(_gameId, _score);
   }
 
-  handleRateGame(_gameId: number, _rating: number) {
-    this.ps.rateGame(_gameId, _rating);
+  handleRateGame(_formData: { gameId: number; rating: number }) {
+    this.ps.rateGame(_formData.gameId, _formData.rating);
   }
 }

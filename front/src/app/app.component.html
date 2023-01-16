@@ -11,3 +11,5 @@
 <!-- <app-register (playerRegistered)="handleRegisterPlayer()"></app-register> -->
 <app-game-play></app-game-play>
 <!-- <app-game-list [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)"></app-game-list> -->
+<!-- <app-game-play></app-game-play> -->
+<app-game-list [_games]="getGamesList()" (gamePurchesed)="handlePurchase($event)" (gameRated)="handleRateGame($event)"></app-game-list>
