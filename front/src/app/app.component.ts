@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent {
   showForm = false;
-
+  cg : HTMLElement;
   player: Player = null;
   gamesMap = new Map<number, Game>();
   activeGame: Game = null;
@@ -118,7 +118,9 @@ export class AppComponent {
   }
 
   showCreateGame() {
+    console.log("KIR")
     this.uiService.updateAppState('IN_GAME_CREATE');
+    console.log(this.appState)
   }
 
   showAllGames() {
@@ -146,8 +148,9 @@ export class AppComponent {
   }
 
   handleRegisterPlayer() {
+    this.isRegistered = true;
     const response = this.ps.registerPlayer();
-    this.uiService.updateIsRegistered(response);
+    // this.uiService.updateIsRegistered(response);
   }
 
   handleGameCreated(_formData: {
@@ -185,5 +188,10 @@ export class AppComponent {
 
   handleRateGame(_formData: { gameId: number; rating: number }) {
     this.ps.rateGame(_formData.gameId, _formData.rating);
+  }
+
+  scroll(el: HTMLElement) {
+    console.log("OMAD ",el)
+    el.scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 }

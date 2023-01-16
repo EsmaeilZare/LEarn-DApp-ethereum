@@ -30,6 +30,7 @@
 
 .body{
     background: #007bff;
+
 }
 
 ::selection{
@@ -38,10 +39,11 @@
 }
 
 .quiz_box{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    // position: absolute;
+    // margin-left: 100px;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
                 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -51,10 +53,10 @@
     width: 550px;
     background: #fff;
     border-radius: 5px;
-    transform: translate(-50%, -50%) scale(0.9);
+    // transform: translate(-50%, -50%) scale(0.9);
     // opacity: 0;
     // pointer-events: none;
-    transition: all 0.3s ease;
+    // transition: all 0.3s ease;
 }
 
 .quiz_box.activeQuiz {

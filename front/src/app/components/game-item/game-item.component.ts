@@ -5,6 +5,9 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { using } from 'rxjs';
+
+import { UiService } from 'src/app/services/ui.service';
 import { Game } from 'src/app/types';
 
 @Component({
@@ -20,7 +23,7 @@ export class GameItemComponent {
 
   rating: number = 0;
 
-  constructor() {
+  constructor(private ui : UiService) {
     this.initRating();
   }
 
@@ -52,5 +55,6 @@ export class GameItemComponent {
 
   startPlaying() {
     this.playingStarted.emit(this._game);
+    this.ui.updateAppState('IN_GAME_PLAY')
   }
 }
