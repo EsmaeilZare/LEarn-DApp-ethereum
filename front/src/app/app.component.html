@@ -92,7 +92,7 @@
             <button type="button" class="btn position-relative getstarted m-0"  style="padding: 5px 15px;">
             <span class="align-middle h5">Credit <svg style="height: 25px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"> <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> </span>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              10
+              {{player.credit}}
               <span class="visually-hidden">Credit</span>
             </span>
             </button>
@@ -299,12 +299,18 @@
       </div>
     </section>
 
-    <section>
+    <section *ngIf="appState == 'IN_GAME_PLAY'">
       <div class="container">
         <div class="section-title" data-aos="fade-up">
           <h2>Play</h2>
+          <p>You have 15 seconds to answer each question</p>
+          <p>You can not go back and forth between questions</p>
+          <p>You will be rewarded if you answer 60% of the questions correctly</p>
+          <p>Your credit will be deducted if you answer less than 60% of the questions correctly</p>
+
+
         </div>
-        <app-game-play *ngIf="appState == 'IN_GAME_PLAY'" [questionList]="activeQuestionList" [_game]="activeGame"
+        <app-game-play [questionList]="activeQuestionList" [_game]="activeGame"
         (gamePlayed)="handleFinishGame($event)"></app-game-play>
       </div>
     </section>

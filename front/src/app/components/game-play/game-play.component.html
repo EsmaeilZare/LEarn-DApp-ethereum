@@ -34,7 +34,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="isQuizCompleted">
-      <div class="result_box">
+      <div *ngIf="isQuizCompleted" class="result_box mx-auto text-center align-items-center">
         <div class="icon">
           <i class="fas fa-crown"></i>
         </div>

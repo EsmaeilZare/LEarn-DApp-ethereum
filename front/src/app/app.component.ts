@@ -155,7 +155,7 @@ export class AppComponent {
   handleRegisterPlayer() {
     this.isRegistered = true;
     const response = this.ps.registerPlayer();
-    // this.uiService.updateIsRegistered(response);
+    this.uiService.updateIsRegistered(response);
   }
 
   handleGameCreated(_formData: {

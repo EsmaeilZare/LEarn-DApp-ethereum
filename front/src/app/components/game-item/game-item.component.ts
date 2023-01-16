@@ -25,6 +25,15 @@ export class GameItemComponent {
 
   constructor(private ui : UiService) {
     this.initRating();
+
+    if (this._game) {
+      if (this._game.details.thumbnail == '') {
+      console.log("THUMBNAIL:", this._game.details.thumbnail);
+      this._game.details.thumbnail = "https://getuikit.com/v2/docs/images/placeholder_600x400.svg";
+      }
+
+    }
+
   }
 
   initRating() {
