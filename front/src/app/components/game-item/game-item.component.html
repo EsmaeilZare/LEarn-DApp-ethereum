@@ -10,31 +10,36 @@
       <div class="row justify-content-center">
         <div class="rating-wrapper">
           <!-- star 5 -->
-          <input type="radio" id="5-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="5">
+          <input type="radio" id="5-star-rating{{_game.id}}" name="star-rating" value="100" [checked]="rating==100"
+            (click)="rate(100)">
           <label for="5-star-rating{{_game.id}}" class="star-rating">
             <i class="fas fa-star d-inline-block"></i>
           </label>
 
           <!-- star 4 -->
-          <input type="radio" id="4-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="4">
+          <input type="radio" id="4-star-rating{{_game.id}}" name="star-rating" value="80" [checked]="rating==80"
+            (click)="rate(80)">
           <label for="4-star-rating{{_game.id}}" class="star-rating star">
             <i class="fas fa-star d-inline-block"></i>
           </label>
 
           <!-- star 3 -->
-          <input type="radio" id="3-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="3">
+          <input type="radio" id="3-star-rating{{_game.id}}" name="star-rating" value="60" [checked]="rating==60"
+            (click)="rate(60)">
           <label for="3-star-rating{{_game.id}}" class="star-rating star">
             <i class="fas fa-star d-inline-block"></i>
           </label>
 
           <!-- star 2 -->
-          <input type="radio" id="2-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="2">
+          <input type="radio" id="2-star-rating{{_game.id}}" name="star-rating" value="40" [checked]="rating==40"
+            (click)="rate(40)">
           <label for="2-star-rating{{_game.id}}" class="star-rating star">
             <i class="fas fa-star d-inline-block"></i>
           </label>
 
           <!-- star 1 -->
-          <input type="radio" id="1-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value="1">
+          <input type="radio" id="1-star-rating{{_game.id}}" name="star-rating" value="20" [checked]="rating==20"
+            (click)="rate(20)">
           <label for="1-star-rating{{_game.id}}" class="star-rating star">
             <i class="fas fa-star d-inline-block"></i>
           </label>
@@ -45,7 +50,8 @@
   </div>
 
   <!-- </div> -->
-  <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;">
+  <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;"
+    *ngIf="!_game.playerStats.isCreator">
     <button type="button" class="btn btn-primary btn-lg" *ngIf="_game.playerStats.isPurchased; else play">
       PLAY
     </button>

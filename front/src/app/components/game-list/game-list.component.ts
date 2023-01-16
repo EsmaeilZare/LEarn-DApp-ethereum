@@ -9,14 +9,23 @@ import { Game } from 'src/app/types';
 export class GameListComponent {
   @Input() _games: Game[];
   @Output() gamePurchesed: EventEmitter<Game> = new EventEmitter();
+  @Output() gameRated: EventEmitter<any> = new EventEmitter();
 
-  // _games: Game[];
+  // games: Game[];
 
   purchase(_game: Game) {
     this.gamePurchesed.emit(_game);
   }
 
+  rateGame(_formData: any) {
+    this.gameRated.emit(_formData);
+  }
+
   // constructor() {
+  //   this.setGames();
+  // }
+
+  // setGames() {
   //   let currentRate = 6;
   //   const game1: Game = {
   //     id: 1,
@@ -41,7 +50,7 @@ export class GameListComponent {
   //       isCreator: true,
   //       isPurchased: false,
   //       highscore: 100,
-  //       rating: 7,
+  //       rating: 100,
   //     },
   //   };
 
@@ -67,7 +76,7 @@ export class GameListComponent {
   //       isCreator: false,
   //       isPurchased: true,
   //       highscore: 100,
-  //       rating: 7,
+  //       rating: 20,
   //     },
   //   };
 
@@ -94,7 +103,7 @@ export class GameListComponent {
   //       isCreator: false,
   //       isPurchased: true,
   //       highscore: 100,
-  //       rating: 7,
+  //       rating: 40,
   //     },
   //   };
 
@@ -121,14 +130,19 @@ export class GameListComponent {
   //       isCreator: true,
   //       isPurchased: true,
   //       highscore: 100,
-  //       rating: 7,
+  //       rating: 80,
   //     },
   //   };
 
-  //   this._games = [];
-  //   this._games.push(game1);
-  //   this._games.push(game2);
-  //   this._games.push(game3);
-  //   this._games.push(game4);
+  //   this.games = [];
+  //   // this._games.splice(0);
+  //   // while (this._games.length) {
+  //   //   console.log('sag');
+  //   //   this._games.pop();
+  //   // }
+  //   this.games.push(game1);
+  //   this.games.push(game2);
+  //   this.games.push(game3);
+  //   this.games.push(game4);
   // }
 }
