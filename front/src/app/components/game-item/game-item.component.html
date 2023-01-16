@@ -52,11 +52,12 @@
   <!-- </div> -->
   <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;"
     *ngIf="!_game.playerStats.isCreator">
-    <button type="button" class="btn btn-primary btn-lg" *ngIf="_game.playerStats.isPurchased; else play">
+    <button type="button" class="btn btn-primary btn-lg" *ngIf="_game.playerStats.isPurchased; else play"
+      (click)="startPlaying()">
       PLAY
     </button>
     <ng-template #play>
-      <button type="button" class="btn btn-primary btn-lg">
+      <button type="button" class="btn btn-primary btn-lg" (click)="purchase()">
         Purchase for {{_game.details.price}}$
       </button>
     </ng-template>
