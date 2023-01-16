@@ -1,5 +1,12 @@
 import { outputAst } from '@angular/compiler';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
 import { interval } from 'rxjs';
 import { QuestionService } from 'src/app/services/question.service';
 import { Game, Question } from 'src/app/types';
@@ -11,13 +18,16 @@ import { Game, Question } from 'src/app/types';
 })
 export class GamePlayComponent implements OnInit {
   @Input() _game: Game;
+  @Input() questionList: any;
   @Output() gamePlayed: EventEmitter<any> = new EventEmitter();
+
+  isLoaded: boolean = false;
 
   tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
   crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
-  htmlToAdd : string;
+  htmlToAdd: string;
   public name: string = '';
-  public questionList: any = [];
+  // public questionList: any = [];
 
   public currentQuestion: number = 0;
   public points: number = 0;
@@ -30,16 +40,34 @@ export class GamePlayComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.getAllQuestions();
+    // this.getAllQuestions();
     this.startCounter();
   }
 
-  getAllQuestions() {
-    this.questionList = this._game.questions;
+  ngOnChanges(changes: SimpleChanges) {
+    // let isOK = true;
+    if (changes['questionList'].currentValue.length != 0) {
+      this.isLoaded = true;
+    }
+    // for (const propName in changes) {
+    //   const chng = changes[propName];
+    //   const cur = JSON.stringify(chng.currentValue);
+    //   const prev = JSON.stringify(chng.previousValue);
+    //   console.log(
+    //     `${propName}: currentValue = ${cur}, previousValue = ${prev}`
+    //   );
+    //   if (cur == null) {
+    //     isOK = false;
+    //   }
+    // }
+    // this.isLoaded = isOK;
   }
 
+  // getAllQuestions() {
+  //   this.questionList = this._game.questions;
+  // }
+
   answer(currentQno: number, optionIndex: number) {
-    console.log("MOHAGHAGH")
     if (currentQno === this.questionList.length - 1) {
       this.isQuizCompleted = true;
       this.stopCounter();
@@ -94,7 +122,6 @@ export class GamePlayComponent implements OnInit {
   }
   resetQuiz() {
     this.resetCounter();
-    this.getAllQuestions();
     this.points = 0;
     this.counter = 15;
     this.currentQuestion = 0;

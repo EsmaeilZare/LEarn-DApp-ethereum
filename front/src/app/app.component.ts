@@ -15,13 +15,18 @@ export class AppComponent {
 
   player: Player = null;
   gamesMap = new Map<number, Game>();
-  activeGame: Game = null;
-  activeGameList: Game[] = [];
 
   appState: string = 'IN_GAME_LIST';
   isRegistered: boolean = false;
+  activeGame: Game = null;
+  activeGameList: Game[] = [];
+  activeQuestionList: Question[] = [];
+
   appStateSubscription: Subscription;
   isRegisteredSubscription: Subscription;
+  activeGameSubscription: Subscription;
+  activeGameListSubscription: Subscription;
+  activeQuestionListSubscription: Subscription;
 
   constructor(
     private ps: PlayerService,
@@ -34,26 +39,16 @@ export class AppComponent {
     this.isRegisteredSubscription = this.uiService
       .onUpdateIsRegistered()
       .subscribe((value) => (this.isRegistered = value));
+    this.activeGameSubscription = this.uiService
+      .onUpdateActiveGame()
+      .subscribe((value) => (this.activeGame = value));
+    this.activeGameListSubscription = this.uiService
+      .onUpdateActiveGameList()
+      .subscribe((value) => (this.activeGameList = value));
+    this.activeQuestionListSubscription = this.uiService
+      .onUpdateActiveQuestionList()
+      .subscribe((value) => (this.activeQuestionList = value));
   }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   // let isOK = true;
-  //   if (changes['questions'].currentValue != null) {
-  //     this.isLoaded = true;
-  //   }
-  //   // for (const propName in changes) {
-  //   //   const chng = changes[propName];
-  //   //   const cur = JSON.stringify(chng.currentValue);
-  //   //   const prev = JSON.stringify(chng.previousValue);
-  //   //   console.log(
-  //   //     `${propName}: currentValue = ${cur}, previousValue = ${prev}`
-  //   //   );
-  //   //   if (cur == null) {
-  //   //     isOK = false;
-  //   //   }
-  //   // }
-  //   // this.isLoaded = isOK;
-  // }
 
   async ngOnInit() {
     try {
@@ -108,13 +103,14 @@ export class AppComponent {
   }
 
   setActiveGamesList(_gameIds: number[]) {
-    this.activeGameList = [];
+    const _activeGameList: Game[] = [];
     if (_gameIds == null) {
       _gameIds = [...this.gamesMap.keys()];
     }
     _gameIds.forEach((gameId) => {
-      this.activeGameList.push(this.gamesMap.get(gameId));
+      _activeGameList.push(this.gamesMap.get(gameId));
     });
+    this.uiService.updateActiveGameList(_activeGameList);
   }
 
   showCreateGame() {
@@ -137,12 +133,21 @@ export class AppComponent {
   }
 
   startPlayingGame(_game: Game) {
+    console.log('started game--> ', _game);
     this.setActiveGame(_game);
-    this.uiService.updateAppState('IN_GAME_PLAY');
+    this.setActiveQuestionList().then(() =>
+      this.uiService.updateAppState('IN_GAME_PLAY')
+    );
   }
 
-  setActiveGame(game: Game) {
-    this.activeGame = game;
+  setActiveGame(_game: Game) {
+    this.uiService.updateActiveGame(_game);
+    console.log('==============> ', this.activeGame);
+  }
+
+  async setActiveQuestionList(): Promise<void> {
+    const questions = await this.gs.getGameQuestions(this.activeGame.id);
+    this.uiService.updateActiveQuestionList(questions);
   }
 
   handleRegisterPlayer() {

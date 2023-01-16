@@ -1,5 +1,6 @@
 <div class="row row-cols-3 m-5">
   <div *ngFor="let game of _games" class="col mb-3">
-    <app-game-item [_game]="game" (gamePurchesed)="purchase($event)" (gameRated)="rateGame($event)"></app-game-item>
+    <app-game-item [_game]="game" (gamePurchesed)="purchase($event)" (gameRated)="rateGame($event)"
+      (playingStarted)="startPlaying($event)"></app-game-item>
   </div>
 </div>

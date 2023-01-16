@@ -63,23 +63,22 @@ export class GameService {
   }
 
   async getGameQuestions(_gameId: number): Promise<Question[]> {
+    const questions: Question[] = [];
     try {
-      const questions: Question[] = [];
-      const rawGameQuestions = await this.web3.call(
-        'getGameQuestions',
-        _gameId
-      );
-
-      rawGameQuestions.forEach((rawGameQuestion: any) => {
-        questions.push(this.parseGameQuestion(rawGameQuestion));
-      });
+      const respond = await this.web3.call('getGameQuestions', _gameId);
+      const numQuestions = respond[0];
+      const rawGameQuestions = respond[1];
+      for (let i = 0; i < numQuestions; i++) {
+        questions.push(this.parseGameQuestion(rawGameQuestions[i]));
+      }
+      console.log('------> ', questions);
       return questions;
     } catch (error: any) {
       console.warn(
         'could not retrieve game questions details due to : ',
         error.message
       );
-      return [];
+      return questions;
     }
   }
 
