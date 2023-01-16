@@ -11,16 +11,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  currentGameInfo = {
-    id: 1,
-    numQuestions: 2,
-  };
-
   showForm = false;
 
   player: Player = null;
   gamesMap = new Map<number, Game>();
   activeGame: Game = null;
+  activeGameList: Game[] = [];
+
+  appState = new Map<string, boolean>([
+    ['GameList', true],
+    ['Registeration', false],
+    ['GameCreation', false],
+    ['Playing', false],
+  ]);
 
   showAddTask: boolean = false;
   isRegistered: boolean = false;
@@ -48,6 +51,8 @@ export class AppComponent {
         (await this.gs.getAllGames()).forEach((game) => {
           this.gamesMap.set(game.id, game);
         });
+        this.appState.set('Registration', false);
+        this.appState.set('GameList', true);
       });
 
       this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
@@ -87,16 +92,44 @@ export class AppComponent {
     }
   }
 
-  getGamesList(_gameIds?: number[]) {
-    let gameList: Game[] = [];
+  setActiveGamesList(_gameIds: number[]) {
+    this.activeGameList = [];
     if (_gameIds == null) {
       _gameIds = [...this.gamesMap.keys()];
     }
     _gameIds.forEach((gameId) => {
-      gameList.push(this.gamesMap.get(gameId));
+      this.activeGameList.push(this.gamesMap.get(gameId));
     });
+  }
 
-    return gameList;
+  showCreateGame() {
+    this.appState.set('GameCreation', true);
+    this.appState.set('GameList', false);
+  }
+
+  showAllGames() {
+    this.setActiveGamesList(null);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  showCreatedGames() {
+    this.setActiveGamesList(this.player.createdGames);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  showPurchasedGames() {
+    this.setActiveGamesList(this.player.purchasedGames);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
+  }
+
+  startPlaying(_game: Game) {
+    this.setActiveGame(_game);
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', false);
+    this.appState.set('Playing', true);
   }
 
   setActiveGame(game: Game) {
@@ -121,6 +154,8 @@ export class AppComponent {
     } catch (error: any) {
       console.error('could not create game due to: ', error.message);
     }
+    this.appState.set('GameCreation', false);
+    this.appState.set('GameList', true);
   }
 
   handlePurchase(_game: Game) {
@@ -138,8 +173,10 @@ export class AppComponent {
     }
   }
 
-  handlePlay(_gameId: number, _score: number) {
-    this.ps.play(_gameId, _score);
+  handlePlayGame(_formData: { gameId: number; score: number }) {
+    this.ps.play(_formData.gameId, _formData.score);
+    this.appState.set('Playing', false);
+    this.appState.set('GameList', true);
   }
 
   handleRateGame(_formData: { gameId: number; rating: number }) {

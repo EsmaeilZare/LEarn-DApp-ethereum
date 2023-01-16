@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 <div class="mt-5">
   <div class="body">
@@ -7,16 +7,16 @@
       <div class="quiz_box">
 
         <header>
-            <!-- <div class="score">
+          <!-- <div class="score">
               <h5>{{points}} Points</h5>
             </div> -->
-            <div class="title" style="font-style: italic;">Question {{currentQuestion+1}} of {{questionList.length}}</div>
-            <div class="timer">
-              <div class="time_left_txt">Time Left</div>
-              <div class="timer_sec">{{counter}}</div>
-              <!-- <h5>{{counter}} sec ⏱</h5> -->
-            </div>
-            <!-- <div class="time_line"></div> -->
+          <div class="title" style="font-style: italic;">Question {{currentQuestion+1}} of {{questionList.length}}</div>
+          <div class="timer">
+            <div class="time_left_txt">Time Left</div>
+            <div class="timer_sec">{{counter}}</div>
+            <!-- <h5>{{counter}} sec ⏱</h5> -->
+          </div>
+          <!-- <div class="time_line"></div> -->
         </header>
 
         <section>
@@ -24,7 +24,8 @@
             <span>{{questionList[currentQuestion]?.text}}</span>
           </div>
           <div class="option_list">
-            <div class="option"  *ngFor="let option of questionList[currentQuestion]?.options; let i = index " (click)="answer(currentQuestion,i)"  appChangeBg [isCorrect]="i==questionList[currentQuestion]?.answer">
+            <div class="option" *ngFor="let option of questionList[currentQuestion]?.options; let i = index "
+              (click)="answer(currentQuestion,i)" appChangeBg [isCorrect]="i==questionList[currentQuestion]?.answer">
               <span>{{option}}</span>
               <!-- <div *ngIf="i==questionList[currentQuestion]?.answer" class="icon tick"><i class="fas fa-check"></i></div> -->
 
@@ -71,20 +72,20 @@
     </ng-container>
 
     <ng-container *ngIf="isQuizCompleted">
-    <div class="result_box">
-      <div class="icon">
+      <div class="result_box">
+        <div class="icon">
           <i class="fas fa-crown"></i>
-      </div>
-      <div class="complete_text">You've completed the Quiz!</div>
-      <div class="text-center">
-        <h5 class="mt-2">You've answered {{correctAnswer}} out of {{questionList.length}} questions.</h5>
-        <h5 class="mt-2">Your Score: {{points}} points.</h5>
-      </div>
-      <div class="buttons">
+        </div>
+        <div class="complete_text">You've completed the Quiz!</div>
+        <div class="text-center">
+          <h5 class="mt-2">You've answered {{correctAnswer}} out of {{questionList.length}} questions.</h5>
+          <h5 class="mt-2">Your Score: {{points}} points.</h5>
+        </div>
+        <div class="buttons">
           <button class="btn btn-info">Quit Quiz</button>
+        </div>
       </div>
-  </div>
-  </ng-container>
+    </ng-container>
 
     <!-- <ng-container *ngIf="isQuizCompleted">
       <div class="row d-flex justify-content-between">

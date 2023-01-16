@@ -16,6 +16,7 @@ export class GameItemComponent {
   @Input() _game: Game;
   @Output() gamePurchesed: EventEmitter<Game> = new EventEmitter();
   @Output() gameRated: EventEmitter<any> = new EventEmitter();
+  @Output() playingStarted: EventEmitter<Game> = new EventEmitter();
 
   rating: number = 0;
 
@@ -49,5 +50,7 @@ export class GameItemComponent {
     this.gamePurchesed.emit(this._game);
   }
 
-  startPlaying() {}
+  startPlaying() {
+    this.playingStarted.emit(this._game);
+  }
 }
