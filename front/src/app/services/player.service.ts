@@ -8,12 +8,17 @@ import { Player } from '../types';
 export class PlayerService {
   constructor(private web3: Web3Service) {}
 
-  registerPlayer() {
+  registerPlayer(): boolean {
     try {
       this.web3.executeTransaction('registerPlayer');
-    } catch (error) {
-      // alert('there was an error while registering in the game.\n');
-      throw error;
+      return true;
+    } catch (error: any) {
+      console.error('could not register to the game! Due to: ', error.message);
+      if (error.message == 'This user has already been registered') {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -21,22 +26,49 @@ export class PlayerService {
     try {
       const rawPlayer = await this.web3.call('getPlayer');
       return this.parsePlayer(rawPlayer);
-    } catch (error) {
-      // alert('We could not retrieve your account detail on the game.\n');
-      throw error;
+    } catch (error: any) {
+      console.warn(
+        'could not retrieve player details due to : ',
+        error.message
+      );
+      return null;
     }
   }
 
   purchase(_gameId: number) {
-    this.web3.executeTransaction('purchase', _gameId);
+    try {
+      this.web3.executeTransaction('purchase', _gameId);
+      return true;
+    } catch (error: any) {
+      console.error('could not purchase the game! Due to: ', error.message);
+      return false;
+    }
   }
 
   play(_gameId: number, _score: number) {
-    this.web3.executeTransaction('play', _gameId, _score);
+    try {
+      this.web3.executeTransaction('play', _gameId, _score);
+      return true;
+    } catch (error: any) {
+      console.error(
+        'could not save the result of game played! Due to: ',
+        error.message
+      );
+      return false;
+    }
   }
 
   rateGame(_gameId: number, _rating: number) {
-    this.web3.executeTransaction('rateGame', _gameId, _rating);
+    try {
+      this.web3.executeTransaction('rateGame', _gameId, _rating);
+      return true;
+    } catch (error: any) {
+      console.error(
+        'could not save the rating of game you entered! Due to: ',
+        error.message
+      );
+      return false;
+    }
   }
 
   parsePlayer(rawPlayer: any): Player {

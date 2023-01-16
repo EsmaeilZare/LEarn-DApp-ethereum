@@ -1,4 +1,4 @@
-<!-- <app-header></app-header>
+<app-header></app-header>
 <div class="row">
   <div class="col-2">
     <div>
@@ -15,14 +15,14 @@
     </div>
   </div>
   <div class="col-10">
-    <app-game-list *ngIf="appState.get('GameList')" [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
-      (gameRated)="handleRateGame($event)" (playingStarted)="startPlaying($event)"></app-game-list>
-    <app-game-create *ngIf="appState.get('GameCreation')" (gameCreated)="handleGameCreate($event)"></app-game-create>
-    <app-register *ngIf="appState.get('Registeration')" (playerRegistered)="handleRegisterPlayer()"></app-register>
+    <app-game-list *ngIf="appState == 'IN_GAME_LIST'" [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
+      (gameRated)="handleRateGame($event)" (playingStarted)="startPlayingGame($event)"></app-game-list>
+    <app-game-create *ngIf="appState == 'IN_GAME_CREATE'" (gameCreated)="handleGameCreated($event)"></app-game-create>
+    <app-register *ngIf="!isRegistered" (playerRegistered)="handleRegisterPlayer()"></app-register>
   </div>
 </div>
-<app-game-play *ngIf="appState.get('Playing')" [_game]="activeGame"
-  (gamePlayed)="handlePlayGame($event)"></app-game-play> -->
+<app-game-play *ngIf="appState == 'IN_GAME_PLAY'" [_game]="activeGame"
+  (gamePlayed)="handleFinishGame($event)"></app-game-play> -->
 <app-dashbord></app-dashbord>
 
 
@@ -422,4 +422,3 @@
       </div>
     </section>
     <!-- End Portfolio Section -->
-
