@@ -22,11 +22,7 @@
   </div>
 </div>
 <app-game-play *ngIf="appState == 'IN_GAME_PLAY'" [_game]="activeGame"
-  (gamePlayed)="handleFinishGame($event)"></app-game-play> --> -->
-<!-- <app-dashbord></app-dashbord> -->
-
-
-<!-- ------------------------------------------------ -->
+  (gamePlayed)="handleFinishGame($event)"></app-game-play> -->
 
 <head>
   <meta charset="utf-8">
@@ -41,75 +37,59 @@
   <link href="src/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <!-- <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="D:/La Sapienza/Third Sem/Blockchain/project-git/front/src/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
-
-  <!-- Template Main CSS File -->
-
-  <!-- =======================================================
-  * Template Name: Vesperr - v4.10.0
-  * Template URL: https://bootstrapmade.com/vesperr-free-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
-<!-- <div *ngIf="appState == 'IN_GAME_CREATE'" style="background-color: black;">
-  <app-game-create (gameCreated)="handleGameCreated($event)"></app-game-create>
 
-</div> -->
-<body>
+<body *ngIf="isLoaded">
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center pb-5">
+    <div class="container d-flex align-items-center justify-content-between">
 
+      <div class="logo">
+        <h1><a href="index.html">(L)Earn</a></h1>
+      </div>
 
- <!-- ======= Header ======= -->
- <header id="header" class="fixed-top d-flex align-items-center pb-5">
-  <div class="container d-flex align-items-center justify-content-between">
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#">Home</a></li>
+          <li (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Create Game</a>
+          </li>
+          <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Games</a></li>
+          <li (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+          <li *ngIf="!isRegistered; else profile" (click)="handleRegisterPlayer()"><a
+              class="getstarted scrollto">Register</a></li>
+          <ng-template #profile>
+            <li>
+              <a class="nav-link">
+                <button type="button" class="btn position-relative getstarted m-0" style="padding: 5px 15px;">
+                  <span class="align-middle h5">Credit <svg style="height: 25px;" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512">
+                      <path
+                        d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z" />
+                    </svg> </span>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{player.credit}}
+                    <span class="visually-hidden">Credit</span>
+                  </span>
+                </button>
+              </a>
+            </li>
 
-    <div class="logo">
-      <h1><a href="index.html">(L)Earn</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+          </ng-template>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+      <!-- .navbar -->
+
     </div>
 
-    <nav id="navbar" class="navbar">
-      <ul>
-        <li><a class="nav-link scrollto active" href="#">Home</a></li>
-        <li (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Create Game</a></li>
-        <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto" >Games</a></li>
-        <li (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
-        <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
-        <li *ngIf="!isRegistered; else profile" (click)="handleRegisterPlayer()"><a class="getstarted scrollto">Register</a></li>
-        <ng-template #profile >
-          <li>
-            <a class="nav-link">
-            <button type="button" class="btn position-relative getstarted m-0"  style="padding: 5px 15px;">
-            <span class="align-middle h5">Credit <svg style="height: 25px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"> <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> </span>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {{player.credit}}
-              <span class="visually-hidden">Credit</span>
-            </span>
-            </button>
-          </a>
-        </li>
+  </header>
 
-        </ng-template>
-      </ul>
-      <i class="bi bi-list mobile-nav-toggle"></i>
-    </nav>
-    <!-- .navbar -->
-
-  </div>
-
-</header>
-
-<!-- End Header -->
+  <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
@@ -118,16 +98,19 @@
       <div class="row">
         <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
           <h1 data-aos="fade-up">Earn and learn on the blockchain</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">(L)Earn is a growing quiz platform focused on learning while making money.</h2>
+          <h2 data-aos="fade-up" data-aos-delay="400">(L)Earn is a growing quiz platform focused on learning while
+            making money.</h2>
           <div data-aos="fade-up" data-aos-delay="800">
-            <a (click)="handleRegisterPlayer()" *ngIf="!isRegistered; else registered" class="btn-get-started scrollto">Register</a>
+            <a (click)="handleRegisterPlayer()" *ngIf="!isRegistered; else registered"
+              class="btn-get-started scrollto">Register</a>
             <ng-template #registered>
               <button class="btn btn-get-started">Play</button>
             </ng-template>
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
-          <img src="https://i.pinimg.com/originals/48/ff/04/48ff04f86b719be583203a47139e0c2c.png" class="img-fluid animated" alt="">
+          <img src="https://i.pinimg.com/originals/48/ff/04/48ff04f86b719be583203a47139e0c2c.png"
+            class="img-fluid animated" alt="">
         </div>
       </div>
     </div>
@@ -135,149 +118,105 @@
   </section>
   <!-- End Hero -->
 
-      <!-- ======= Counts Section ======= -->
-      <section id="counts" class="counts">
-        <div class="container">
+  <!-- ======= Counts Section ======= -->
+  <section id="counts" class="counts">
+    <div class="container">
 
-          <div class="row">
-            <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start" data-aos="fade-right" data-aos-delay="150">
-              <img src="assets/img/counts-img.svg" alt="" class="img-fluid">
-            </div>
+      <div class="row">
+        <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start"
+          data-aos="fade-right" data-aos-delay="150">
+          <img src="assets/img/counts-img.svg" alt="" class="img-fluid">
+        </div>
 
-            <div class="col-xl-7 d-flex align-items-stretch pt-4 pt-xl-0" data-aos="fade-left" data-aos-delay="300">
-              <div class="content d-flex flex-column justify-content-center">
-                <div class="row">
-                  <div class="col-md-6 d-md-flex align-items-md-stretch">
-                    <div class="count-box">
-                      <i class="bi bi-emoji-smile"></i>
-                      <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="1" class="purecounter">2</span>
-                      <p><strong>Members</strong> use our platform to learn and earn daily.</p>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 d-md-flex align-items-md-stretch">
-                    <div class="count-box">
-                      <i class="bi bi-journal-richtext"></i>
-                      <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter">5</span>
-                      <p><strong>Games</strong> Have already been uploaded and tested on the platform.</p>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 d-md-flex align-items-md-stretch">
-                    <div class="count-box">
-                      <i class="bi bi-clock"></i>
-                      <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1" class="purecounter">3</span>
-                      <p><strong>Hours</strong> spent on average by users on a daily basis.</p>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6 d-md-flex align-items-md-stretch">
-                    <div class="count-box">
-                      <i class="bi bi-award"></i>
-                      <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter">23</span>
-                      <p><strong>Awards</strong> Have been given to winners until now.</p>
-                    </div>
-                  </div>
+        <div class="col-xl-7 d-flex align-items-stretch pt-4 pt-xl-0" data-aos="fade-left" data-aos-delay="300">
+          <div class="content d-flex flex-column justify-content-center">
+            <div class="row">
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-emoji-smile"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="1"
+                    class="purecounter">2</span>
+                  <p><strong>Members</strong> use our platform to learn and earn daily.</p>
                 </div>
               </div>
-              <!-- End .content-->
-            </div>
-          </div>
 
-        </div>
-      </section>
-      <!-- End Counts Section -->
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-journal-richtext"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1"
+                    class="purecounter">5</span>
+                  <p><strong>Games</strong> Have already been uploaded and tested on the platform.</p>
+                </div>
+              </div>
 
-    <!-- ======= Features Section ======= -->
-    <section #futures id="features" class="features">
-      <div class="container">
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-clock"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1"
+                    class="purecounter">3</span>
+                  <p><strong>Hours</strong> spent on average by users on a daily basis.</p>
+                </div>
+              </div>
 
-        <div class="section-title" data-aos="fade-up">
-          <h2>Features</h2>
-          <p>A feature rich platform like nothing else</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="300">
-          <div class="col-lg-3 col-md-4">
-            <div class="icon-box">
-              <i class="bi bi-database-x" style="color: #47aeff;"></i>
-              <h3><a href="">No database</a></h3>
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-award"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                    class="purecounter">23</span>
+                  <p><strong>Awards</strong> Have been given to winners until now.</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-fingerprint" style="color: #29cc61"></i>
-              <h3><a href="">Secure Login</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-person-gear" style="color: #11dbcf;"></i>
-              <h3><a href="">24/7 Support</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
-            <div class="icon-box">
-              <i class="bi bi-wallet2" style="color: #5578ff;"></i>
-              <h3><a href="">Wallet Connect</a></h3>
-            </div>
-          </div>
-          <!-- <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-database-2-line" style="color: #47aeff;"></i>
-              <h3><a href="">Nemo Enim</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-gradienter-line" style="color: #ffa76e;"></i>
-              <h3><a href="">Eiusmod Tempor</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-file-list-3-line" style="color: #11dbcf;"></i>
-              <h3><a href="">Midela Teren</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-price-tag-2-line" style="color: #4233ff;"></i>
-              <h3><a href="">Pira Neve</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-anchor-line" style="color: #b2904f;"></i>
-              <h3><a href="">Dirada Pack</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-disc-line" style="color: #b20969;"></i>
-              <h3><a href="">Moton Ideal</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-base-station-line" style="color: #ff5828;"></i>
-              <h3><a href="">Verdo Park</a></h3>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-4 mt-4">
-            <div class="icon-box">
-              <i class="ri-fingerprint-line" style="color: #29cc61;"></i>
-              <h3><a href="">Flavor Nivelanda</a></h3>
-            </div>
-          </div>
-        </div> -->
+          <!-- End .content-->
         </div>
       </div>
-    </section>
 
-    <div #cg>
+    </div>
+  </section>
+  <!-- End Counts Section -->
 
-    <section *ngIf="appState == 'IN_GAME_CREATE'" >
+  <!-- ======= Features Section ======= -->
+  <section #futures id="features" class="features">
+    <div class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Features</h2>
+        <p>A feature rich platform like nothing else</p>
+      </div>
+
+      <div class="row" data-aos="fade-up" data-aos-delay="300">
+        <div class="col-lg-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-database-x" style="color: #47aeff;"></i>
+            <h3><a href="">No database</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-fingerprint" style="color: #29cc61"></i>
+            <h3><a href="">Secure Login</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-person-gear" style="color: #11dbcf;"></i>
+            <h3><a href="">24/7 Support</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
+          <div class="icon-box">
+            <i class="bi bi-wallet2" style="color: #5578ff;"></i>
+            <h3><a href="">Wallet Connect</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div #cg>
+
+    <section *ngIf="appState == 'IN_GAME_CREATE'">
       <div class="container">
         <div class="section-title" data-aos="fade-up">
           <h2>Create Game</h2>
@@ -289,13 +228,13 @@
       </div>
     </section>
 
-    <section *ngIf="appState == 'IN_GAME_LIST'" >
+    <section *ngIf="appState == 'IN_GAME_LIST'">
       <div class="container">
         <div class="section-title" data-aos="fade-up">
           <h2>List of Games</h2>
         </div>
         <app-game-list [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
-        (gameRated)="handleRateGame($event)" (playingStarted)="startPlayingGame($event)"></app-game-list>
+          (gameRated)="handleRateGame($event)" (playingStarted)="startPlayingGame($event)"></app-game-list>
       </div>
     </section>
 
@@ -311,195 +250,30 @@
 
         </div>
         <app-game-play [questionList]="activeQuestionList" [_game]="activeGame"
-        (gamePlayed)="handleFinishGame($event)"></app-game-play>
+          (gamePlayed)="handleFinishGame($event)"></app-game-play>
       </div>
     </section>
 
-    </div>
-
-
-
-
-
-    <!-- End Features Section -->
-
-     <!-- ======= Portfolio Section ======= -->
-     <!-- <section id="portfolio" class="portfolio">
-      <div class="container">
-
-        <div class="section-title" data-aos="fade-up">
-          <h2>Games</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
+  </div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>(L)Earn</strong>. All Rights Reserved
           </div>
         </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="400"> -->
-
-
-
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 1</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 2</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 2</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 2</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>App 3</h4>
-                <p>App</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 1</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Card 3</h4>
-                <p>Card</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Web 3</h4>
-                <p>Web</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                  <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                </div>
-              </div>
-            </div>
-          </div> -->
-
-        <!-- </div>
-
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="#intro" class="scrollto">Home</a>
+            <a href="#about" class="scrollto">About</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </nav>
+        </div>
       </div>
-    </section> -->
-    <!-- End Portfolio Section -->
-
-      <!-- ======= Footer ======= -->
-      <footer id="footer">
-        <div class="container">
-          <div class="row d-flex align-items-center">
-            <div class="col-lg-6 text-lg-left text-center">
-              <div class="copyright">
-                &copy; Copyright <strong>(L)Earn</strong>. All Rights Reserved
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-                <a href="#intro" class="scrollto">Home</a>
-                <a href="#about" class="scrollto">About</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </footer>
-      <!-- End Footer -->
+    </div>
+  </footer>
+  <!-- End Footer -->
 </body>
-
-<!-- <app-dashbord></app-dashbord> -->

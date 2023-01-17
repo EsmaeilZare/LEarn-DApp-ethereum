@@ -40,13 +40,12 @@ export class GamePlayComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.startQuestion(this.currentQNumber, 15);
-    console.log("Quizz completed: ", this.isQuizCompleted)
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['questionList'].currentValue.length != 0) {
       this.isLoaded = true;
+      this.startQuestion(this.currentQNumber, 15);
     }
   }
 
@@ -91,7 +90,9 @@ export class GamePlayComponent implements OnInit {
         this.conuntdown--;
       } else {
         this.endQuestion(qNumber);
-        this.startQuestion(qNumber + 1, responsetimePeriod);
+        setTimeout(() => {
+          this.startQuestion(qNumber + 1, responsetimePeriod);
+        }, 2000);
       }
     });
   }
