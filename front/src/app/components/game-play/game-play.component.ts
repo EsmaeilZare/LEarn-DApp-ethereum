@@ -26,8 +26,8 @@ export class GamePlayComponent implements OnInit {
   isLoaded: boolean = false;
   isAnswerable: boolean = true;
   conuntdown: number = 0;
-  lastAnswer: number = 0;
-  lastSelectedOption: number = 0;
+  lastAnswer: number = 5;
+  lastSelectedOption: number = 5;
 
   public currentQNumber: number = 0;
   public points: number = 0;
@@ -102,6 +102,7 @@ export class GamePlayComponent implements OnInit {
     this.interval$.unsubscribe();
     setTimeout(() => {
       this.currentQNumber++;
+      this.lastSelectedOption = 5;
     }, 2000);
   }
 

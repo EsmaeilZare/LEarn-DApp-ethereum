@@ -1,15 +1,15 @@
-<div name="create" *ngIf="!previewStage">
+  <div name="create" *ngIf="!previewStage">
   <app-game-add-details *ngIf="!addQuestionStage" [_gameDetails]="gameDetails"
     (gameDetailsAdded)="addDetails($event)"></app-game-add-details>
   <app-game-add-questions *ngIf="addQuestionStage" [_questions]="questions" [numQuestions]="gameDetails.numQuestions"
     (gameQuestionsAdded)="addQuestions($event)"></app-game-add-questions>
 </div>
 <div name="preview" *ngIf="previewStage">
-  <div class="row g-2 p-5">
-    <div class="col-6">
+  <div class="row g-2 p-5 m-5">
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <app-game-show-details [_gameDetails]="gameDetails"></app-game-show-details>
     </div>
-    <div class="col-6">
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <app-question-list [questions]="questions"></app-question-list>
     </div>
   </div>

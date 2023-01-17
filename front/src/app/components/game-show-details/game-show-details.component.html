@@ -1,23 +1,23 @@
-<div class="card">
-  <img *ngIf="!_gameDetails.thumbnail; else image" src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" class="card-img-top">
-  <ng-template #image>  <img src="{{_gameDetails.thumbnail}}" class="card-img-top" alt="..."></ng-template>
+<div class="card h-100">
+  <img *ngIf="!_gameDetails.thumbnail; else image" src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" class="card-img-top img-fluid" style="height: 20rem; object-fit: cover;">
+  <ng-template #image>  <img src="{{_gameDetails.thumbnail}}" class="card-img-top img-fluid" style="height: 20rem; object-fit: cover;"></ng-template>
   <div class="card-body">
     <p class="card-title display-5">{{_gameDetails.title}}</p>
     <p class="card-text" style="font-size: 1.5rem;">{{_gameDetails.description}}</p>
   </div>
   <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;">
-      <button type="button" class="btn btn-primary btn-lg">
-        Purchase for {{_gameDetails.price}}$
+      <button type="button" class="btn btn-lg" style="background-color: #50adda;">
+        <span class="align-middle h5">Purchase for {{_gameDetails.price}}<svg style="height: 25px; margin-bottom: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"> <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg> </span>
       </button>
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <button type="button" class="btn btn-primary btn-sm">
+    <button type="button" class="btn mid btn-sm">
       <span class="badge bg-secondary">{{_gameDetails.numQuestions}}</span> Questions
     </button>
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn mid">
       <span class="badge bg-secondary">50% Rated</span> &nbsp;<span class="badge bg-secondary">0 votes.</span>
     </button>
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn mid">
       <span class="badge bg-secondary">X</span> Players
     </button>
   </div>
