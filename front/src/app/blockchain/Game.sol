@@ -62,6 +62,7 @@ contract GameContract {
     }
 
     uint256 private numGames;
+    uint256 private numPlayers;
     mapping(uint256 => Game) private games;
     mapping(address => Player) private players;
 
@@ -103,6 +104,7 @@ contract GameContract {
 
         players[msg.sender].isRegistered = true;
         players[msg.sender].credit = INITIAL_CREDIT;
+        numPlayers++;
 
         emit PlayerRegistered(msg.sender);
     }
@@ -236,8 +238,12 @@ contract GameContract {
     }
 
 
-    function getGamesCount() external view authenticatePlayer(msg.sender) returns(uint256) {
+    function getGamesCount() external view returns(uint256) {
         return numGames;
+    }
+
+    function getPlayersCount() external view returns(uint256) {
+        return numPlayers;
     }
 
     // since we don't have floating point number here we are going to store rating between 0 to 100 and in the app we can show it as 0 to 10

@@ -45,7 +45,7 @@ export class GameService {
   async getAllGames(): Promise<Game[]> {
     try {
       const games: Game[] = [];
-      const totalGamesCount = await this.web3.call('getGamesCount');
+      const totalGamesCount = await this.getGamesCount();
 
       for (let gameId = 0; gameId < totalGamesCount; gameId++) {
         const game = await this.getGameInfo(gameId);
@@ -78,6 +78,19 @@ export class GameService {
         error.message
       );
       return questions;
+    }
+  }
+
+  async getGamesCount(): Promise<number> {
+    try {
+      const totalGamesCount = await this.web3.call('getGamesCount');
+      return totalGamesCount;
+    } catch (error: any) {
+      console.warn(
+        'could not retrieve number of games due to : ',
+        error.message
+      );
+      return 0;
     }
   }
 
