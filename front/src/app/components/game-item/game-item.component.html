@@ -1,16 +1,16 @@
-<div class="card h-100">
+<div class="card h-100" style=" background-color: #f3f4f6">
   <img *ngIf="!_game.details.thumbnail; else image" src="{{src}}" class="card-img-top img-fluid" style="height: 20rem; object-fit: cover;">
   <ng-template #image>  <img src="{{_game.details.thumbnail}}" class="card-img-top img-fluid" style="height: 20rem; object-fit: cover;">
   </ng-template>
   <div class="card-body" style="height: 10rem;">
     <p class="card-title display-6">{{_game.details.title}}</p>
-    <hr>
+    <hr style="color: #3c84b8;">
     <p class="card-text" style="font-size: 1rem;">{{_game.details.description}}</p>
   </div>
   <div  *ngIf="_game.playerStats.isPurchased && !_game.playerStats.isCreator">
-    <div class="container d-flex align-items-center justify-content-center mb-0">
-      <div class="row justify-content-center">
-        <div class="rating-wrapper">
+    <!-- <div class="container d-flex align-items-center justify-content-center mb-0"> -->
+      <div class="row my-4">
+        <div class="rating-wrapper d-flex justify-content-center">
           <!-- star 5 -->
           <input type="radio" id="5-star-rating{{_game.id}}" name="star-rating" value="100" [checked]="rating==100"
             (click)="rate(100)">
@@ -48,13 +48,13 @@
 
         </div>
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 
   <!-- </div> -->
   <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;"
     *ngIf="!_game.playerStats.isCreator">
-    <button type="button" class="btn btn-primary btn-lg" *ngIf="_game.playerStats.isPurchased; else play" style="background-color: #50adda;"
+    <button type="button" class="btn btn-lg" *ngIf="_game.playerStats.isPurchased; else play" style="background-color: #50adda;"
       (click)="startPlaying()">
       PLAY
     </button>
@@ -64,20 +64,21 @@
       </button>
     </ng-template>
   </div>
-  <div class="card-footer d-flex justify-content-between">
-    <button class="btn mid d-flex justify-content-between align-items-center btn-sm">
+  <div class="card-footer d-flex justify-content-between px-2">
+    <button class="btn mid d-flex justify-content-between align-items-center btn-sm px-1">
       <span class="badge bg-secondary">{{_game.details.numQuestions}}</span> &nbsp;Questions
     </button>
-    <button type="button" class="btn d-flex justify-content-between align-items-center btn-sm"
-      [ngClass]=" {bad: _game.stats.rating <= 35 ,mid: _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}">
-      <span class="badge bg-secondary">{{_game.stats.rating}}% Rated</span> &nbsp;
-      <span class="badge bg-secondary">{{_game.stats.numRaters}} votes.</span>
+    <button type="button" class="btn d-flex justify-content-between align-items-center btn-sm px-1 mid">
+            <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
+              class="badge">{{_game.stats.rating}}% Rated</span> &nbsp;
+      <span [ngClass]=" {bad: _game.stats.rating <= 35 ,mid: _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
+        class="badge">{{_game.stats.numRaters}} votes</span>
     </button>
-    <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm" *ngIf="_game.playerStats.isPurchased; else players">
+    <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm px-1" *ngIf="_game.playerStats.isPurchased; else players">
       <span class="badge bg-secondary">{{_game.playerStats.highscore}}</span> &nbsp;Highscore
     </button>
     <ng-template #players>
-      <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm">
+      <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm px-1">
         <span class="badge bg-secondary">{{_game.stats.numBuyers}}</span> &nbsp;Players
       </button>
     </ng-template>

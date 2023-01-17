@@ -5,11 +5,11 @@
     (gameQuestionsAdded)="addQuestions($event)"></app-game-add-questions>
 </div>
 <div name="preview" *ngIf="previewStage">
-  <div class="row g-2 p-5 m-5">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+  <div class="row g-2">
+    <div class="col-6">
       <app-game-show-details [_gameDetails]="gameDetails"></app-game-show-details>
     </div>
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-6 px-5">
       <app-question-list [questions]="questions" [editMode]="false"></app-question-list>
     </div>
   </div>

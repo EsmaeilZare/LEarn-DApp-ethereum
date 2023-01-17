@@ -104,7 +104,7 @@
             <a (click)="handleRegisterPlayer()" *ngIf="!isRegistered; else registered"
               class="btn-get-started scrollto">Register</a>
             <ng-template #registered>
-              <button class="btn btn-get-started">Play</button>
+              <button (click)="[showAllGames(), scroll(cg)]" class="btn btn-get-started">Play</button>
             </ng-template>
           </div>
         </div>
