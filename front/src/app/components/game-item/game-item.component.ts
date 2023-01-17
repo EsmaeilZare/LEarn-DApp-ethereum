@@ -1,13 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
-import { using } from 'rxjs';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 
-import { UiService } from 'src/app/services/ui.service';
 import { Game } from 'src/app/types';
 
 @Component({
@@ -22,22 +14,22 @@ export class GameItemComponent {
   @Output() playingStarted: EventEmitter<Game> = new EventEmitter();
   src : string = "https://getuikit.com/v2/docs/images/placeholder_600x400.svg";
 
-  rating: number = 0;
 
-  constructor(private ui : UiService) {
-    this.initRating();
+  constructor() {
   }
 
-  initRating() {
-    if (this._game != null) {
-      this.rating = this._game.playerStats.rating;
+  isLoaded: boolean = false;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['_game'].currentValue != null) {
+      this.isLoaded = true;
+      console.log("player high score in game ", this._game.id, " is:", this._game.playerStats.highscore)
     }
   }
 
   rate(_rating: number) {
     try {
-      console.log('dskfjdsalkjfdslkj');
-      if (_rating == this.rating) {
+      if (_rating == this._game.playerStats.rating) {
         return;
       }
       const payload = {
@@ -56,6 +48,5 @@ export class GameItemComponent {
 
   startPlaying() {
     this.playingStarted.emit(this._game);
-    this.ui.updateAppState('IN_GAME_PLAY')
   }
 }

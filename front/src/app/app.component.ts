@@ -71,6 +71,7 @@ export class AppComponent {
         (await this.gs.getAllGames()).forEach((game) => {
           this.gamesMap.set(game.id, game);
         });
+        this.uiService.updateAppState('IN_GAME_LIST');
       });
 
       this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
@@ -78,6 +79,7 @@ export class AppComponent {
         const game = await this.gs.getGameInfo(gameId);
         this.player.credit -= game.details.price * 5;
         this.gamesMap.set(gameId, game);
+        this.uiService.updateAppState('IN_GAME_LIST');
       });
 
       this.ps.onEvent('GamePurchased').subscribe(async (data: any) => {
@@ -85,20 +87,32 @@ export class AppComponent {
         const game = await this.gs.getGameInfo(gameId);
         this.player.credit -= game.details.price;
         this.gamesMap.set(gameId, game);
+        this.setActiveGamesList(null);
+        this.uiService.updateAppState('IN_GAME_LIST');
       });
 
       this.ps.onEvent('GameResult').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         const game = this.gamesMap.get(gameId);
         this.player.credit = parseInt(data.payload.playerCredit);
-        game.playerStats.highscore = parseInt(data.payload.score);
+        console.log(
+          'this is the high score',
+          data.payload.highscore,
+          'driven from blockchain event on game ',
+          gameId
+        );
+        game.playerStats.highscore = parseInt(data.payload.highscore);
         this.gamesMap.set(gameId, game);
+        this.setActiveGamesList(null);
+        this.uiService.updateAppState('IN_GAME_LIST');
       });
 
       this.gs.onEvent('GameRated').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         const game = await this.gs.getGameInfo(gameId);
         this.gamesMap.set(gameId, game);
+        this.setActiveGamesList(null);
+        this.uiService.updateAppState('IN_GAME_LIST');
       });
     } catch (error: any) {
       switch (error.message) {

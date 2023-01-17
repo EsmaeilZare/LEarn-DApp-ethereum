@@ -71,7 +71,6 @@ export class GameService {
       for (let i = 0; i < numQuestions; i++) {
         questions.push(this.parseGameQuestion(rawGameQuestions[i]));
       }
-      console.log('------> ', questions);
       return questions;
     } catch (error: any) {
       console.warn(
