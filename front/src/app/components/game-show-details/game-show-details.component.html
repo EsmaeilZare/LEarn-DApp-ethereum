@@ -1,6 +1,6 @@
 <div class="card">
-  <!-- <img *ngIf="!_gameDetails.thumbnail; else showImage" src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" class="card-img-top"> -->
-  <img src="{{_gameDetails.thumbnail}}" class="card-img-top" alt="...">
+  <img *ngIf="!_gameDetails.thumbnail; else image" src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" class="card-img-top">
+  <ng-template #image>  <img src="{{_gameDetails.thumbnail}}" class="card-img-top" alt="..."></ng-template>
   <div class="card-body">
     <p class="card-title display-5">{{_gameDetails.title}}</p>
     <p class="card-text" style="font-size: 1.5rem;">{{_gameDetails.description}}</p>

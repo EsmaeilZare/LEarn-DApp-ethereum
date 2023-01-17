@@ -20,20 +20,12 @@ export class GameItemComponent {
   @Output() gamePurchesed: EventEmitter<Game> = new EventEmitter();
   @Output() gameRated: EventEmitter<any> = new EventEmitter();
   @Output() playingStarted: EventEmitter<Game> = new EventEmitter();
+  src : string = "https://getuikit.com/v2/docs/images/placeholder_600x400.svg";
 
   rating: number = 0;
 
   constructor(private ui : UiService) {
     this.initRating();
-
-    if (this._game) {
-      if (this._game.details.thumbnail == '') {
-      console.log("THUMBNAIL:", this._game.details.thumbnail);
-      this._game.details.thumbnail = "https://getuikit.com/v2/docs/images/placeholder_600x400.svg";
-      }
-
-    }
-
   }
 
   initRating() {

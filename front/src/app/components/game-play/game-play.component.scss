@@ -268,20 +268,20 @@ footer button.show{
 .result_box.activeResult{
   opacity: 1;
   z-index: 5;
-  // pointer-events: auto;
-  // transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .result_box{
   background: #fff;
   border-radius: 5px;
-  display: flex;
+  // display: flex;
   padding: 25px 30px;
   width: 450px;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  transform: translate(-50%, -50%) scale(0.9);
+  // align-items: center;
+  // flex-direction: column;
+  // justify-content: center;
+  // transform: translate(-50%, -50%) scale(0.9);
   // opacity: 0;
   // pointer-events: none;
   transition: all 0.3s ease;

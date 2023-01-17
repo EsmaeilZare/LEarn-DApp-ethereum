@@ -1,11 +1,13 @@
 <div class="card h-100">
-  <img src="{{_game.details.thumbnail}}" class="card-img-top" style="height: 35%;" alt="...">
-  <div class="card-body" style="height: 1rem;">
-    <p class="card-title display-5">{{_game.details.title}}</p>
+  <img *ngIf="!_game.details.thumbnail; else image" src="{{src}}" class="card-img-top img-fluid" style="height: 20rem; object-fit: cover;">
+  <ng-template #image>  <img src="{{_game.details.thumbnail}}" class="card-img-top img-fluid" style="height: 20rem;">
+  </ng-template>
+  <div class="card-body" style="height: 10rem;">
+    <p class="card-title display-6">{{_game.details.title}}</p>
     <hr>
-    <p class="card-text" style="font-size: 1.5rem;">{{_game.details.description}}</p>
+    <p class="card-text" style="font-size: 1rem;">{{_game.details.description}}</p>
   </div>
-  <div class="container-wrapper" *ngIf="_game.playerStats.isPurchased && !_game.playerStats.isCreator">
+  <div  *ngIf="_game.playerStats.isPurchased && !_game.playerStats.isCreator">
     <div class="container d-flex align-items-center justify-content-center mb-0">
       <div class="row justify-content-center">
         <div class="rating-wrapper">

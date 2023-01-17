@@ -41,6 +41,7 @@ export class GamePlayComponent implements OnInit {
 
   ngOnInit(): void {
     this.startQuestion(this.currentQNumber, 15);
+    console.log("Quizz completed: ", this.isQuizCompleted)
   }
 
   ngOnChanges(changes: SimpleChanges) {
