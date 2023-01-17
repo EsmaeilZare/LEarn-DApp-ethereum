@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+} from '@angular/core';
 import { Game } from 'src/app/types';
 
 @Component({
@@ -12,7 +18,13 @@ export class GameListComponent {
   @Output() gameRated: EventEmitter<any> = new EventEmitter();
   @Output() playingStarted: EventEmitter<Game> = new EventEmitter();
 
-  // games: Game[];
+  isLoaded: boolean = false;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['_games'].currentValue != null) {
+      this.isLoaded = true;
+    }
+  }
 
   purchase(_game: Game) {
     this.gamePurchesed.emit(_game);
