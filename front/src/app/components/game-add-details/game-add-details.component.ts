@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgModel } from '@angular/forms';
 
 import { GameDetails } from 'src/app/types';
@@ -9,24 +15,44 @@ import { GameDetails } from 'src/app/types';
   styleUrls: ['./game-add-details.component.scss'],
 })
 export class GameAddDetailsComponent {
-  @Input() _gameDetails?: GameDetails;
+  @Input() _gameDetails: GameDetails;
   @Output() gameDetailsAdded: EventEmitter<GameDetails> = new EventEmitter();
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.formInit();
+  constructor(private fb: FormBuilder) {}
+
+  isLoaded: boolean = false;
+
+  ngOnChanges(changes: SimpleChanges) {
+    // let isOK = true;
+    if (changes['_gameDetails'].currentValue != null) {
+      this.isLoaded = true;
+      this.formInit();
+    }
+    // for (const propName in changes) {
+    //   const chng = changes[propName];
+    //   const cur = JSON.stringify(chng.currentValue);
+    //   const prev = JSON.stringify(chng.previousValue);
+    //   console.log(
+    //     `${propName}: currentValue = ${cur}, previousValue = ${prev}`
+    //   );
+    //   if (cur == null) {
+    //     isOK = false;
+    //   }
+    // }
+    // this.isLoaded = isOK;
   }
 
   formInit() {
-    if (this._gameDetails == null) {
-      this._gameDetails = {
-        title: null,
-        price: null,
-        numQuestions: null,
-        description: null,
-        thumbnail: null,
-      };
-    }
+    // if (this._gameDetails == null) {
+    //   this._gameDetails = {
+    //     title: null,
+    //     price: null,
+    //     numQuestions: null,
+    //     description: null,
+    //     thumbnail: null,
+    //   };
+    // }
     this.form = this.fb.group({
       title: this.fb.control(this._gameDetails.title, [Validators.required]),
       price: this.fb.control(this._gameDetails.price, [Validators.required]),
