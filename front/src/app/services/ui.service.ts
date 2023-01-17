@@ -35,7 +35,7 @@ export class UiService {
   }
 
   onUpdateIsRegistered(): Observable<any> {
-    return this.appStateSubject.asObservable();
+    return this.isRegisteredSubject.asObservable();
   }
 
   updateActiveGame(value: Game): void {

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { AppRoutingModule } from './app-routing.module';
+// import { AppRoutingModule } from './app-routing.module';
 
 // directives
 import { ChangeBgDirective } from './directives/change-bg.directive';
@@ -58,7 +58,7 @@ import { DashbordComponent } from './components/dashbord/dashbord.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

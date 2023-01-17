@@ -3,12 +3,12 @@ pragma solidity >=0.7.0 <0.9.0;
 
 
 contract GameContract {
-    uint8 private constant GAME_CREATION_FEE = 50;
-    uint8 private constant GAME_BASE_REWARD = 1;
-    uint8 private constant INITIAL_CREDIT = 100;
+    uint256 private constant GAME_CREATION_BASE_FEE = 5;
+    uint256 private constant GAME_BASE_REWARD = 1;
+    uint256 private constant INITIAL_CREDIT = 500;
     uint8 private constant MIN_QUESTIONS_COUNT = 10;
     uint8 private constant MAX_QUESTIONS_COUNT = 100;
-    uint8 private constant FAIL_TRESHOLD = 60;
+    uint8 private constant FAIL_TRESHOLD = 50;
 
 
     enum CorrectOption {
@@ -68,7 +68,7 @@ contract GameContract {
     event PlayerRegistered(address playerId);
     event GameCreated(uint256 gameId);
     event GamePurchased(address playerId, uint256 gameId);
-    event NewHighscore(address playerId, uint256 gameId, uint8 highscore);
+    event GameResult(address playerId, uint256 gameId, uint8 highscore, uint256 playerCredit);
     event GameRated(uint256 gameId);
 
 
@@ -118,10 +118,10 @@ contract GameContract {
     }
 
 
-    // input example: "title","description",1,10,"",[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
-    function createGame(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) sufficientCredit(GAME_CREATION_FEE) {
+    // input example: "title","description",20,10,"",[["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1],["q",["a","b","c","d"],1]]
+    function createGame(string memory _title, string memory _description, uint256 _price, uint8 _numQuestions, string memory _thumbnail, Question[] memory _gameQuestions) public payable authenticatePlayer(msg.sender) sufficientCredit(_price*GAME_CREATION_BASE_FEE) {
         require(_numQuestions <= MAX_QUESTIONS_COUNT && _numQuestions >= MIN_QUESTIONS_COUNT, "__TX_ERROR__Each game should have at least 10 and at most 100 questions__TX_ERROR__");
-        require(_price>=0 && _price <= 10, "__TX_ERROR__game price should be between 0 t0 10__TX_ERROR__");
+        require(_price>=10 && _price <= 50, "__TX_ERROR__game price should be between 0 t0 10__TX_ERROR__");
         require(_gameQuestions.length == _numQuestions, "__TX_ERROR__Number of questions passed should be equal to the number of questions specified in the game creation__TX_ERROR__");
 
         uint256 gameId = numGames++;
@@ -147,7 +147,7 @@ contract GameContract {
 
         players[msg.sender].createdGames.push(gameId);
         players[msg.sender].gameStats[gameId].isCreator = true;
-        players[msg.sender].credit -= GAME_CREATION_FEE;
+        players[msg.sender].credit -= _price * GAME_CREATION_BASE_FEE;
 
         emit GameCreated(gameId);
     }
@@ -216,14 +216,22 @@ contract GameContract {
     function play(uint256 _gameId, uint8 score) external payable authenticatePlayer(msg.sender) validateGameId(_gameId) gameNotCreatedByUser(_gameId){
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "__TX_ERROR__This player did not purchase this game__TX_ERROR__");
 
-        if (score > players[msg.sender].gameStats[_gameId].highscore){
-            if (score >= FAIL_TRESHOLD){
-                players[msg.sender].credit += (score - players[msg.sender].gameStats[_gameId].highscore) * GAME_BASE_REWARD;
-                emit NewHighscore(msg.sender, _gameId, score);
-            }
-            players[msg.sender].gameStats[_gameId].highscore = score;
-        } else if (score < FAIL_TRESHOLD){
+        if (score < FAIL_TRESHOLD) {
             players[msg.sender].credit -= (FAIL_TRESHOLD - score) * GAME_BASE_REWARD;
+            if (score > players[msg.sender].gameStats[_gameId].highscore){
+                players[msg.sender].gameStats[_gameId].highscore = score;
+            }
+            emit GameResult(msg.sender, _gameId, players[msg.sender].gameStats[_gameId].highscore, players[msg.sender].credit);
+        } else {
+            if(score > players[msg.sender].gameStats[_gameId].highscore){
+                if(players[msg.sender].gameStats[_gameId].highscore < FAIL_TRESHOLD){
+                    players[msg.sender].credit += (score - FAIL_TRESHOLD) * GAME_BASE_REWARD;
+                } else{
+                    players[msg.sender].credit += (score - players[msg.sender].gameStats[_gameId].highscore) * GAME_BASE_REWARD;
+                }
+                players[msg.sender].gameStats[_gameId].highscore = score;
+                emit GameResult(msg.sender, _gameId, players[msg.sender].gameStats[_gameId].highscore, players[msg.sender].credit);
+            }
         }
     }
 

@@ -11,12 +11,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  showForm = false;
-  cg : HTMLElement;
   player: Player = null;
   gamesMap = new Map<number, Game>();
 
   appState: string = 'IN_GAME_LIST';
+  isLoaded: boolean = false;
   isRegistered: boolean = false;
   activeGame: Game = null;
   activeGameList: Game[] = [];
@@ -52,36 +51,47 @@ export class AppComponent {
 
   async ngOnInit() {
     try {
-      this.player = await this.ps.getPlayer();
+      this.ps.getPlayer().then((player) => {
+        this.isLoaded = true;
+        if (player == null) {
+          this.uiService.updateIsRegistered(false);
+        } else {
+          this.player = player;
+          this.uiService.updateIsRegistered(true);
+        }
+      });
+
       (await this.gs.getAllGames()).forEach((game) => {
         this.gamesMap.set(game.id, game);
       });
 
       this.ps.onEvent('PlayerRegistered').subscribe(async (data: any) => {
         this.player = await this.ps.getPlayer();
+        this.uiService.updateIsRegistered(true);
         (await this.gs.getAllGames()).forEach((game) => {
           this.gamesMap.set(game.id, game);
         });
-        this.uiService.updateIsRegistered(true);
       });
 
       this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         const game = await this.gs.getGameInfo(gameId);
+        this.player.credit -= game.details.price * 5;
         this.gamesMap.set(gameId, game);
       });
 
       this.ps.onEvent('GamePurchased').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
         const game = await this.gs.getGameInfo(gameId);
+        this.player.credit -= game.details.price;
         this.gamesMap.set(gameId, game);
       });
 
-      this.ps.onEvent('NewHighscore').subscribe(async (data: any) => {
+      this.ps.onEvent('GameResult').subscribe(async (data: any) => {
         const gameId = parseInt(data.payload.gameId);
-        const score = parseInt(data.payload.score);
         const game = this.gamesMap.get(gameId);
-        game.playerStats.highscore = score;
+        this.player.credit = parseInt(data.payload.playerCredit);
+        game.playerStats.highscore = parseInt(data.payload.score);
         this.gamesMap.set(gameId, game);
       });
 
@@ -114,9 +124,9 @@ export class AppComponent {
   }
 
   showCreateGame() {
-    console.log("KIR")
+    console.log('KIR');
     this.uiService.updateAppState('IN_GAME_CREATE');
-    console.log(this.appState)
+    console.log(this.appState);
   }
 
   showAllGames() {
@@ -135,7 +145,6 @@ export class AppComponent {
   }
 
   startPlayingGame(_game: Game) {
-    console.log('started game--> ', _game);
     this.setActiveGame(_game);
     this.setActiveQuestionList().then(() =>
       this.uiService.updateAppState('IN_GAME_PLAY')
@@ -144,7 +153,6 @@ export class AppComponent {
 
   setActiveGame(_game: Game) {
     this.uiService.updateActiveGame(_game);
-    console.log('==============> ', this.activeGame);
   }
 
   async setActiveQuestionList(): Promise<void> {
@@ -153,22 +161,14 @@ export class AppComponent {
   }
 
   handleRegisterPlayer() {
-    this.isRegistered = true;
-    const response = this.ps.registerPlayer();
-    this.uiService.updateIsRegistered(response);
+    this.ps.registerPlayer();
   }
 
   handleGameCreated(_formData: {
     gameDetails: GameDetails;
     questions: Question[];
   }) {
-    const response = this.gs.createGame(
-      _formData.gameDetails,
-      _formData.questions
-    );
-    if (response) {
-      this.uiService.updateAppState('IN_GAME_LIST');
-    }
+    this.gs.createGame(_formData.gameDetails, _formData.questions);
   }
 
   handlePurchase(_game: Game) {
@@ -188,7 +188,6 @@ export class AppComponent {
 
   handleFinishGame(_formData: { gameId: number; score: number }) {
     this.ps.play(_formData.gameId, _formData.score);
-    this.uiService.updateAppState('IN_GAME_LIST');
   }
 
   handleRateGame(_formData: { gameId: number; rating: number }) {
@@ -196,7 +195,7 @@ export class AppComponent {
   }
 
   scroll(el: HTMLElement) {
-    console.log("OMAD ",el)
-    el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    console.log('OMAD ', el);
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
