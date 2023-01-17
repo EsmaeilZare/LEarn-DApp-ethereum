@@ -9,6 +9,7 @@ import { Question } from 'src/app/types';
 })
 export class QuestionListComponent {
   @Input() questions: Question[] = null;
+  @Input() editMode: boolean = true;
 
   isLoaded: boolean = false;
 

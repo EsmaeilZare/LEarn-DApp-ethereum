@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { Game, Question } from '../types';
+import { Game, GameDetails, Question } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +11,14 @@ export class UiService {
   private activeGame: Game = null;
   private activeGameList: Game[] = [];
   private activeQuestionList: Question[] = [];
+  private gameDetails: GameDetails = null;
 
   private appStateSubject = new Subject<string>();
   private isRegisteredSubject = new Subject<boolean>();
   private activeGameSubject = new Subject<Game>();
   private activeGameListSubject = new Subject<Game[]>();
   private activeQuestionListSubject = new Subject<Question[]>();
+  private gameDetailsSubject = new Subject<GameDetails>();
 
   constructor() {}
 
@@ -63,5 +65,14 @@ export class UiService {
 
   onUpdateActiveQuestionList(): Observable<any> {
     return this.activeQuestionListSubject.asObservable();
+  }
+
+  updateGameDetails(value: GameDetails): void {
+    this.gameDetails = value;
+    this.gameDetailsSubject.next(this.gameDetails);
+  }
+
+  onUpdateGameDetails(): Observable<any> {
+    return this.gameDetailsSubject.asObservable();
   }
 }

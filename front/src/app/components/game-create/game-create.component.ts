@@ -1,6 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { QueueScheduler } from 'rxjs/internal/scheduler/QueueScheduler';
+import { subscriptionLogsToBeFn } from 'rxjs/internal/testing/TestScheduler';
+import { UiService } from 'src/app/services/ui.service';
 import { GameDetails, Question } from 'src/app/types';
 
 @Component({
@@ -14,15 +17,35 @@ export class GameCreateComponent {
   addQuestionStage: boolean = false;
   previewStage: boolean = false;
 
-  questions: Question[];
   gameDetails: GameDetails;
+  questions: Question[];
 
-  constructor() {}
+  gameDetailsSubscription: Subscription;
+  questionsSubscription: Subscription;
+
+  constructor(private uiService: UiService) {
+    this.questionsSubscription = this.uiService
+      .onUpdateActiveQuestionList()
+      .subscribe((value) => (this.questions = value));
+    this.gameDetailsSubscription = this.uiService
+      .onUpdateGameDetails()
+      .subscribe((value) => (this.gameDetails = value));
+
+    this.uiService.updateActiveQuestionList([]);
+    const defaultGameDetails: GameDetails = {
+      title: '',
+      description: '',
+      price: null,
+      numQuestions: null,
+      thumbnail: '',
+    };
+    this.uiService.updateGameDetails(defaultGameDetails);
+  }
 
   ngInit() {}
 
   addDetails(_gameDetails: GameDetails) {
-    this.gameDetails = _gameDetails;
+    this.uiService.updateGameDetails(_gameDetails);
     this.addQuestionStage = true;
   }
 
