@@ -6,10 +6,10 @@
 </div>
 <div name="preview" *ngIf="previewStage">
   <div class="row g-2">
-    <div class="col-6">
+    <div class="col-6 d-flex justify-content-center mb-5">
       <app-game-show-details [_gameDetails]="gameDetails"></app-game-show-details>
     </div>
-    <div class="col-6 px-5">
+    <div class="col-6">
       <app-question-list [questions]="questions" [editMode]="false"></app-question-list>
     </div>
   </div>
@@ -22,6 +22,6 @@
     </div>
   </div>
   <div class="d-flex justify-content-center">
-    <button class="btn btn-primary" (click)="submitGame()">Submit Game</button>
+    <button class="btn" style="background-color: #a2d886;" (click)="submitGame()">Submit Game for <strong>{{gameDetails.price * 5 }}</strong>  <svg style="height: 25px; margin-bottom: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"> <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z"/></svg></button>
   </div>
 </div>

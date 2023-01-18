@@ -54,11 +54,11 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#">Home</a></li>
-          <li (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Create Game</a>
+          <li *ngIf="appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto active" href="#">Home</a></li>
+          <li  (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered && appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto">Create Game</a>
           </li>
-          <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered"><a class="nav-link scrollto">Games</a></li>
-          <li (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
+          <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered && appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto">Games</a></li>
+          <li *ngIf="appState != 'IN_GAME_PLAY'" (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
           <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
           <li *ngIf="!isRegistered; else profile" (click)="handleRegisterPlayer()"><a
               class="getstarted scrollto">Register</a></li>
@@ -92,7 +92,7 @@
   <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
+  <section *ngIf="appState != 'IN_GAME_PLAY'" id="hero" class="d-flex align-items-center">
 
     <div class="container">
       <div class="row">
@@ -119,7 +119,7 @@
   <!-- End Hero -->
 
   <!-- ======= Counts Section ======= -->
-  <section id="counts" class="counts">
+  <section *ngIf="appState != 'IN_GAME_PLAY'" id="counts" class="counts">
     <div class="container">
 
       <div class="row">
@@ -178,7 +178,7 @@
 
   <!-- ======= Features Section ======= -->
   <section #futures id="features" class="features">
-    <div class="container">
+    <div  *ngIf="appState != 'IN_GAME_PLAY'" class="container">
 
       <div class="section-title" data-aos="fade-up">
         <h2>Features</h2>
@@ -266,8 +266,8 @@
         </div>
         <div class="col-lg-6">
           <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
-            <a href="#intro" class="scrollto">Home</a>
-            <a href="#about" class="scrollto">About</a>
+            <a href="#" class="scrollto">Home</a>
+            <a (click)="scroll(futures)" class="scrollto">About</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>
           </nav>

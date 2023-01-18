@@ -1,4 +1,4 @@
-<div *ngIf="isLoaded" class="card h-100">
+<div *ngIf="isLoaded" class="card h-100" style=" background-color: #f3f4f6">
   <img *ngIf="!_game.details.thumbnail; else image" src="{{src}}" class="card-img-top img-fluid"
     style="height: 20rem; object-fit: cover;">
   <ng-template #image> <img src="{{_game.details.thumbnail}}" class="card-img-top img-fluid"
@@ -76,7 +76,7 @@
     <button type="button" class="btn d-flex justify-content-between align-items-center btn-sm px-1 mid">
             <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
               class="badge">{{_game.stats.rating}}% Rated</span> &nbsp;
-      <span [ngClass]=" {bad: _game.stats.rating <= 35 ,mid: _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
+      <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
         class="badge">{{_game.stats.numRaters}} votes</span>
     </button>
     <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm px-1" *ngIf="_game.playerStats.isPurchased; else players">
