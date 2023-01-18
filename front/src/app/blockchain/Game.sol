@@ -219,7 +219,11 @@ contract GameContract {
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "__TX_ERROR__This player did not purchase this game__TX_ERROR__");
 
         if (score < FAIL_TRESHOLD) {
-            players[msg.sender].credit -= (FAIL_TRESHOLD - score) * GAME_BASE_REWARD;
+            if (players[msg.sender].credit < (FAIL_TRESHOLD - score) * GAME_BASE_REWARD){
+                players[msg.sender].credit = 0;
+            } else{
+                players[msg.sender].credit -= (FAIL_TRESHOLD - score) * GAME_BASE_REWARD;
+            }
             if (score > players[msg.sender].gameStats[_gameId].highscore){
                 players[msg.sender].gameStats[_gameId].highscore = score;
             }
