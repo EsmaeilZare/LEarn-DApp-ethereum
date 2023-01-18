@@ -71,7 +71,7 @@
                       <path
                         d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z" />
                     </svg> </span>
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #f51bb7">
                     {{player.credit}}
                     <span class="visually-hidden">Credit</span>
                   </span>
@@ -97,8 +97,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Earn and learn on the blockchain</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">(L)Earn is a growing quiz platform focused on learning while
+          <h1 data-aos="fade-up">(L)Earn on the blockchain</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">A growing quiz platform focused on learning while
             making money.</h2>
           <div data-aos="fade-up" data-aos-delay="800">
             <a (click)="handleRegisterPlayer()" *ngIf="!isRegistered; else registered"
