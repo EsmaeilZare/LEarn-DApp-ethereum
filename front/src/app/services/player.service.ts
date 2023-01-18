@@ -35,6 +35,19 @@ export class PlayerService {
     }
   }
 
+  async getPlayersCount(): Promise<number> {
+    try {
+      const totalPlayersCount = await this.web3.call('getPlayersCount');
+      return totalPlayersCount;
+    } catch (error: any) {
+      console.warn(
+        'could not retrieve number of players due to : ',
+        error.message
+      );
+      return 0;
+    }
+  }
+
   purchase(_gameId: number) {
     try {
       this.web3.executeTransaction('purchase', _gameId);

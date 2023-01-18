@@ -20,12 +20,16 @@ export class AppComponent {
   activeGame: Game = null;
   activeGameList: Game[] = [];
   activeQuestionList: Question[] = [];
+  numPlayers: number = 0;
+  numGames: number = 0;
 
   appStateSubscription: Subscription;
   isRegisteredSubscription: Subscription;
   activeGameSubscription: Subscription;
   activeGameListSubscription: Subscription;
   activeQuestionListSubscription: Subscription;
+  numPlayersSubscription: Subscription;
+  numGamesSubscription: Subscription;
 
   constructor(
     private ps: PlayerService,
@@ -47,10 +51,18 @@ export class AppComponent {
     this.activeQuestionListSubscription = this.uiService
       .onUpdateActiveQuestionList()
       .subscribe((value) => (this.activeQuestionList = value));
+    this.numPlayersSubscription = this.uiService
+      .onUpdateNumPlayers()
+      .subscribe((value) => (this.numPlayers = value));
+    this.numGamesSubscription = this.uiService
+      .onUpdateNumGames()
+      .subscribe((value) => (this.numGames = value));
   }
 
   async ngOnInit() {
     try {
+      this.uiService.updateNumPlayers(await this.ps.getPlayersCount());
+      this.uiService.updateNumGames(await this.gs.getGamesCount());
       this.ps.getPlayer().then((player) => {
         this.isLoaded = true;
         if (player == null) {
@@ -72,6 +84,7 @@ export class AppComponent {
           this.gamesMap.set(game.id, game);
         });
         this.uiService.updateAppState('IN_GAME_LIST');
+        this.uiService.updateNumPlayers(await this.ps.getPlayersCount());
       });
 
       this.gs.onEvent('GameCreated').subscribe(async (data: any) => {
@@ -80,6 +93,7 @@ export class AppComponent {
         this.player.credit -= game.details.price * 5;
         this.gamesMap.set(gameId, game);
         this.uiService.updateAppState('IN_GAME_LIST');
+        this.uiService.updateNumGames(this.numGames + 1);
       });
 
       this.ps.onEvent('GamePurchased').subscribe(async (data: any) => {

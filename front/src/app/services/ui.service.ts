@@ -12,6 +12,8 @@ export class UiService {
   private activeGameList: Game[] = [];
   private activeQuestionList: Question[] = [];
   private gameDetails: GameDetails = null;
+  private numPlayers: number = 0;
+  private numGames: number = 0;
 
   private appStateSubject = new Subject<string>();
   private isRegisteredSubject = new Subject<boolean>();
@@ -19,6 +21,8 @@ export class UiService {
   private activeGameListSubject = new Subject<Game[]>();
   private activeQuestionListSubject = new Subject<Question[]>();
   private gameDetailsSubject = new Subject<GameDetails>();
+  private numPlayersSubject = new Subject<number>();
+  private numGamesSubject = new Subject<number>();
 
   constructor() {}
 
@@ -74,5 +78,23 @@ export class UiService {
 
   onUpdateGameDetails(): Observable<any> {
     return this.gameDetailsSubject.asObservable();
+  }
+
+  updateNumPlayers(value: number): void {
+    this.numPlayers = value;
+    this.numPlayersSubject.next(this.numPlayers);
+  }
+
+  onUpdateNumPlayers(): Observable<any> {
+    return this.numPlayersSubject.asObservable();
+  }
+
+  updateNumGames(value: number): void {
+    this.numGames = value;
+    this.numGamesSubject.next(this.numGames);
+  }
+
+  onUpdateNumGames(): Observable<any> {
+    return this.numGamesSubject.asObservable();
   }
 }

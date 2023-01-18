@@ -62,6 +62,7 @@ contract GameContract {
     }
 
     uint256 private numGames;
+    uint256 private numPlayers;
     mapping(uint256 => Game) private games;
     mapping(address => Player) private players;
 
@@ -103,6 +104,7 @@ contract GameContract {
 
         players[msg.sender].isRegistered = true;
         players[msg.sender].credit = INITIAL_CREDIT;
+        numPlayers++;
 
         emit PlayerRegistered(msg.sender);
     }
@@ -236,8 +238,12 @@ contract GameContract {
     }
 
 
-    function getGamesCount() external view authenticatePlayer(msg.sender) returns(uint256) {
+    function getGamesCount() external view returns(uint256) {
         return numGames;
+    }
+
+    function getPlayersCount() external view returns(uint256) {
+        return numPlayers;
     }
 
     // since we don't have floating point number here we are going to store rating between 0 to 100 and in the app we can show it as 0 to 10
@@ -245,9 +251,13 @@ contract GameContract {
         require(players[msg.sender].gameStats[_gameId].isPurchased == true, "__TX_ERROR__This player did not purchase this game__TX_ERROR__");
         require(_rating <= 100 && _rating > 0, "__TX_ERROR__rating number should be between 1 to 100__TX_ERROR__");
 
+        if (players[msg.sender].gameStats[_gameId].rating == 0){
+            games[_gameId].stats.numRaters++;
+            games[_gameId].stats.rating = (_rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / (games[_gameId].stats.numRaters + 1);
+        } else {
+            games[_gameId].stats.rating = (_rating - players[msg.sender].gameStats[_gameId].rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / games[_gameId].stats.numRaters;
+        }
         players[msg.sender].gameStats[_gameId].rating = _rating;
-        games[_gameId].stats.rating = (_rating + (games[_gameId].stats.rating * games[_gameId].stats.numRaters)) / (games[_gameId].stats.numRaters + 1);
-        games[_gameId].stats.numRaters++;
 
         emit GameRated(_gameId);
     }
