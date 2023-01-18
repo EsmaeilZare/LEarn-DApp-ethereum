@@ -70,20 +70,20 @@
     </ng-template>
   </div>
   <div class="card-footer d-flex justify-content-between px-2">
-    <button class="btn mid d-flex justify-content-between align-items-center btn-sm px-1">
+    <button class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1">
       <span class="badge bg-secondary">{{_game.details.numQuestions}}</span> &nbsp;Questions
     </button>
-    <button type="button" class="btn d-flex justify-content-between align-items-center btn-sm px-1 mid">
+    <button type="button" class="np btn d-flex justify-content-between align-items-center btn-sm px-1 mid">
             <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
               class="badge">{{_game.stats.rating}}% Rated</span> &nbsp;
       <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
         class="badge">{{_game.stats.numRaters}} votes</span>
     </button>
-    <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm px-1" *ngIf="_game.playerStats.isPurchased; else players">
+    <button type="button" class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1" *ngIf="_game.playerStats.isPurchased; else players">
       <span class="badge bg-secondary">{{_game.playerStats.highscore}}</span> &nbsp;Highscore
     </button>
     <ng-template #players>
-      <button type="button" class="btn mid d-flex justify-content-between align-items-center btn-sm px-1">
+      <button type="button" class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1">
         <span class="badge bg-secondary">{{_game.stats.numBuyers}}</span> &nbsp;Players
       </button>
     </ng-template>
