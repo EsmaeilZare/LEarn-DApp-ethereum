@@ -1,0 +1,14 @@
+<div class="gamifiedQuestion">
+  <div class="card">
+    <h3>{{question.text}}</h3>
+  </div>
+</div>
+<div class="options">
+  <ol *ngFor="let option of question.options; let i = index">
+    <li>
+      <div appChangeBg [isCorrect]="i==question.answer" class="card">
+        {{option}}
+      </div>
+    </li>
+  </ol>
+</div>

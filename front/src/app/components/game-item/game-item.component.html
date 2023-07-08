@@ -1,0 +1,91 @@
+<div *ngIf="isLoaded" class="card h-100" style=" background-color: #f3f4f6">
+  <img *ngIf="!_game.details.thumbnail; else image" src="{{src}}" class="card-img-top img-fluid"
+    style="height: 20rem; object-fit: cover;">
+  <ng-template #image> <img src="{{_game.details.thumbnail}}" class="card-img-top img-fluid"
+      style="height: 20rem; object-fit: cover;">
+  </ng-template>
+  <div class="card-body" style="height: 10rem;">
+    <p class="card-title display-6">{{_game.details.title}}</p>
+    <hr style="color: #3c84b8;">
+    <p class="card-text" style="font-size: 1rem;">{{_game.details.description}}</p>
+  </div>
+  <div  *ngIf="_game.playerStats.isPurchased && !_game.playerStats.isCreator">
+    <!-- <div class="container d-flex align-items-center justify-content-center mb-0"> -->
+      <div class="row my-4">
+        <div class="rating-wrapper d-flex justify-content-center">
+          <!-- star 5 -->
+          <input type="radio" id="5-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value=100
+            [checked]="_game.playerStats.rating==100" (click)="rate(100)">
+          <label for="5-star-rating{{_game.id}}" class="star-rating">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 4 -->
+          <input type="radio" id="4-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value=80
+            [checked]="_game.playerStats.rating==80" (click)="rate(80)">
+          <label for="4-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 3 -->
+          <input type="radio" id="3-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value=60
+            [checked]="_game.playerStats.rating==60" (click)="rate(60)">
+          <label for="3-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 2 -->
+          <input type="radio" id="2-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value=40
+            [checked]="_game.playerStats.rating==40" (click)="rate(40)">
+          <label for="2-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+          <!-- star 1 -->
+          <input type="radio" id="1-star-rating{{_game.id}}" name="star-rating{{_game.id}}" value=20
+            [checked]="_game.playerStats.rating==20" (click)="rate(20)">
+          <label for="1-star-rating{{_game.id}}" class="star-rating star">
+            <i class="fas fa-star d-inline-block"></i>
+          </label>
+
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+
+  <!-- </div> -->
+  <div class="card-footer text-center d-grid" style="background-color: inherit; border: 0;"
+    *ngIf="!_game.playerStats.isCreator">
+    <button type="button" class="btn btn-lg" *ngIf="_game.playerStats.isPurchased; else play" style="background-color: #50adda;"
+      (click)="startPlaying()">
+      PLAY
+    </button>
+    <ng-template #play>
+      <button type="button" class="btn btn-lg" (click)="purchase()" style="background-color: #50adda;">
+        <span class="align-middle h5">Purchase for {{_game.details.price}} <svg
+            style="height: 25px; margin-bottom: 5px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+            <path d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z" />
+          </svg> </span>
+      </button>
+    </ng-template>
+  </div>
+  <div class="card-footer d-flex justify-content-between px-2">
+    <button class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1">
+      <span class="badge bg-secondary">{{_game.details.numQuestions}}</span> &nbsp;Questions
+    </button>
+    <button type="button" class="np btn d-flex justify-content-between align-items-center btn-sm px-1 mid">
+            <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
+              class="badge">{{_game.stats.rating}}% Rated</span> &nbsp;
+      <span [ngClass]=" {bad: _game.stats.rating <= 35 ,'bg-secondary': _game.stats.rating > 35 && _game.stats.rating < 65 , great : _game.stats.rating >= 65}"
+        class="badge">{{_game.stats.numRaters}} votes</span>
+    </button>
+    <button type="button" class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1" *ngIf="_game.playerStats.isPurchased; else players">
+      <span class="badge bg-secondary">{{_game.playerStats.highscore}}</span> &nbsp;Highscore
+    </button>
+    <ng-template #players>
+      <button type="button" class="np btn mid d-flex justify-content-between align-items-center btn-sm px-1">
+        <span class="badge bg-secondary">{{_game.stats.numBuyers}}</span> &nbsp;Players
+      </button>
+    </ng-template>
+  </div>
+</div>

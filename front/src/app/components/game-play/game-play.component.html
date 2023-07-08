@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+<div *ngIf="isLoaded">
+    <ng-container *ngIf="!isQuizCompleted">
+      <div class="quiz_box mx-auto">
+        <header>
+          <div class="title" style="font-style: italic;">Question {{currentQNumber+1}} of {{questionList.length}}</div>
+          <div class="timer">
+            <div class="time_left_txt">Time Left</div>
+            <div class="timer_sec">{{conuntdown}}</div>
+          </div>
+        </header>
+        <section>
+          <div class="que_text">
+            <span>{{questionList[currentQNumber]?.text}}</span>
+          </div>
+          <div class="option_list">
+            <div
+              [ngClass]="i!=lastAnswer && i==lastSelectedOption && !isAnswerable ? 'option incorrect' : i==lastAnswer && !isAnswerable ? 'option correct' :'option'"
+              *ngFor="let option of questionList[currentQNumber]?.options; let i = index "
+              (click)="isAnswerable ? answer(currentQNumber,i): false">
+              <span>{{option}}</span>
+              <div *ngIf="i==lastAnswer && !isAnswerable" class="icon tick"><i class="fas fa-check"></i></div>
+              <div *ngIf="i!=lastAnswer && i==lastSelectedOption && !isAnswerable" class="icon cross"><i
+                  class="fas fa-times"></i></div>
+            </div>
+          </div>
+        </section>
+        <footer>
+          <div class="total que">
+            <h5>{{points}} Points</h5>
+          </div>
+        </footer>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isQuizCompleted" class="d-flex justify-content-center align-items-center">
+      <div class="result_box mx-auto text-center align-items-center">
+        <div class="icon">
+          <i class="fas fa-crown"></i>
+        </div>
+        <div class="complete_text">You've completed the Quiz!</div>
+        <div class="text-center">
+          <h5 class="mt-2">You've answered {{correctAnswers}} out of {{questionList.length}} questions.</h5>
+          <h5 class="mt-2">Your Score: {{points}} points.</h5>
+        </div>
+        <div class="buttons d-flex justify-content-center">
+          <button class="btn" style="background-color: #50adda;" (click)="quitQuiz()">Quit Quiz</button>
+        </div>
+      </div>
+    </ng-container>
+</div>

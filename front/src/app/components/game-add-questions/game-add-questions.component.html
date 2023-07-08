@@ -1,0 +1,8 @@
+<div *ngIf="isLoaded" class="row">
+  <app-question-create class="col-6" (questionCreated)="addQuestion($event)"></app-question-create>
+  <app-question-list class="col-6" [questions]="_questions" [editMode]="true"></app-question-list>
+  <div class="d-flex justify-content-center">
+    <button class="btn btn-primary" (click)="createGameQuestions()" [disabled]="_questions.length!=numQuestions">Confirm
+      Game Questions</button>
+  </div>
+</div>

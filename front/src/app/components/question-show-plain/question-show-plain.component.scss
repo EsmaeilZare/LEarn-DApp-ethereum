@@ -1,0 +1,21 @@
+.card {
+  background-color: rgba(0, 0, 0, 0);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1px;
+  border-width: 0;
+}
+
+li {
+  list-style-type: none;
+  cursor: pointer;
+  margin: 1px;
+}
+
+ol {
+  padding: 0;
+}
+
+.highlight {
+  background-color: lightgreen;
+}

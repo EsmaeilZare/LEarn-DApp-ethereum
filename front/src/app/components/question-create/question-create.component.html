@@ -1,0 +1,102 @@
+<!-- <div class="d-flex align-items-between"> -->
+  <form [formGroup]="form" (ngSubmit)="submit()" class="mb-5">
+  <!-- <div class="form-group row">
+    <label class="col-sm-3 col-form-label col-form-label-sm">
+      Question Text:
+    </label>
+    <div class="col-sm-8">
+      <input formControlName="questionText" type="text" class="form-control form-control-sm"
+        placeholder="Enter Question Text" />
+    </div>
+
+    <label>Options:</label>
+    <div class="input-group">
+      <input formControlName="op0" type="text" class="form-control form-control-sm" placeholder="Enter Option" />
+      <input type="radio" value="0" name="answer" formControlName="answer">
+    </div>
+    <div class="input-group">
+      <input formControlName="op1" type="text" class="form-control form-control-sm" placeholder="Enter Option" />
+      <input type="radio" value="1" name="answer" formControlName="answer">
+    </div>
+    <div class="input-group">
+      <input formControlName="op2" type="text" class="form-control form-control-sm" placeholder="Enter Option" />
+      <input id="radioOp2" type="radio" value="2" name="answer" formControlName="answer">
+    </div>
+    <div class="input-group">
+      <input formControlName="op3" type="text" class="form-control form-control-sm" placeholder="Enter Option" />
+      <input type="radio" value="3" name="answer" formControlName="answer">
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Submit</button> -->
+
+  <!-- <div class="row mb-3"> -->
+    <div class="d-flex flex-column justify-content-between" style="height: 450px;">
+      <div class="form-group col-12">
+        <div class="form-floating">
+          <input formControlName="questionText" type="text" class="form-control form-control-sm"
+          placeholder="Enter Question Text" />
+          <label for="questionText"> Enter Question</label>
+        </div>
+      </div>
+  <!-- </div> -->
+
+  <!-- <div class="row mb-2"> -->
+    <div class="col-12">
+      <div class="input-group">
+        <div class="input-group-text">
+          <input class="form-check-input" type="radio" value="0" name="answer" formControlName="answer" aria-label="Radio button for following text input">
+        </div>
+          <div class="form-floating">
+            <input formControlName="op0" type="text" class="form-control" placeholder="Enter Option" aria-label="Text input with radio button"/>
+            <label for="op0"> Option 1</label>
+          </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="input-group">
+        <div class="input-group-text">
+          <input class="form-check-input" type="radio" value="1" name="answer" formControlName="answer" aria-label="Radio button for following text input">
+        </div>
+          <div class="form-floating">
+            <input formControlName="op1" type="text" class="form-control" placeholder="Enter Option" aria-label="Text input with radio button"/>
+            <label for="op1"> Option 2</label>
+          </div>
+      </div>
+    </div>
+  <!-- </div> -->
+
+  <!-- <div class="row"> -->
+    <div class="col-12">
+      <div class="input-group">
+        <div class="input-group-text">
+          <input class="form-check-input" type="radio" value="2" name="answer" formControlName="answer" aria-label="Radio button for following text input">
+        </div>
+          <div class="form-floating">
+            <input formControlName="op2" type="text" class="form-control" placeholder="Enter Option" aria-label="Text input with radio button"/>
+            <label for="op2"> Option 3</label>
+          </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="input-group">
+        <div class="input-group-text">
+          <input class="form-check-input" type="radio" value="3" name="answer" formControlName="answer" aria-label="Radio button for following text input">
+        </div>
+          <div class="form-floating">
+            <input formControlName="op3" type="text" class="form-control" placeholder="Enter Option" aria-label="Text input with radio button"/>
+            <label for="op3"> Option 4</label>
+          </div>
+      </div>
+    </div>
+  <!-- </div> -->
+
+  <div class="text-center ">
+      <button class="btn" style="background-color: #50adda;" type="submit" [disabled]="!form.valid">Submit</button>
+  </div>
+  </div>
+
+
+</form>
+<!-- </div> -->
+

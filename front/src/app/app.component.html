@@ -1,0 +1,279 @@
+<!-- <app-header></app-header>
+<div class="row">
+  <div class="col-2">
+    <div>
+      <button (click)="showCreateGame()">Create Game</button>
+    </div>
+    <div>
+      <button (click)="showAllGames()">All Games</button>
+    </div>
+    <div>
+      <button (click)="showCreatedGames()">Created Games</button>
+    </div>
+    <div>
+      <button (click)="showPurchasedGames()">Purchased Games</button>
+    </div>
+  </div>
+  <div class="col-10">
+    <app-game-list *ngIf="appState == 'IN_GAME_LIST'" [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
+      (gameRated)="handleRateGame($event)" (playingStarted)="startPlayingGame($event)"></app-game-list>
+    <app-game-create *ngIf="appState == 'IN_GAME_CREATE'" (gameCreated)="handleGameCreated($event)"></app-game-create>
+    <app-register *ngIf="!isRegistered" (playerRegistered)="handleRegisterPlayer()"></app-register>
+  </div>
+</div>
+<app-game-play *ngIf="appState == 'IN_GAME_PLAY'" [_game]="activeGame"
+  (gamePlayed)="handleFinishGame($event)"></app-game-play> -->
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>L(Earn) - Quizzed On Blockchain</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="src/assets/img/favicon.png" rel="icon">
+  <link href="src/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+</head>
+
+<body *ngIf="isLoaded">
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center pb-5">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="index.html">(L)Earn</a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li *ngIf="appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto active" href="#">Home</a></li>
+          <li  (click)="[showCreateGame(), scroll(cg)]" *ngIf="isRegistered && appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto">Create Game</a>
+          </li>
+          <li (click)="[showAllGames(), scroll(cg)]" *ngIf="isRegistered && appState != 'IN_GAME_PLAY'"><a class="nav-link scrollto">Games</a></li>
+          <li *ngIf="appState != 'IN_GAME_PLAY'" (click)="scroll(futures)"><a class="nav-link scrollto ">Features</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> -->
+          <li *ngIf="!isRegistered; else profile" (click)="handleRegisterPlayer()"><a
+              class="getstarted scrollto">Register</a></li>
+          <ng-template #profile>
+            <li>
+              <a class="nav-link">
+                <button type="button" class="btn position-relative getstarted m-0" style="padding: 5px 15px;">
+                  <span class="align-middle h5">Credit <svg style="height: 25px;" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512">
+                      <path
+                        d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z" />
+                    </svg> </span>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color: #f51bb7">
+                    {{player.credit}}
+                    <span class="visually-hidden">Credit</span>
+                  </span>
+                </button>
+              </a>
+            </li>
+
+          </ng-template>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+      <!-- .navbar -->
+
+    </div>
+
+  </header>
+
+  <!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section *ngIf="appState != 'IN_GAME_PLAY'" id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">(L)Earn on the blockchain</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">A growing quiz platform focused on learning while
+            making money.</h2>
+          <div data-aos="fade-up" data-aos-delay="800">
+            <a (click)="handleRegisterPlayer()" *ngIf="!isRegistered; else registered"
+              class="btn-get-started scrollto">Register</a>
+            <ng-template #registered>
+              <button (click)="[showAllGames(), scroll(cg)]" class="btn btn-get-started">Play</button>
+            </ng-template>
+          </div>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="200">
+          <img src="https://i.pinimg.com/originals/48/ff/04/48ff04f86b719be583203a47139e0c2c.png"
+            class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- End Hero -->
+
+  <!-- ======= Counts Section ======= -->
+  <section *ngIf="appState != 'IN_GAME_PLAY'" id="counts" class="counts">
+    <div class="container">
+
+      <div class="row">
+        <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-xl-start"
+          data-aos="fade-right" data-aos-delay="150">
+          <img src="assets/img/counts-img.svg" alt="" class="img-fluid">
+        </div>
+
+        <div class="col-xl-7 d-flex align-items-stretch pt-4 pt-xl-0" data-aos="fade-left" data-aos-delay="300">
+          <div class="content d-flex flex-column justify-content-center">
+            <div class="row">
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-emoji-smile"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="65" data-purecounter-duration="1"
+                    class="purecounter">{{numPlayers}}</span>
+                  <p><strong>Members</strong> use our platform to learn and earn daily.</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-journal-richtext"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1"
+                    class="purecounter">{{numGames}}</span>
+                  <p><strong>Games</strong> Have already been uploaded and tested on the platform.</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-clock"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1"
+                    class="purecounter">3</span>
+                  <p><strong>Hours</strong> spent on average by users on a daily basis.</p>
+                </div>
+              </div>
+
+              <div class="col-md-6 d-md-flex align-items-md-stretch">
+                <div class="count-box">
+                  <i class="bi bi-award"></i>
+                  <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
+                    class="purecounter">23</span>
+                  <p><strong>Awards</strong> Have been given to winners until now.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End .content-->
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- End Counts Section -->
+
+  <!-- ======= Features Section ======= -->
+  <section #futures id="features" class="features">
+    <div  *ngIf="appState != 'IN_GAME_PLAY'" class="container">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2>Features</h2>
+        <p>A feature rich platform like nothing else</p>
+      </div>
+
+      <div class="row" data-aos="fade-up" data-aos-delay="300">
+        <div class="col-lg-3 col-md-4">
+          <div class="icon-box">
+            <i class="bi bi-database-x" style="color: #47aeff;"></i>
+            <h3><a href="">No database</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-fingerprint" style="color: #29cc61"></i>
+            <h3><a href="">Secure Login</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
+          <div class="icon-box">
+            <i class="bi bi-person-gear" style="color: #11dbcf;"></i>
+            <h3><a href="">24/7 Support</a></h3>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
+          <div class="icon-box">
+            <i class="bi bi-wallet2" style="color: #5578ff;"></i>
+            <h3><a href="">Wallet Connect</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div #cg>
+
+    <section *ngIf="appState == 'IN_GAME_CREATE'">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Create Game</h2>
+          <p>1.Add details of the Game</p>
+          <p>2.Add the questions</p>
+          <p>3.Review and Submit</p>
+        </div>
+        <app-game-create (gameCreated)="handleGameCreated($event)"></app-game-create>
+      </div>
+    </section>
+
+    <section *ngIf="appState == 'IN_GAME_LIST'">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>List of Games</h2>
+        </div>
+        <app-game-list [_games]="activeGameList" (gamePurchesed)="handlePurchase($event)"
+          (gameRated)="handleRateGame($event)" (playingStarted)="startPlayingGame($event)"></app-game-list>
+      </div>
+    </section>
+
+    <section *ngIf="appState == 'IN_GAME_PLAY'">
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+          <h2>Play</h2>
+          <p>You have 15 seconds to answer each question</p>
+          <p>You can not go back and forth between questions</p>
+          <p>You will be rewarded if you answer 60% of the questions correctly</p>
+          <p>Your credit will be deducted if you answer less than 60% of the questions correctly</p>
+
+
+        </div>
+        <app-game-play [questionList]="activeQuestionList" [_game]="activeGame"
+          (gamePlayed)="handleFinishGame($event)"></app-game-play>
+      </div>
+    </section>
+
+  </div>
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>(L)Earn</strong>. All Rights Reserved
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="#" class="scrollto">Home</a>
+            <a (click)="scroll(futures)" class="scrollto">About</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+</body>
